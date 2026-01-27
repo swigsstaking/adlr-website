@@ -146,8 +146,11 @@ const Configurator = () => {
         </div>
       </section>
 
+      {/* Spacer for sticky header */}
+      <div className="h-[80px]" />
+
       {/* Configurator Content */}
-      <section className="pt-8 pb-32 bg-white min-h-[60vh]">
+      <section className="pb-40 bg-white min-h-[60vh]">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatePresence mode="wait">
             {/* Step 1: Vehicle Type */}
