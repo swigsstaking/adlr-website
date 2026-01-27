@@ -1,0 +1,43 @@
+{
+  "global": {
+    "siteName": "ADLR Cosmetic Auto",
+    "siteUrl": "https://adlrcosmeticauto.ch",
+    "language": "fr",
+    "logo": "/logo.png",
+    "favicon": "/favicon.svg"
+  },
+  "pages": {
+    "home": {
+      "title": "ADLR Cosmetic Auto | Detailing Automobile Premium en Suisse",
+      "description": "Expert en detailing automobile : nettoyage professionnel, polish, traitement céramique et protection de carrosserie. Redonnez l'éclat à votre véhicule.",
+      "keywords": "detailing automobile, nettoyage voiture, polish, céramique, protection carrosserie, Suisse",
+      "ogTitle": "ADLR Cosmetic Auto - L'Art du Detailing Automobile",
+      "ogDescription": "Transformez votre véhicule avec nos services de detailing premium. Expertise, passion et résultats exceptionnels."
+    },
+    "services": {
+      "title": "Nos Services de Detailing | ADLR Cosmetic Auto",
+      "description": "Découvrez nos packs detailing : nettoyage intérieur/extérieur, polish correctif, traitement céramique, protection PPF. Services adaptés à tous les véhicules.",
+      "keywords": "services detailing, pack nettoyage, polish correctif, céramique, PPF, protection peinture"
+    },
+    "configurator": {
+      "title": "Configurateur de Service | ADLR Cosmetic Auto",
+      "description": "Composez votre prestation de detailing sur mesure. Sélectionnez les services dont votre véhicule a besoin et obtenez un devis instantané.",
+      "keywords": "devis detailing, configurateur service, prestation sur mesure, prix detailing"
+    },
+    "shop": {
+      "title": "Boutique Produits Detailing | ADLR Cosmetic Auto",
+      "description": "Achetez les meilleurs produits de detailing : shampoings, cires, céramiques, accessoires. Produits professionnels sélectionnés par nos experts.",
+      "keywords": "produits detailing, shampoing voiture, cire, céramique, accessoires auto"
+    },
+    "tutorials": {
+      "title": "Tutoriels Detailing | ADLR Cosmetic Auto",
+      "description": "Apprenez les techniques professionnelles de detailing : méthode des deux seaux, polish, application céramique. Guides complets avec produits recommandés.",
+      "keywords": "tutoriel detailing, méthode deux seaux, comment polish, guide céramique"
+    },
+    "contact": {
+      "title": "Contact | ADLR Cosmetic Auto",
+      "description": "Contactez ADLR Cosmetic Auto pour un devis gratuit. Réponse rapide, conseils personnalisés pour votre véhicule.",
+      "keywords": "contact detailing, devis gratuit, rendez-vous detailing"
+    }
+  }
+}
