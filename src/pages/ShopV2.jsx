@@ -247,7 +247,7 @@ const ShopV2 = () => {
             {/* Mobile Filter Button */}
             <button
               onClick={() => setIsMobileFilterOpen(true)}
-              className="lg:hidden fixed bottom-[calc(6rem+env(safe-area-inset-bottom))] left-4 z-40 flex items-center gap-2 px-4 py-3 bg-white border border-sand-200 rounded-full shadow-lg"
+              className="lg:hidden fixed bottom-[calc(6rem+env(safe-area-inset-bottom))] left-4 z-40 flex items-center gap-2 px-4 py-3 bg-white border border-sand-200 rounded-full shadow-lg text-dark-700"
             >
               <Filter className="w-5 h-5" />
               Filtres
