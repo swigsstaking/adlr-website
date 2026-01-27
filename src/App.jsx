@@ -51,21 +51,30 @@ function App() {
       <Layout>
         <Suspense fallback={<PageLoader />}>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/v2" element={<HomeV2 />} />
-            <Route path="/v3" element={<HomeV3 />} />
-            <Route path="/v4" element={<HomeV4 />} />
+            {/* Home - V3 is default */}
+            <Route path="/" element={<HomeV3 />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/home-v2" element={<HomeV2 />} />
+            <Route path="/home-v3" element={<HomeV3 />} />
+            <Route path="/home-v4" element={<HomeV4 />} />
+            {/* Services */}
             <Route path="/services" element={<Services />} />
             <Route path="/services/lavage" element={<LavageService />} />
             <Route path="/services/polish" element={<PolishService />} />
             <Route path="/services/ceramique" element={<CeramiqueService />} />
             <Route path="/services/cire" element={<CireService />} />
-            <Route path="/configurateur" element={<Configurator />} />
+            {/* Configurateur - V2 is default */}
+            <Route path="/configurateur" element={<ConfiguratorV2 />} />
+            <Route path="/configurateur-v1" element={<Configurator />} />
             <Route path="/configurateur-v2" element={<ConfiguratorV2 />} />
-            <Route path="/boutique" element={<Shop />} />
+            {/* Boutique - V2 is default */}
+            <Route path="/boutique" element={<ShopV2 />} />
+            <Route path="/boutique-v1" element={<Shop />} />
             <Route path="/boutique-v2" element={<ShopV2 />} />
             <Route path="/boutique/:id" element={<ProductDetail />} />
-            <Route path="/tutoriels" element={<Tutorials />} />
+            {/* Tutoriels - V2 is default */}
+            <Route path="/tutoriels" element={<TutorialsV2 />} />
+            <Route path="/tutoriels-v1" element={<Tutorials />} />
             <Route path="/tutoriels-v2" element={<TutorialsV2 />} />
             <Route path="/tutoriels/:id" element={<TutorialDetail />} />
             <Route path="/contact" element={<Contact />} />

@@ -11,7 +11,7 @@ import { useCart } from '../context/CartContext'
 const Layout = ({ children }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
-  const [isServicesOpen, setIsServicesOpen] = useState(false)
+  const [openDropdown, setOpenDropdown] = useState(null)
   const location = useLocation()
   const { siteInfo } = useSiteInfo()
   const { isAuthenticated } = useAuth()
@@ -28,24 +28,66 @@ const Layout = ({ children }) => {
 
   useEffect(() => {
     setIsMenuOpen(false)
-    setIsServicesOpen(false)
+    setOpenDropdown(null)
   }, [location])
 
-  // Navigation principale
+  // Navigation avec dropdowns pour les variantes
   const mainNav = [
-    { name: 'Services', path: '/services', hasDropdown: true },
-    { name: 'Configurateur', path: '/configurateur' },
-    { name: 'Boutique', path: '/boutique' },
-    { name: 'Tutoriels', path: '/tutoriels' },
+    {
+      name: 'Accueil',
+      path: '/',
+      hasDropdown: true,
+      dropdownKey: 'home',
+      items: [
+        { name: 'Home V3 (Principal)', path: '/' },
+        { name: 'Home V1', path: '/home' },
+        { name: 'Home V2', path: '/home-v2' },
+        { name: 'Home V4', path: '/home-v4' },
+      ]
+    },
+    {
+      name: 'Services',
+      path: '/services',
+      hasDropdown: true,
+      dropdownKey: 'services',
+      items: [
+        { name: 'Lavage', path: '/services/lavage' },
+        { name: 'Polish', path: '/services/polish' },
+        { name: 'Céramique', path: '/services/ceramique' },
+        { name: 'Cire', path: '/services/cire' },
+      ]
+    },
+    {
+      name: 'Configurateur',
+      path: '/configurateur',
+      hasDropdown: true,
+      dropdownKey: 'configurateur',
+      items: [
+        { name: 'Config V2 (Principal)', path: '/configurateur' },
+        { name: 'Config V1', path: '/configurateur-v1' },
+      ]
+    },
+    {
+      name: 'Boutique',
+      path: '/boutique',
+      hasDropdown: true,
+      dropdownKey: 'boutique',
+      items: [
+        { name: 'Boutique V2 (Principal)', path: '/boutique' },
+        { name: 'Boutique V1', path: '/boutique-v1' },
+      ]
+    },
+    {
+      name: 'Tutoriels',
+      path: '/tutoriels',
+      hasDropdown: true,
+      dropdownKey: 'tutoriels',
+      items: [
+        { name: 'Tutoriels V2 (Principal)', path: '/tutoriels' },
+        { name: 'Tutoriels V1', path: '/tutoriels-v1' },
+      ]
+    },
     { name: 'Contact', path: '/contact' },
-  ]
-
-  // Sous-menu services
-  const servicesNav = [
-    { name: 'Lavage', path: '/services/lavage' },
-    { name: 'Polish', path: '/services/polish' },
-    { name: 'Céramique', path: '/services/ceramique' },
-    { name: 'Cire', path: '/services/cire' },
   ]
 
   const isActive = (path) => location.pathname === path
@@ -74,10 +116,11 @@ const Layout = ({ children }) => {
                   <div
                     key={item.name}
                     className="relative"
-                    onMouseEnter={() => setIsServicesOpen(true)}
-                    onMouseLeave={() => setIsServicesOpen(false)}
+                    onMouseEnter={() => setOpenDropdown(item.dropdownKey)}
+                    onMouseLeave={() => setOpenDropdown(null)}
                   >
-                    <button
+                    <Link
+                      to={item.path}
                       className={`flex items-center text-sm font-medium transition-colors ${
                         isActive(item.path)
                           ? 'text-dark-900'
@@ -85,36 +128,42 @@ const Layout = ({ children }) => {
                       }`}
                     >
                       {item.name}
-                      <ChevronDown className={`w-4 h-4 ml-1 transition-transform ${isServicesOpen ? 'rotate-180' : ''}`} />
-                    </button>
+                      <ChevronDown className={`w-4 h-4 ml-1 transition-transform ${openDropdown === item.dropdownKey ? 'rotate-180' : ''}`} />
+                    </Link>
 
                     {/* Dropdown */}
                     <AnimatePresence>
-                      {isServicesOpen && (
+                      {openDropdown === item.dropdownKey && (
                         <motion.div
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: 10 }}
                           transition={{ duration: 0.2 }}
-                          className="absolute top-full left-0 mt-2 w-48 bg-white rounded-xl shadow-xl border border-sand-200 py-2 overflow-hidden"
+                          className="absolute top-full left-0 mt-2 w-52 bg-white rounded-xl shadow-xl border border-sand-200 py-2 overflow-hidden"
                         >
-                          {servicesNav.map((subItem) => (
+                          {item.items.map((subItem) => (
                             <Link
                               key={subItem.name}
                               to={subItem.path}
-                              className="block px-4 py-2.5 text-sm text-dark-600 hover:bg-sand-100 hover:text-dark-900 transition-colors"
+                              className={`block px-4 py-2.5 text-sm transition-colors ${
+                                isActive(subItem.path)
+                                  ? 'bg-sand-100 text-dark-900 font-medium'
+                                  : 'text-dark-600 hover:bg-sand-100 hover:text-dark-900'
+                              }`}
                             >
                               {subItem.name}
                             </Link>
                           ))}
-                          <div className="border-t border-sand-200 mt-2 pt-2">
-                            <Link
-                              to="/services"
-                              className="block px-4 py-2.5 text-sm font-medium text-dark-900 hover:bg-sand-100 transition-colors"
-                            >
-                              Tous les services →
-                            </Link>
-                          </div>
+                          {item.dropdownKey === 'services' && (
+                            <div className="border-t border-sand-200 mt-2 pt-2">
+                              <Link
+                                to="/services"
+                                className="block px-4 py-2.5 text-sm font-medium text-dark-900 hover:bg-sand-100 transition-colors"
+                              >
+                                Tous les services →
+                              </Link>
+                            </div>
+                          )}
                         </motion.div>
                       )}
                     </AnimatePresence>
@@ -189,50 +238,54 @@ const Layout = ({ children }) => {
               className="lg:hidden bg-white border-t border-sand-200"
             >
               <nav className="max-w-7xl mx-auto px-4 py-4 space-y-1">
-                {/* Services avec sous-menu */}
-                <div>
-                  <button
-                    onClick={() => setIsServicesOpen(!isServicesOpen)}
-                    className="flex items-center justify-between w-full py-3 px-4 rounded-lg font-medium text-dark-600 hover:bg-sand-100 hover:text-dark-900 transition-colors"
-                  >
-                    Services
-                    <ChevronDown className={`w-4 h-4 transition-transform ${isServicesOpen ? 'rotate-180' : ''}`} />
-                  </button>
-                  <AnimatePresence>
-                    {isServicesOpen && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        exit={{ opacity: 0, height: 0 }}
-                        className="pl-4 space-y-1"
+                {mainNav.map((item) => (
+                  item.hasDropdown ? (
+                    <div key={item.name}>
+                      <button
+                        onClick={() => setOpenDropdown(openDropdown === item.dropdownKey ? null : item.dropdownKey)}
+                        className="flex items-center justify-between w-full py-3 px-4 rounded-lg font-medium text-dark-600 hover:bg-sand-100 hover:text-dark-900 transition-colors"
                       >
-                        {servicesNav.map((item) => (
-                          <Link
-                            key={item.name}
-                            to={item.path}
-                            className="block py-2 px-4 text-sm text-dark-500 hover:text-dark-900 transition-colors"
+                        {item.name}
+                        <ChevronDown className={`w-4 h-4 transition-transform ${openDropdown === item.dropdownKey ? 'rotate-180' : ''}`} />
+                      </button>
+                      <AnimatePresence>
+                        {openDropdown === item.dropdownKey && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            exit={{ opacity: 0, height: 0 }}
+                            className="pl-4 space-y-1"
                           >
-                            {item.name}
-                          </Link>
-                        ))}
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-
-                {/* Autres liens */}
-                {mainNav.filter(item => !item.hasDropdown).map((item) => (
-                  <Link
-                    key={item.name}
-                    to={item.path}
-                    className={`block py-3 px-4 rounded-lg font-medium transition-colors ${
-                      isActive(item.path)
-                        ? 'bg-sand-200 text-dark-900'
-                        : 'text-dark-600 hover:bg-sand-100 hover:text-dark-900'
-                    }`}
-                  >
-                    {item.name}
-                  </Link>
+                            {item.items.map((subItem) => (
+                              <Link
+                                key={subItem.name}
+                                to={subItem.path}
+                                className={`block py-2 px-4 text-sm transition-colors ${
+                                  isActive(subItem.path)
+                                    ? 'text-dark-900 font-medium'
+                                    : 'text-dark-500 hover:text-dark-900'
+                                }`}
+                              >
+                                {subItem.name}
+                              </Link>
+                            ))}
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  ) : (
+                    <Link
+                      key={item.name}
+                      to={item.path}
+                      className={`block py-3 px-4 rounded-lg font-medium transition-colors ${
+                        isActive(item.path)
+                          ? 'bg-sand-200 text-dark-900'
+                          : 'text-dark-600 hover:bg-sand-100 hover:text-dark-900'
+                      }`}
+                    >
+                      {item.name}
+                    </Link>
+                  )
                 ))}
 
                 {/* Account link */}
