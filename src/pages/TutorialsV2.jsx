@@ -222,21 +222,13 @@ const TutorialsV2 = () => {
               <p className="text-white/60 mb-8">
                 Nos experts réalisent ces prestations avec un savoir-faire inégalé
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link
-                  to="/services"
-                  className="inline-flex items-center justify-center px-6 py-3 bg-white hover:bg-sand-100 text-dark-900 font-semibold rounded-full transition-all"
-                >
-                  Découvrir nos services
-                  <ChevronRight className="w-5 h-5 ml-1" />
-                </Link>
-                <Link
-                  to="/boutique"
-                  className="inline-flex items-center justify-center px-6 py-3 border-2 border-white/30 hover:border-white text-white font-semibold rounded-full transition-all"
-                >
-                  Voir les produits
-                </Link>
-              </div>
+              <Link
+                to="/services"
+                className="inline-flex items-center justify-center px-6 py-3 bg-white hover:bg-sand-100 text-dark-900 font-semibold rounded-full transition-all"
+              >
+                Découvrir nos services
+                <ChevronRight className="w-5 h-5 ml-1" />
+              </Link>
             </motion.div>
           </div>
         </div>

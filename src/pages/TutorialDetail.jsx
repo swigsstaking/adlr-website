@@ -1,13 +1,16 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Clock, ChevronLeft, ChevronRight, CheckCircle, ShoppingBag, Play, BookOpen } from 'lucide-react'
+import { Clock, ChevronLeft, ChevronRight, CheckCircle, ShoppingBag, ShoppingCart, Play, BookOpen } from 'lucide-react'
 import SEOHead from '../components/SEOHead'
+import { useCart } from '../context/CartContext'
 
 const TutorialDetail = () => {
   const { id } = useParams()
   const [tutorial, setTutorial] = useState(null)
   const [currentStep, setCurrentStep] = useState(0)
+  const [productsAdded, setProductsAdded] = useState(false)
+  const { addToCart } = useCart()
 
   const tutorials = [
     {
@@ -355,7 +358,24 @@ Heureusement, il est facile de leur redonner leur aspect d'origine avec les bons
     const found = tutorials.find(t => t.id === id)
     setTutorial(found || tutorials[0])
     setCurrentStep(0)
+    setProductsAdded(false)
   }, [id])
+
+  const handleAddAllToCart = () => {
+    if (!tutorial?.products) return
+
+    const productsWithId = tutorial.products.filter(p => p.id)
+    productsWithId.forEach(product => {
+      addToCart({
+        _id: product.id,
+        name: product.name,
+        price: { amount: product.price },
+      })
+    })
+
+    setProductsAdded(true)
+    setTimeout(() => setProductsAdded(false), 3000)
+  }
 
   if (!tutorial) {
     return (
@@ -527,13 +547,27 @@ Heureusement, il est facile de leur redonner leur aspect d'origine avec les bons
                         CHF {tutorial.products.reduce((sum, p) => sum + p.price, 0).toFixed(2)}
                       </span>
                     </div>
-                    <Link
-                      to="/boutique"
-                      className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-dark-900 hover:bg-dark-800 text-white font-semibold rounded-xl transition-all"
+                    <button
+                      onClick={handleAddAllToCart}
+                      disabled={productsAdded}
+                      className={`w-full flex items-center justify-center gap-2 px-4 py-3 font-semibold rounded-xl transition-all ${
+                        productsAdded
+                          ? 'bg-green-600 text-white cursor-default'
+                          : 'bg-dark-900 hover:bg-dark-800 text-white'
+                      }`}
                     >
-                      Voir les produits
-                      <ChevronRight className="w-4 h-4" />
-                    </Link>
+                      {productsAdded ? (
+                        <>
+                          <CheckCircle className="w-4 h-4" />
+                          Produits ajoutés !
+                        </>
+                      ) : (
+                        <>
+                          <ShoppingCart className="w-4 h-4" />
+                          Ajouter au panier
+                        </>
+                      )}
+                    </button>
                   </div>
 
                   {/* Related Tutorials */}
