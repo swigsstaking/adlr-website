@@ -356,7 +356,7 @@ const ShopV2 = () => {
         {/* Floating Cart Button */}
         <button
           onClick={() => setIsCartOpen(true)}
-          className="fixed bottom-[calc(1.5rem+env(safe-area-inset-bottom))] right-6 z-40 flex items-center gap-3 px-6 py-4 bg-dark-900 hover:bg-dark-800 text-white font-semibold rounded-full shadow-2xl transition-all hover:scale-105"
+          className="fixed bottom-[calc(1.5rem+env(safe-area-inset-bottom))] right-6 z-40 flex items-center gap-3 px-6 py-4 bg-dark-900 hover:bg-dark-800 text-white font-semibold rounded-full shadow-2xl transition-colors"
         >
           <ShoppingCart className="w-5 h-5" />
           <span>CHF {cartTotal.toFixed(2)}</span>
