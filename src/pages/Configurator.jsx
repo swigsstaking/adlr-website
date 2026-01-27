@@ -352,7 +352,7 @@ const Configurator = () => {
       </section>
 
       {/* Bottom Bar with Price & Navigation */}
-      <section className="py-4 bg-white/95 backdrop-blur-sm border-t border-sand-300 fixed bottom-0 left-0 right-0 z-40">
+      <section className="py-4 pb-[calc(1rem+env(safe-area-inset-bottom))] bg-white/95 backdrop-blur-sm border-t border-sand-300 fixed bottom-0 left-0 right-0 z-40">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             <button

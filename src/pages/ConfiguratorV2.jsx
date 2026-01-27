@@ -155,7 +155,7 @@ const ConfiguratorV2 = () => {
             </div>
 
             {/* Content */}
-            <div className="p-6 lg:p-10">
+            <div className="p-6 lg:p-10 pb-32 lg:pb-10">
               <AnimatePresence mode="wait">
                 {/* Step 1: Vehicle Type */}
                 {step === 1 && (
@@ -433,7 +433,7 @@ const ConfiguratorV2 = () => {
             </div>
 
             {/* Navigation mobile */}
-            <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-sand-200 p-4 z-50">
+            <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-sand-200 p-4 pb-[calc(1rem+env(safe-area-inset-bottom))] z-50">
               <div className="flex items-center justify-between gap-4">
                 <button
                   onClick={prevStep}

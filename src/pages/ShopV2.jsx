@@ -247,7 +247,7 @@ const ShopV2 = () => {
             {/* Mobile Filter Button */}
             <button
               onClick={() => setIsMobileFilterOpen(true)}
-              className="lg:hidden fixed bottom-24 left-4 z-40 flex items-center gap-2 px-4 py-3 bg-white border border-sand-200 rounded-full shadow-lg"
+              className="lg:hidden fixed bottom-[calc(6rem+env(safe-area-inset-bottom))] left-4 z-40 flex items-center gap-2 px-4 py-3 bg-white border border-sand-200 rounded-full shadow-lg"
             >
               <Filter className="w-5 h-5" />
               Filtres
@@ -356,7 +356,7 @@ const ShopV2 = () => {
         {/* Floating Cart Button */}
         <button
           onClick={() => setIsCartOpen(true)}
-          className="fixed bottom-6 right-6 z-40 flex items-center gap-3 px-6 py-4 bg-dark-900 hover:bg-dark-800 text-white font-semibold rounded-full shadow-2xl transition-all hover:scale-105"
+          className="fixed bottom-[calc(1.5rem+env(safe-area-inset-bottom))] right-6 z-40 flex items-center gap-3 px-6 py-4 bg-dark-900 hover:bg-dark-800 text-white font-semibold rounded-full shadow-2xl transition-all hover:scale-105"
         >
           <ShoppingCart className="w-5 h-5" />
           <span>CHF {cartTotal.toFixed(2)}</span>
@@ -444,15 +444,15 @@ const ShopV2 = () => {
                 </div>
 
                 {cart.length > 0 && (
-                  <div className="p-6 border-t border-sand-200">
+                  <div className="p-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))] border-t border-sand-200">
                     <div className="flex items-center justify-between mb-4">
                       <span className="text-dark-500">Total</span>
                       <span className="text-2xl font-bold text-dark-900">CHF {cartTotal.toFixed(2)}</span>
                     </div>
-                    <button className="w-full flex items-center justify-center gap-2 px-6 py-4 bg-dark-900 hover:bg-dark-800 text-white font-semibold rounded-xl transition-all">
-                      Commander
+                    <Link to="/panier" className="w-full flex items-center justify-center gap-2 px-6 py-4 bg-dark-900 hover:bg-dark-800 text-white font-semibold rounded-xl transition-all">
+                      Voir le panier
                       <ArrowRight className="w-5 h-5" />
-                    </button>
+                    </Link>
                   </div>
                 )}
               </motion.div>
@@ -478,7 +478,7 @@ const ShopV2 = () => {
                 transition={{ type: 'spring', damping: 30 }}
                 className="fixed left-0 right-0 bottom-0 bg-white z-50 rounded-t-3xl max-h-[80vh] overflow-auto"
               >
-                <div className="p-6">
+                <div className="p-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))]">
                   <div className="flex items-center justify-between mb-6">
                     <h3 className="text-lg font-bold text-dark-900">Catégories</h3>
                     <button onClick={() => setIsMobileFilterOpen(false)}>
