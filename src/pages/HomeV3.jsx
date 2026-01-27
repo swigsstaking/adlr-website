@@ -51,45 +51,46 @@ const HomeV3 = () => {
       <SEOHead page="home" />
 
       {/* Hero Section */}
-      <section ref={heroRef} className="relative min-h-screen bg-[#f8f7f4] overflow-hidden">
+      <section ref={heroRef} className="relative min-h-screen bg-[#f8f7f4] overflow-hidden pt-[72px]">
         <div className="absolute inset-0 bg-gradient-to-br from-sand-200/30 via-transparent to-sand-300/20" />
 
-        <div className="relative z-10 max-w-[1600px] mx-auto px-6 lg:px-12 pt-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 min-h-screen items-center">
+        <div className="relative z-10 max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12">
+          <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[calc(100vh-72px)] items-center pb-32 lg:pb-24">
+            {/* Text Content */}
             <motion.div
               style={{ opacity: textOpacity }}
-              className="lg:col-span-5 pt-20 lg:pt-0 z-20"
+              className="lg:col-span-5 pt-8 lg:pt-0 z-20"
             >
               <motion.div
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
               >
-                <div className="mb-8">
+                <div className="mb-6 lg:mb-8">
                   <h1 className="font-display font-black text-dark-900 leading-[0.9] tracking-tight">
-                    <span className="text-5xl md:text-6xl lg:text-7xl block">ADLR</span>
-                    <span className="text-3xl md:text-4xl lg:text-5xl block text-dark-500 font-bold mt-2">
+                    <span className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl block">ADLR</span>
+                    <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl block text-dark-500 font-bold mt-2">
                       Cosmetic Auto<span className="text-primary-500">.</span>
                     </span>
                   </h1>
                 </div>
 
-                <p className="text-dark-500 text-lg md:text-xl max-w-md mb-10 leading-relaxed">
+                <p className="text-dark-500 text-base sm:text-lg md:text-xl max-w-md mb-8 lg:mb-10 leading-relaxed">
                   L'excellence du detailing automobile.
                   Des prestations haut de gamme pour sublimer votre véhicule.
                 </p>
 
-                <div className="flex flex-wrap gap-4">
+                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                   <Link
                     to="/configurateur"
-                    className="inline-flex items-center px-8 py-4 bg-dark-900 hover:bg-dark-800 text-white font-semibold rounded-full transition-all duration-300 group"
+                    className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 bg-dark-900 hover:bg-dark-800 text-white font-semibold rounded-full transition-all duration-300 group"
                   >
                     Obtenir un devis
                     <ChevronRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                   </Link>
                   <Link
                     to="/services"
-                    className="inline-flex items-center px-8 py-4 border-2 border-dark-300 hover:border-dark-900 text-dark-700 hover:text-dark-900 font-semibold rounded-full transition-all duration-300"
+                    className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 border-2 border-dark-300 hover:border-dark-900 text-dark-700 hover:text-dark-900 font-semibold rounded-full transition-all duration-300"
                   >
                     Nos services
                   </Link>
@@ -97,15 +98,16 @@ const HomeV3 = () => {
               </motion.div>
             </motion.div>
 
+            {/* Car Image */}
             <motion.div
               style={{ x: carX }}
-              className="lg:col-span-7 relative flex items-center justify-center lg:justify-end"
+              className="lg:col-span-7 relative flex items-center justify-center lg:justify-end mt-8 lg:mt-0"
             >
               <motion.div
                 initial={{ opacity: 0, x: 60 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
-                className="relative w-full max-w-4xl"
+                className="relative w-full max-w-md sm:max-w-lg lg:max-w-4xl"
               >
                 <img
                   src="https://swigs.online/uploads/adlr/1769437285688-381899037.webp"
@@ -117,7 +119,7 @@ const HomeV3 = () => {
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{ duration: 0.5, delay: 0.8 }}
-                  className="absolute bottom-[15%] left-[35%] w-4 h-4 bg-primary-500 rounded-full shadow-lg shadow-primary-500/50"
+                  className="absolute bottom-[15%] left-[35%] w-4 h-4 bg-primary-500 rounded-full shadow-lg shadow-primary-500/50 hidden lg:block"
                 />
               </motion.div>
             </motion.div>
@@ -128,14 +130,14 @@ const HomeV3 = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="absolute bottom-8 left-6 right-6 lg:left-12 lg:right-12"
+            className="absolute bottom-4 sm:bottom-8 left-4 right-4 sm:left-6 sm:right-6 lg:left-12 lg:right-12 z-30 bg-[#f8f7f4]/90 backdrop-blur-sm rounded-xl sm:rounded-none sm:bg-transparent sm:backdrop-blur-none"
           >
-            <div className="flex items-end justify-between py-6 border-t border-dark-200/50">
-              <div className="flex items-center gap-8 md:gap-16">
+            <div className="flex items-end justify-between py-4 sm:py-6 px-4 sm:px-0 border-t border-dark-200/50">
+              <div className="flex items-center gap-4 sm:gap-8 md:gap-16">
                 {stats.map((stat) => (
                   <div key={stat.label}>
-                    <p className="text-3xl md:text-4xl font-bold text-dark-900">{stat.value}</p>
-                    <p className="text-xs md:text-sm text-dark-400 uppercase tracking-wider mt-1">{stat.label}</p>
+                    <p className="text-xl sm:text-3xl md:text-4xl font-bold text-dark-900">{stat.value}</p>
+                    <p className="text-[10px] sm:text-xs md:text-sm text-dark-400 uppercase tracking-wider mt-1">{stat.label}</p>
                   </div>
                 ))}
               </div>
@@ -321,14 +323,14 @@ const ServiceCard = ({ service, index, isLast, totalCards }) => {
   return (
     <div
       ref={cardRef}
-      className={`${isLast ? 'relative' : 'sticky top-[72px]'} min-h-[calc(100vh-72px)] flex items-center`}
+      className={`${isLast ? 'relative' : 'lg:sticky lg:top-[72px]'} min-h-[auto] lg:min-h-[calc(100vh-72px)] flex items-center`}
       style={{ zIndex: isLast ? totalCards + 10 : index + 1 }}
     >
       {/* Background avec couleur alternée subtile */}
       <div className={`absolute inset-0 ${index % 2 === 0 ? 'bg-[#f8f7f4]' : 'bg-white'}`} />
 
-      <div className="relative z-10 w-full max-w-[1600px] mx-auto px-6 lg:px-12 py-12 lg:py-16">
-        <div className={`grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center ${!isEven ? 'lg:flex-row-reverse' : ''}`}>
+      <div className="relative z-10 w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 py-8 sm:py-12 lg:py-16">
+        <div className={`grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-10 lg:gap-16 items-center ${!isEven ? 'lg:flex-row-reverse' : ''}`}>
 
           {/* Texte */}
           <motion.div
@@ -339,19 +341,19 @@ const ServiceCard = ({ service, index, isLast, totalCards }) => {
             className={`${!isEven ? 'lg:order-2' : ''}`}
           >
             <div className="max-w-xl">
-              <h2 className="font-display font-black text-dark-900 leading-[0.95] mb-6">
-                <span className="block text-5xl md:text-6xl lg:text-7xl">{service.title}</span>
-                <span className="block text-4xl md:text-5xl lg:text-6xl text-dark-400">{service.subtitle}</span>
+              <h2 className="font-display font-black text-dark-900 leading-[0.95] mb-4 sm:mb-6">
+                <span className="block text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl">{service.title}</span>
+                <span className="block text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-dark-400">{service.subtitle}</span>
               </h2>
-              <p className="text-dark-500 text-lg lg:text-xl leading-relaxed mb-8">
+              <p className="text-dark-500 text-base sm:text-lg lg:text-xl leading-relaxed mb-6 sm:mb-8">
                 {service.description}
               </p>
               <Link
                 to={service.link || '/services'}
-                className="inline-flex items-center px-8 py-4 bg-dark-900 hover:bg-dark-800 text-white font-semibold rounded-full transition-all duration-300 group"
+                className="inline-flex items-center px-6 sm:px-8 py-3 sm:py-4 bg-dark-900 hover:bg-dark-800 text-white font-semibold rounded-full transition-all duration-300 group text-sm sm:text-base"
               >
                 {service.isLast ? 'Découvrir nos services' : 'En savoir plus'}
-                <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2 group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
           </motion.div>
@@ -388,8 +390,8 @@ const ServiceCard = ({ service, index, isLast, totalCards }) => {
               </div>
 
               {/* Badge numéro */}
-              <div className="absolute -top-4 -right-4 lg:-top-6 lg:-right-6 w-16 h-16 lg:w-20 lg:h-20 bg-white rounded-full shadow-xl flex items-center justify-center">
-                <span className="text-2xl lg:text-3xl font-display font-black text-dark-900">
+              <div className="absolute -top-3 -right-3 sm:-top-4 sm:-right-4 lg:-top-6 lg:-right-6 w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 bg-white rounded-full shadow-xl flex items-center justify-center">
+                <span className="text-xl sm:text-2xl lg:text-3xl font-display font-black text-dark-900">
                   0{index + 1}
                 </span>
               </div>
