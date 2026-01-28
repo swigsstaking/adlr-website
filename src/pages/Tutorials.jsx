@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Play, Clock, BookOpen, ShoppingBag, ShoppingCart, ChevronRight, Droplets, Sparkles, Shield, Armchair, Loader2, Check } from 'lucide-react'
+import { Clock, BookOpen, ShoppingBag, ShoppingCart, ChevronRight, Droplets, Sparkles, Shield, Armchair, Loader2, Check } from 'lucide-react'
 import SEOHead from '../components/SEOHead'
 import { useCart } from '../context/CartContext'
 
@@ -248,7 +248,7 @@ const Tutorials = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.05 }}
-                  className="bg-white rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300"
+                  className="bg-white rounded-3xl overflow-hidden"
                 >
                   <div className="flex flex-col lg:flex-row">
                     {/* Image */}
@@ -259,16 +259,9 @@ const Tutorials = () => {
                       <img
                         src={tutorial.image}
                         alt={tutorial.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        className="w-full h-full object-cover"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-dark-900/60 via-transparent to-transparent" />
-
-                      {/* Play Button */}
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-16 h-16 rounded-full bg-white/90 flex items-center justify-center transform group-hover:scale-110 transition-transform shadow-xl">
-                          <Play className="w-7 h-7 text-dark-900 ml-0.5" />
-                        </div>
-                      </div>
 
                       {/* Badges */}
                       <div className="absolute bottom-5 left-5 right-5 flex items-center justify-between">

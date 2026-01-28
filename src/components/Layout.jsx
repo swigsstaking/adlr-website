@@ -33,7 +33,16 @@ const Layout = ({ children }) => {
 
   // Navigation
   const mainNav = [
-    { name: 'Accueil', path: '/' },
+    {
+      name: 'Accueil',
+      path: '/',
+      hasDropdown: true,
+      dropdownKey: 'accueil',
+      items: [
+        { name: 'V1 (Actuelle)', path: '/' },
+        { name: 'V2 (Test)', path: '/home-v2' },
+      ]
+    },
     {
       name: 'Services',
       path: '/services',
