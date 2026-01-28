@@ -255,7 +255,7 @@ const ProductDetail = () => {
                   className="relative aspect-square rounded-3xl overflow-hidden bg-sand-100 mb-4"
                 >
                   <img
-                    src={product.images?.[selectedImage]?.url || product.images?.[0]?.url}
+                    src={product.images?.[selectedImage]?.url || product.images?.[selectedImage] || product.images?.[0]?.url || product.images?.[0]}
                     alt={product.name}
                     className="w-full h-full object-cover"
                   />
@@ -281,7 +281,7 @@ const ProductDetail = () => {
                           selectedImage === i ? 'border-dark-900' : 'border-transparent opacity-60 hover:opacity-100'
                         }`}
                       >
-                        <img src={img.url} alt="" className="w-full h-full object-cover" />
+                        <img src={img?.url || img} alt="" className="w-full h-full object-cover" />
                       </button>
                     ))}
                   </div>
@@ -301,11 +301,11 @@ const ProductDetail = () => {
                 {/* Price */}
                 <div className="flex items-baseline gap-3 mb-6">
                   <span className="text-4xl font-bold text-dark-900">
-                    CHF {product.price?.toFixed(2)}
+                    CHF {Number(product.price?.amount ?? product.price ?? 0).toFixed(2)}
                   </span>
                   {product.originalPrice && (
                     <span className="text-xl text-dark-400 line-through">
-                      CHF {product.originalPrice.toFixed(2)}
+                      CHF {Number(product.originalPrice?.amount ?? product.originalPrice ?? 0).toFixed(2)}
                     </span>
                   )}
                 </div>
@@ -429,7 +429,7 @@ const ProductDetail = () => {
                   >
                     <div className="aspect-square overflow-hidden">
                       <img
-                        src={relProduct.images?.[0]?.url}
+                        src={relProduct.images?.[0]?.url || relProduct.images?.[0]}
                         alt={relProduct.name}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
@@ -439,7 +439,7 @@ const ProductDetail = () => {
                         {relProduct.name}
                       </h3>
                       <p className="text-dark-900 font-bold mt-1">
-                        CHF {relProduct.price?.toFixed(2)}
+                        CHF {Number(relProduct.price?.amount ?? relProduct.price ?? 0).toFixed(2)}
                       </p>
                     </div>
                   </Link>
