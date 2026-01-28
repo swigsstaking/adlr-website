@@ -123,29 +123,33 @@ const ConfiguratorV2 = () => {
       <SEOHead page="configurator" />
 
       <div className="min-h-screen bg-sand-50 pt-24">
-        {/* Header avec steps - Full width */}
-        <div className="bg-white border-b border-sand-200 px-6 py-4">
-          <div className="max-w-3xl">
-            <div className="flex items-center justify-between mb-4">
-              <h1 className="text-xl font-display font-bold text-dark-900">
-                Configurateur
-              </h1>
-              <span className="text-sm text-dark-500">
-                Étape {step} sur 4
-              </span>
-            </div>
-
-            {/* Progress dots */}
-            <div className="flex items-center gap-2">
-              {[1, 2, 3, 4].map((s) => (
-                <div key={s} className="flex-1 flex items-center">
-                  <div
-                    className={`h-1.5 flex-1 rounded-full transition-all ${
-                      s < step ? 'bg-dark-900' : s === step ? 'bg-dark-900' : 'bg-sand-300'
-                    }`}
-                  />
+        {/* Header avec steps */}
+        <div className="bg-white border-b border-sand-200">
+          <div className="flex flex-col lg:flex-row">
+            <div className="flex-1 lg:max-w-[65%] px-6 lg:px-10 py-4">
+              <div className="max-w-3xl">
+                <div className="flex items-center justify-between mb-4">
+                  <h1 className="text-xl font-display font-bold text-dark-900">
+                    Configurateur
+                  </h1>
+                  <span className="text-sm text-dark-500">
+                    Étape {step} sur 4
+                  </span>
                 </div>
-              ))}
+
+                {/* Progress dots */}
+                <div className="flex items-center gap-2">
+                  {[1, 2, 3, 4].map((s) => (
+                    <div key={s} className="flex-1 flex items-center">
+                      <div
+                        className={`h-1.5 flex-1 rounded-full transition-all ${
+                          s < step ? 'bg-dark-900' : s === step ? 'bg-dark-900' : 'bg-sand-300'
+                        }`}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -482,25 +486,25 @@ const ConfiguratorV2 = () => {
           </div>
 
           {/* Sidebar - Summary (Desktop only) */}
-          <div className="hidden lg:block w-[35%] bg-sand-700 text-white sticky top-24 h-[calc(100vh-96px)] overflow-hidden">
-            <div className="p-6 h-full flex flex-col">
-              <div className="flex items-center gap-3 mb-4 flex-shrink-0">
-                <div className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center">
-                  <ShoppingCart className="w-4 h-4" />
+          <div className="hidden lg:block w-[35%] bg-sand-700 text-white sticky top-[156px] h-[calc(100vh-156px)] overflow-hidden">
+            <div className="p-8 h-full flex flex-col">
+              <div className="flex items-center gap-3 mb-8">
+                <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
+                  <ShoppingCart className="w-5 h-5" />
                 </div>
-                <h2 className="text-lg font-display font-bold">Récapitulatif</h2>
+                <h2 className="text-xl font-display font-bold">Récapitulatif</h2>
               </div>
 
-              <div className="flex-1 space-y-3 overflow-hidden">
+              <div className="flex-1 space-y-6">
                 {/* Vehicle */}
-                <div className={`p-3 rounded-xl transition-all ${selectedVehicle ? 'bg-white/10' : 'bg-white/5 border border-dashed border-white/20'}`}>
-                  <p className="text-white/60 text-xs uppercase tracking-wider mb-1">Véhicule</p>
+                <div className={`p-4 rounded-xl transition-all ${selectedVehicle ? 'bg-white/10' : 'bg-white/5 border border-dashed border-white/20'}`}>
+                  <p className="text-white/60 text-xs uppercase tracking-wider mb-2">Véhicule</p>
                   {selectedVehicle ? (
-                    <div className="flex items-center gap-2">
-                      <selectedVehicle.Icon className="w-5 h-5" />
+                    <div className="flex items-center gap-3">
+                      <selectedVehicle.Icon className="w-6 h-6" />
                       <div>
-                        <p className="font-semibold text-sm">{selectedVehicle.name}</p>
-                        <p className="text-white/60 text-xs">{selectedVehicle.subtitle}</p>
+                        <p className="font-semibold">{selectedVehicle.name}</p>
+                        <p className="text-white/60 text-sm">{selectedVehicle.subtitle}</p>
                       </div>
                     </div>
                   ) : (
@@ -509,12 +513,12 @@ const ConfiguratorV2 = () => {
                 </div>
 
                 {/* Pack */}
-                <div className={`p-3 rounded-xl transition-all ${selectedPack ? 'bg-white/10' : 'bg-white/5 border border-dashed border-white/20'}`}>
-                  <p className="text-white/60 text-xs uppercase tracking-wider mb-1">Formule</p>
+                <div className={`p-4 rounded-xl transition-all ${selectedPack ? 'bg-white/10' : 'bg-white/5 border border-dashed border-white/20'}`}>
+                  <p className="text-white/60 text-xs uppercase tracking-wider mb-2">Formule</p>
                   {selectedPack ? (
                     <div>
-                      <p className="font-semibold text-sm">{selectedPack.name}</p>
-                      <p className="text-white/60 text-xs">{selectedPack.duration}</p>
+                      <p className="font-semibold">{selectedPack.name}</p>
+                      <p className="text-white/60 text-sm">{selectedPack.duration}</p>
                     </div>
                   ) : (
                     <p className="text-white/40 text-sm">Non sélectionné</p>
@@ -523,45 +527,42 @@ const ConfiguratorV2 = () => {
 
                 {/* Options */}
                 {config.options.length > 0 && (
-                  <div className="p-3 rounded-xl bg-white/10">
-                    <p className="text-white/60 text-xs uppercase tracking-wider mb-1">Options ({config.options.length})</p>
-                    <div className="space-y-1 max-h-24 overflow-hidden">
-                      {config.options.slice(0, 4).map(optId => {
+                  <div className="p-4 rounded-xl bg-white/10">
+                    <p className="text-white/60 text-xs uppercase tracking-wider mb-2">Options</p>
+                    <div className="space-y-2">
+                      {config.options.map(optId => {
                         const opt = additionalOptions.find(o => o.id === optId)
                         return (
-                          <div key={optId} className="flex items-center justify-between text-xs">
-                            <span className="truncate">{opt?.name}</span>
-                            <span className="text-white/60 ml-2">+{opt?.price}</span>
+                          <div key={optId} className="flex items-center justify-between text-sm">
+                            <span>{opt?.name}</span>
+                            <span className="text-white/60">+CHF {opt?.price}</span>
                           </div>
                         )
                       })}
-                      {config.options.length > 4 && (
-                        <p className="text-white/40 text-xs">+{config.options.length - 4} autres...</p>
-                      )}
                     </div>
                   </div>
                 )}
               </div>
 
               {/* Total & CTA */}
-              <div className="pt-4 border-t border-white/20 mt-4 flex-shrink-0">
-                <div className="flex items-end justify-between mb-4">
-                  <span className="text-white/60 text-sm">Total estimé</span>
+              <div className="pt-6 border-t border-white/20 mt-6">
+                <div className="flex items-end justify-between mb-6">
+                  <span className="text-white/60">Total estimé</span>
                   <div className="text-right">
-                    <p className="text-3xl font-bold">CHF {getPrice()}.-</p>
+                    <p className="text-4xl font-bold">CHF {getPrice()}.-</p>
                     {selectedPack && (
-                      <p className="text-white/40 text-xs">Durée: {selectedPack.duration}</p>
+                      <p className="text-white/40 text-sm">Durée: {selectedPack.duration}</p>
                     )}
                   </div>
                 </div>
 
-                <div className="flex gap-2">
+                <div className="flex gap-3">
                   {step > 1 && (
                     <button
                       onClick={prevStep}
-                      className="flex-1 flex items-center justify-center px-3 py-3 rounded-xl font-medium bg-white/10 hover:bg-white/20 transition-all text-sm"
+                      className="flex-1 flex items-center justify-center px-4 py-4 rounded-xl font-medium bg-white/10 hover:bg-white/20 transition-all"
                     >
-                      <ChevronLeft className="w-4 h-4 mr-1" />
+                      <ChevronLeft className="w-5 h-5 mr-1" />
                       Retour
                     </button>
                   )}
@@ -570,27 +571,27 @@ const ConfiguratorV2 = () => {
                     <button
                       onClick={nextStep}
                       disabled={!canProceed()}
-                      className={`flex-1 flex items-center justify-center px-3 py-3 rounded-xl font-semibold transition-all text-sm ${
+                      className={`flex-1 flex items-center justify-center px-4 py-4 rounded-xl font-semibold transition-all ${
                         canProceed()
                           ? 'bg-white text-dark-900 hover:bg-sand-100'
                           : 'bg-white/20 text-white/40 cursor-not-allowed'
                       }`}
                     >
                       Continuer
-                      <ChevronRight className="w-4 h-4 ml-1" />
+                      <ChevronRight className="w-5 h-5 ml-1" />
                     </button>
                   ) : (
                     <button
                       onClick={handleSubmit}
                       disabled={!canProceed()}
-                      className={`flex-1 flex items-center justify-center px-3 py-3 rounded-xl font-semibold transition-all text-sm ${
+                      className={`flex-1 flex items-center justify-center px-4 py-4 rounded-xl font-semibold transition-all ${
                         canProceed()
                           ? 'bg-white text-dark-900 hover:bg-sand-100'
                           : 'bg-white/20 text-white/40 cursor-not-allowed'
                       }`}
                     >
-                      <Send className="w-4 h-4 mr-2" />
-                      Envoyer
+                      <Send className="w-5 h-5 mr-2" />
+                      Envoyer la demande
                     </button>
                   )}
                 </div>
