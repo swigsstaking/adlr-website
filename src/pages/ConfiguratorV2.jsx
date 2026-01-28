@@ -495,7 +495,7 @@ const ConfiguratorV2 = () => {
                 <h2 className="text-xl font-display font-bold">Récapitulatif</h2>
               </div>
 
-              <div className="flex-1 space-y-6">
+              <div className="flex-1 space-y-6 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                 {/* Vehicle */}
                 <div className={`p-4 rounded-xl transition-all ${selectedVehicle ? 'bg-white/10' : 'bg-white/5 border border-dashed border-white/20'}`}>
                   <p className="text-white/60 text-xs uppercase tracking-wider mb-2">Véhicule</p>
