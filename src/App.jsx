@@ -3,18 +3,12 @@ import { lazy, Suspense } from 'react'
 import Layout from './components/Layout'
 
 // Lazy load pages for better performance
-const Home = lazy(() => import('./pages/Home'))
-const HomeV2 = lazy(() => import('./pages/HomeV2'))
-const HomeV3 = lazy(() => import('./pages/HomeV3'))
-const HomeV4 = lazy(() => import('./pages/HomeV4'))
+const Home = lazy(() => import('./pages/HomeV3'))
 const Services = lazy(() => import('./pages/Services'))
-const Configurator = lazy(() => import('./pages/Configurator'))
-const ConfiguratorV2 = lazy(() => import('./pages/ConfiguratorV2'))
-const Shop = lazy(() => import('./pages/Shop'))
-const ShopV2 = lazy(() => import('./pages/ShopV2'))
+const Configurator = lazy(() => import('./pages/ConfiguratorV2'))
+const Shop = lazy(() => import('./pages/ShopV2'))
 const ProductDetail = lazy(() => import('./pages/ProductDetail'))
 const Tutorials = lazy(() => import('./pages/Tutorials'))
-const TutorialsV2 = lazy(() => import('./pages/TutorialsV2'))
 const TutorialDetail = lazy(() => import('./pages/TutorialDetail'))
 const Contact = lazy(() => import('./pages/Contact'))
 
@@ -51,31 +45,21 @@ function App() {
       <Layout>
         <Suspense fallback={<PageLoader />}>
           <Routes>
-            {/* Home - V3 is default */}
-            <Route path="/" element={<HomeV3 />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/home-v2" element={<HomeV2 />} />
-            <Route path="/home-v3" element={<HomeV3 />} />
-            <Route path="/home-v4" element={<HomeV4 />} />
+            {/* Home */}
+            <Route path="/" element={<Home />} />
             {/* Services */}
             <Route path="/services" element={<Services />} />
             <Route path="/services/lavage" element={<LavageService />} />
             <Route path="/services/polish" element={<PolishService />} />
             <Route path="/services/ceramique" element={<CeramiqueService />} />
             <Route path="/services/cire" element={<CireService />} />
-            {/* Configurateur - V2 is default */}
-            <Route path="/configurateur" element={<ConfiguratorV2 />} />
-            <Route path="/configurateur-v1" element={<Configurator />} />
-            <Route path="/configurateur-v2" element={<ConfiguratorV2 />} />
-            {/* Boutique - V2 is default */}
-            <Route path="/boutique" element={<ShopV2 />} />
-            <Route path="/boutique-v1" element={<Shop />} />
-            <Route path="/boutique-v2" element={<ShopV2 />} />
+            {/* Configurateur */}
+            <Route path="/configurateur" element={<Configurator />} />
+            {/* Boutique */}
+            <Route path="/boutique" element={<Shop />} />
             <Route path="/boutique/:id" element={<ProductDetail />} />
-            {/* Tutoriels - V2 is default */}
-            <Route path="/tutoriels" element={<TutorialsV2 />} />
-            <Route path="/tutoriels-v1" element={<Tutorials />} />
-            <Route path="/tutoriels-v2" element={<TutorialsV2 />} />
+            {/* Tutoriels */}
+            <Route path="/tutoriels" element={<Tutorials />} />
             <Route path="/tutoriels/:id" element={<TutorialDetail />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/connexion" element={<Login />} />

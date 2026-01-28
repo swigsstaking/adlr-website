@@ -122,38 +122,37 @@ const ConfiguratorV2 = () => {
     <>
       <SEOHead page="configurator" />
 
-      <div className="min-h-screen bg-sand-50 pt-[72px]">
-        <div className="flex flex-col lg:flex-row min-h-[calc(100vh-72px)]">
-
-          {/* Main Content Area */}
-          <div className="flex-1 lg:max-w-[65%]">
-            {/* Header avec steps */}
-            <div className="bg-white border-b border-sand-200 px-6 py-4">
-              <div className="max-w-3xl mx-auto">
-                <div className="flex items-center justify-between mb-4">
-                  <h1 className="text-xl font-display font-bold text-dark-900">
-                    Configurateur
-                  </h1>
-                  <span className="text-sm text-dark-500">
-                    Étape {step} sur 4
-                  </span>
-                </div>
-
-                {/* Progress dots */}
-                <div className="flex items-center gap-2">
-                  {[1, 2, 3, 4].map((s) => (
-                    <div key={s} className="flex-1 flex items-center">
-                      <div
-                        className={`h-1.5 flex-1 rounded-full transition-all ${
-                          s < step ? 'bg-dark-900' : s === step ? 'bg-dark-900' : 'bg-sand-300'
-                        }`}
-                      />
-                    </div>
-                  ))}
-                </div>
-              </div>
+      <div className="min-h-screen bg-sand-50 pt-24">
+        {/* Header avec steps - Full width */}
+        <div className="bg-white border-b border-sand-200 px-6 py-4">
+          <div className="max-w-3xl">
+            <div className="flex items-center justify-between mb-4">
+              <h1 className="text-xl font-display font-bold text-dark-900">
+                Configurateur
+              </h1>
+              <span className="text-sm text-dark-500">
+                Étape {step} sur 4
+              </span>
             </div>
 
+            {/* Progress dots */}
+            <div className="flex items-center gap-2">
+              {[1, 2, 3, 4].map((s) => (
+                <div key={s} className="flex-1 flex items-center">
+                  <div
+                    className={`h-1.5 flex-1 rounded-full transition-all ${
+                      s < step ? 'bg-dark-900' : s === step ? 'bg-dark-900' : 'bg-sand-300'
+                    }`}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="flex flex-col lg:flex-row min-h-[calc(100vh-156px)]">
+          {/* Main Content Area */}
+          <div className="flex-1 lg:max-w-[65%]">
             {/* Content */}
             <div className="p-6 lg:p-10 pb-32 lg:pb-10">
               <AnimatePresence mode="wait">
@@ -483,7 +482,7 @@ const ConfiguratorV2 = () => {
           </div>
 
           {/* Sidebar - Summary (Desktop only) */}
-          <div className="hidden lg:block w-[35%] bg-dark-900 text-white sticky top-[72px] h-[calc(100vh-72px)] overflow-hidden">
+          <div className="hidden lg:block w-[35%] bg-sand-700 text-white sticky top-[156px] h-[calc(100vh-156px)] overflow-hidden">
             <div className="p-8 h-full flex flex-col">
               <div className="flex items-center gap-3 mb-8">
                 <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
