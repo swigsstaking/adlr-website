@@ -482,16 +482,16 @@ const ConfiguratorV2 = () => {
           </div>
 
           {/* Sidebar - Summary (Desktop only) */}
-          <div className="hidden lg:block w-[35%] bg-sand-700 text-white sticky top-[156px] h-[calc(100vh-156px)] overflow-hidden">
+          <div className="hidden lg:block w-[35%] bg-sand-700 text-white sticky top-24 h-[calc(100vh-96px)] overflow-hidden">
             <div className="p-8 h-full flex flex-col">
-              <div className="flex items-center gap-3 mb-8">
+              <div className="flex items-center gap-3 mb-8 flex-shrink-0">
                 <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
                   <ShoppingCart className="w-5 h-5" />
                 </div>
                 <h2 className="text-xl font-display font-bold">Récapitulatif</h2>
               </div>
 
-              <div className="flex-1 space-y-6">
+              <div className="flex-1 space-y-6 overflow-y-auto min-h-0">
                 {/* Vehicle */}
                 <div className={`p-4 rounded-xl transition-all ${selectedVehicle ? 'bg-white/10' : 'bg-white/5 border border-dashed border-white/20'}`}>
                   <p className="text-white/60 text-xs uppercase tracking-wider mb-2">Véhicule</p>
@@ -541,7 +541,7 @@ const ConfiguratorV2 = () => {
               </div>
 
               {/* Total & CTA */}
-              <div className="pt-6 border-t border-white/20 mt-6">
+              <div className="pt-6 border-t border-white/20 mt-6 flex-shrink-0">
                 <div className="flex items-end justify-between mb-6">
                   <span className="text-white/60">Total estimé</span>
                   <div className="text-right">
