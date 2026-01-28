@@ -289,7 +289,7 @@ const ShopV2 = () => {
                       {/* Image */}
                       <Link to={`/boutique/${product._id}`} className="block relative aspect-square overflow-hidden">
                         <img
-                          src={product.images?.[0]?.url || 'https://via.placeholder.com/400'}
+                          src={product.images?.[0]?.url || product.images?.[0] || 'https://via.placeholder.com/400'}
                           alt={product.name}
                           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                         />
@@ -324,11 +324,11 @@ const ShopV2 = () => {
                         <div className="flex items-center justify-between">
                           <div className="flex items-baseline gap-2">
                             <span className="text-xl font-bold text-dark-900">
-                              CHF {(product.price || 0).toFixed(2)}
+                              CHF {(product.price?.amount || product.price || 0).toFixed(2)}
                             </span>
                             {product.originalPrice && (
                               <span className="text-sm text-dark-400 line-through">
-                                CHF {product.originalPrice.toFixed(2)}
+                                CHF {(product.originalPrice?.amount || product.originalPrice || 0).toFixed(2)}
                               </span>
                             )}
                           </div>
@@ -408,26 +408,26 @@ const ShopV2 = () => {
                       {cart.map((item) => (
                         <div key={item._id} className="flex gap-4 p-4 bg-sand-50 rounded-xl">
                           <img
-                            src={item.images?.[0]?.url}
+                            src={item.images?.[0]?.url || item.images?.[0]}
                             alt={item.name}
                             className="w-20 h-20 object-cover rounded-lg"
                           />
                           <div className="flex-1">
                             <h4 className="font-medium text-dark-900 line-clamp-1">{item.name}</h4>
-                            <p className="text-dark-500 text-sm">CHF {item.price.toFixed(2)}</p>
-                            <div className="flex items-center gap-2 mt-2">
+                            <p className="text-dark-500 text-sm">CHF {(item.price?.amount || item.price || 0).toFixed(2)}</p>
+                            <div className="flex items-center gap-3 mt-2">
                               <button
                                 onClick={() => updateQuantity(item._id, item.quantity - 1)}
-                                className="w-7 h-7 rounded-full bg-white border border-sand-200 flex items-center justify-center"
+                                className="w-8 h-8 rounded-full bg-dark-900 flex items-center justify-center text-white hover:bg-dark-700 transition-colors"
                               >
-                                <Minus className="w-3 h-3" />
+                                <Minus className="w-4 h-4" />
                               </button>
-                              <span className="w-8 text-center font-medium">{item.quantity}</span>
+                              <span className="w-8 text-center font-bold text-dark-900 text-lg">{item.quantity}</span>
                               <button
                                 onClick={() => updateQuantity(item._id, item.quantity + 1)}
-                                className="w-7 h-7 rounded-full bg-white border border-sand-200 flex items-center justify-center"
+                                className="w-8 h-8 rounded-full bg-dark-900 flex items-center justify-center text-white hover:bg-dark-700 transition-colors"
                               >
-                                <Plus className="w-3 h-3" />
+                                <Plus className="w-4 h-4" />
                               </button>
                             </div>
                           </div>

@@ -31,20 +31,9 @@ const Layout = ({ children }) => {
     setOpenDropdown(null)
   }, [location])
 
-  // Navigation avec dropdowns pour les variantes
+  // Navigation
   const mainNav = [
-    {
-      name: 'Accueil',
-      path: '/',
-      hasDropdown: true,
-      dropdownKey: 'home',
-      items: [
-        { name: 'Home V3 (Principal)', path: '/' },
-        { name: 'Home V1', path: '/home' },
-        { name: 'Home V2', path: '/home-v2' },
-        { name: 'Home V4', path: '/home-v4' },
-      ]
-    },
+    { name: 'Accueil', path: '/' },
     {
       name: 'Services',
       path: '/services',
@@ -57,36 +46,9 @@ const Layout = ({ children }) => {
         { name: 'Cire', path: '/services/cire' },
       ]
     },
-    {
-      name: 'Configurateur',
-      path: '/configurateur',
-      hasDropdown: true,
-      dropdownKey: 'configurateur',
-      items: [
-        { name: 'Config V2 (Principal)', path: '/configurateur' },
-        { name: 'Config V1', path: '/configurateur-v1' },
-      ]
-    },
-    {
-      name: 'Boutique',
-      path: '/boutique',
-      hasDropdown: true,
-      dropdownKey: 'boutique',
-      items: [
-        { name: 'Boutique V2 (Principal)', path: '/boutique' },
-        { name: 'Boutique V1', path: '/boutique-v1' },
-      ]
-    },
-    {
-      name: 'Tutoriels',
-      path: '/tutoriels',
-      hasDropdown: true,
-      dropdownKey: 'tutoriels',
-      items: [
-        { name: 'Tutoriels V2 (Principal)', path: '/tutoriels' },
-        { name: 'Tutoriels V1', path: '/tutoriels-v1' },
-      ]
-    },
+    { name: 'Configurateur', path: '/configurateur' },
+    { name: 'Boutique', path: '/boutique' },
+    { name: 'Tutoriels', path: '/tutoriels' },
     { name: 'Contact', path: '/contact' },
   ]
 
@@ -106,7 +68,7 @@ const Layout = ({ children }) => {
 
             {/* Logo - Left */}
             <Link to="/" className="flex items-center">
-              <Logo className="h-10" />
+              <Logo className="h-14" />
             </Link>
 
             {/* Desktop Navigation - Center/Right */}
@@ -407,12 +369,12 @@ const Layout = ({ children }) => {
             <p className="text-dark-400 text-sm mt-2 md:mt-0">
               Site créé par{' '}
               <a
-                href="https://moontain-digital.ch/"
+                href="https://swigs.ch/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-dark-900 transition-colors"
               >
-                Moontain Digital
+                Swigs
               </a>
             </p>
           </div>
