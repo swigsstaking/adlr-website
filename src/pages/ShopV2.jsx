@@ -20,6 +20,16 @@ const ShopV2 = () => {
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false)
   const { cart, addToCart, removeFromCart, updateQuantity, getCartTotal, getCartCount, isCartOpen, setIsCartOpen } = useCart()
 
+  // Helper to check if product is in stock (considers variants)
+  const isProductInStock = (product) => {
+    // If product has variants, check if at least one variant has stock
+    if (product.variants?.length > 0) {
+      return product.variants.some(v => v.stock > 0 || v.stock === undefined)
+    }
+    // Otherwise use product-level stock
+    return product.inStock !== false && (product.stock === undefined || product.stock > 0)
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -302,7 +312,7 @@ const ShopV2 = () => {
                             {product.badge}
                           </span>
                         )}
-                        {!product.inStock && (
+                        {!isProductInStock(product) && (
                           <div className="absolute inset-0 bg-white/80 flex items-center justify-center">
                             <span className="text-dark-500 font-medium">Rupture de stock</span>
                           </div>
@@ -334,9 +344,9 @@ const ShopV2 = () => {
                           </div>
                           <button
                             onClick={() => handleAddToCart(product)}
-                            disabled={!product.inStock}
+                            disabled={!isProductInStock(product)}
                             className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${
-                              product.inStock
+                              isProductInStock(product)
                                 ? 'bg-dark-900 hover:bg-dark-800 text-white hover:scale-110'
                                 : 'bg-sand-200 text-dark-400 cursor-not-allowed'
                             }`}
