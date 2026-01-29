@@ -72,7 +72,7 @@ const HomeV2 = () => {
                   <img
                     src="https://swigs.online/uploads/adlr/1769542860754-268933200.webp"
                     alt="ADLR Cosmetic Auto"
-                    className="h-28 sm:h-32 md:h-36 lg:h-44 w-auto -ml-3"
+                    className="h-28 sm:h-32 md:h-36 lg:h-44 w-auto -ml-8 origin-top-left scale-125 lg:scale-[1.35]"
                   />
                 </div>
 
