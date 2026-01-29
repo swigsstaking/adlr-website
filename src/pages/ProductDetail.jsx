@@ -357,7 +357,7 @@ const ProductDetail = () => {
                 )}
 
                 {/* Description */}
-                <p className="text-dark-600 text-lg mb-6">
+                <p className="text-dark-600 text-lg mb-6 whitespace-pre-line">
                   {product.description}
                 </p>
 
@@ -445,19 +445,15 @@ const ProductDetail = () => {
           </div>
         </section>
 
-        {/* Long Description */}
-        {product.longDescription && (
+        {/* Instructions / Mode d'emploi */}
+        {product.instructions && (
           <section className="py-12 bg-sand-50">
             <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
               <h2 className="text-2xl font-display font-bold text-dark-900 mb-6">
-                Description détaillée
+                Mode d'emploi
               </h2>
-              <div className="prose prose-dark max-w-none">
-                {product.longDescription.split('\n').map((paragraph, i) => (
-                  <p key={i} className="text-dark-600 mb-4 whitespace-pre-line">
-                    {paragraph}
-                  </p>
-                ))}
+              <div className="prose prose-dark max-w-none text-dark-600 whitespace-pre-line">
+                {product.instructions}
               </div>
             </div>
           </section>
