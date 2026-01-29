@@ -3,8 +3,7 @@ import { lazy, Suspense } from 'react'
 import Layout from './components/Layout'
 
 // Lazy load pages for better performance
-const Home = lazy(() => import('./pages/HomeV3'))
-const HomeV2 = lazy(() => import('./pages/HomeV2'))
+const Home = lazy(() => import('./pages/HomeV2'))
 const Services = lazy(() => import('./pages/Services'))
 const Configurator = lazy(() => import('./pages/ConfiguratorV2'))
 const Shop = lazy(() => import('./pages/ShopV2'))
@@ -48,7 +47,6 @@ function App() {
           <Routes>
             {/* Home */}
             <Route path="/" element={<Home />} />
-            <Route path="/home-v2" element={<HomeV2 />} />
             {/* Services */}
             <Route path="/services" element={<Services />} />
             <Route path="/services/lavage" element={<LavageService />} />

@@ -29,20 +29,13 @@ const Layout = ({ children }) => {
   useEffect(() => {
     setIsMenuOpen(false)
     setOpenDropdown(null)
+    // Scroll to top on route change
+    window.scrollTo(0, 0)
   }, [location])
 
   // Navigation
   const mainNav = [
-    {
-      name: 'Accueil',
-      path: '/',
-      hasDropdown: true,
-      dropdownKey: 'accueil',
-      items: [
-        { name: 'V1 (Actuelle)', path: '/' },
-        { name: 'V2 (Test)', path: '/home-v2' },
-      ]
-    },
+    { name: 'Accueil', path: '/' },
     {
       name: 'Services',
       path: '/services',

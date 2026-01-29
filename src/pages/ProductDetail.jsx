@@ -19,9 +19,21 @@ const ProductDetail = () => {
   const [addedToCart, setAddedToCart] = useState(false)
   const { addToCart } = useCart()
 
+  // Auto-select first variant when product loads
+  useEffect(() => {
+    if (product?.variants?.length > 0 && !selectedVariant) {
+      setSelectedVariant(product.variants[0])
+    }
+  }, [product])
+
   // Get current price/image based on variant selection
   const currentPrice = selectedVariant?.price || product?.price?.amount || product?.price || 0
   const currentImage = selectedVariant?.image || product?.images?.[selectedImage]?.url || product?.images?.[selectedImage] || product?.images?.[0]?.url || product?.images?.[0]
+
+  // Check stock availability - use variant stock if variant selected, otherwise product stock
+  const isInStock = selectedVariant
+    ? (selectedVariant.stock > 0 || selectedVariant.stock === undefined)
+    : (product?.stock > 0 || product?.inStock !== false)
 
   // Demo products for fallback
   const demoProducts = [
@@ -380,7 +392,7 @@ const ProductDetail = () => {
 
                   <button
                     onClick={() => {
-                      if (product.inStock !== false) {
+                      if (isInStock) {
                         // Include variant info in cart item
                         const cartItem = selectedVariant
                           ? { ...product, selectedVariant, price: { amount: selectedVariant.price || product.price?.amount } }
@@ -390,11 +402,11 @@ const ProductDetail = () => {
                         setTimeout(() => setAddedToCart(false), 2000)
                       }
                     }}
-                    disabled={!product.inStock}
+                    disabled={!isInStock}
                     className={`flex-1 flex items-center justify-center gap-3 px-8 py-4 rounded-xl font-semibold transition-all ${
                       addedToCart
                         ? 'bg-green-600 text-white'
-                        : product.inStock
+                        : isInStock
                         ? 'bg-dark-900 hover:bg-dark-800 text-white'
                         : 'bg-sand-200 text-dark-400 cursor-not-allowed'
                     }`}
@@ -407,7 +419,7 @@ const ProductDetail = () => {
                     ) : (
                       <>
                         <ShoppingCart className="w-5 h-5" />
-                        {product.inStock ? 'Ajouter au panier' : 'Rupture de stock'}
+                        {isInStock ? 'Ajouter au panier' : 'Rupture de stock'}
                       </>
                     )}
                   </button>
