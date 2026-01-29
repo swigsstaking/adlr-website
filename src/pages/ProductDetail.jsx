@@ -14,9 +14,14 @@ const ProductDetail = () => {
   const [loading, setLoading] = useState(true)
   const [quantity, setQuantity] = useState(1)
   const [selectedImage, setSelectedImage] = useState(0)
+  const [selectedVariant, setSelectedVariant] = useState(null)
   const [relatedProducts, setRelatedProducts] = useState([])
   const [addedToCart, setAddedToCart] = useState(false)
   const { addToCart } = useCart()
+
+  // Get current price/image based on variant selection
+  const currentPrice = selectedVariant?.price || product?.price?.amount || product?.price || 0
+  const currentImage = selectedVariant?.image || product?.images?.[selectedImage]?.url || product?.images?.[selectedImage] || product?.images?.[0]?.url || product?.images?.[0]
 
   // Demo products for fallback
   const demoProducts = [
@@ -255,7 +260,7 @@ const ProductDetail = () => {
                   className="relative aspect-square rounded-3xl overflow-hidden bg-sand-100 mb-4"
                 >
                   <img
-                    src={product.images?.[selectedImage]?.url || product.images?.[selectedImage] || product.images?.[0]?.url || product.images?.[0]}
+                    src={currentImage}
                     alt={product.name}
                     className="w-full h-full object-cover"
                   />
@@ -301,7 +306,7 @@ const ProductDetail = () => {
                 {/* Price */}
                 <div className="flex items-baseline gap-3 mb-6">
                   <span className="text-4xl font-bold text-dark-900">
-                    CHF {Number(product.price?.amount ?? product.price ?? 0).toFixed(2)}
+                    CHF {Number(currentPrice).toFixed(2)}
                   </span>
                   {product.originalPrice && (
                     <span className="text-xl text-dark-400 line-through">
@@ -309,6 +314,35 @@ const ProductDetail = () => {
                     </span>
                   )}
                 </div>
+
+                {/* Variants Selector */}
+                {product.variants?.length > 0 && (
+                  <div className="mb-6">
+                    <label className="block text-sm font-semibold text-dark-700 mb-3">
+                      Variante
+                    </label>
+                    <div className="flex flex-wrap gap-2">
+                      {product.variants.map((variant, index) => (
+                        <button
+                          key={index}
+                          onClick={() => setSelectedVariant(selectedVariant?.name === variant.name ? null : variant)}
+                          className={`px-4 py-2 rounded-xl border-2 font-medium transition-all ${
+                            selectedVariant?.name === variant.name
+                              ? 'border-dark-900 bg-dark-900 text-white'
+                              : 'border-sand-300 hover:border-dark-400 text-dark-700'
+                          }`}
+                        >
+                          {variant.name}
+                          {variant.price && (
+                            <span className="ml-2 text-sm opacity-75">
+                              CHF {Number(variant.price).toFixed(2)}
+                            </span>
+                          )}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
 
                 {/* Description */}
                 <p className="text-dark-600 text-lg mb-6">
@@ -346,8 +380,12 @@ const ProductDetail = () => {
 
                   <button
                     onClick={() => {
-                      if (product.inStock) {
-                        addToCart(product, quantity)
+                      if (product.inStock !== false) {
+                        // Include variant info in cart item
+                        const cartItem = selectedVariant
+                          ? { ...product, selectedVariant, price: { amount: selectedVariant.price || product.price?.amount } }
+                          : product
+                        addToCart(cartItem, quantity)
                         setAddedToCart(true)
                         setTimeout(() => setAddedToCart(false), 2000)
                       }
