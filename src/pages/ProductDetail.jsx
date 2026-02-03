@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Plus, Minus, ShoppingCart, ChevronLeft, Truck, Shield, RotateCcw, Package, Check } from 'lucide-react'
+import { Plus, Minus, ShoppingCart, ChevronLeft, Truck, Shield, RotateCcw, Package, Check, Bell, Mail, Loader2 } from 'lucide-react'
 import SEOHead from '../components/SEOHead'
 import { useCart } from '../context/CartContext'
 
@@ -17,6 +17,11 @@ const ProductDetail = () => {
   const [selectedVariant, setSelectedVariant] = useState(null)
   const [relatedProducts, setRelatedProducts] = useState([])
   const [addedToCart, setAddedToCart] = useState(false)
+  const [siteId, setSiteId] = useState(null)
+  const [alertEmail, setAlertEmail] = useState('')
+  const [alertSubmitting, setAlertSubmitting] = useState(false)
+  const [alertSuccess, setAlertSuccess] = useState(false)
+  const [alertError, setAlertError] = useState('')
   const { addToCart } = useCart()
 
   // Auto-select first variant when product loads
@@ -34,6 +39,55 @@ const ProductDetail = () => {
   const isInStock = selectedVariant
     ? (selectedVariant.stock > 0 || selectedVariant.stock === undefined)
     : (product?.stock > 0 || product?.inStock !== false)
+
+  // Can add to cart: only if in stock
+  const hasVariants = product?.variants?.length > 0
+  const canAddToCart = hasVariants
+    ? selectedVariant && (selectedVariant.stock > 0 || selectedVariant.stock === undefined)
+    : isInStock // Products without variants can only be added if in stock
+
+  // Handler for stock alert subscription
+  const handleStockAlert = async (e) => {
+    e.preventDefault()
+    if (!alertEmail || !siteId || !product?._id) return
+
+    // Validate email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(alertEmail)) {
+      setAlertError('Veuillez entrer une adresse email valide')
+      return
+    }
+
+    setAlertSubmitting(true)
+    setAlertError('')
+
+    try {
+      const response = await fetch(`${API_URL}/stock-alerts/subscribe`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          siteId,
+          productId: product._id,
+          variantId: selectedVariant?._id || null,
+          email: alertEmail,
+        }),
+      })
+
+      const data = await response.json()
+
+      if (data.success) {
+        setAlertSuccess(true)
+        setAlertEmail('')
+      } else {
+        setAlertError(data.message || 'Une erreur est survenue')
+      }
+    } catch (error) {
+      console.error('Stock alert error:', error)
+      setAlertError('Une erreur est survenue. Veuillez réessayer.')
+    } finally {
+      setAlertSubmitting(false)
+    }
+  }
 
   // Demo products for fallback
   const demoProducts = [
@@ -182,8 +236,9 @@ const ProductDetail = () => {
         const siteData = await siteRes.json()
 
         if (siteData.success && siteData.data?._id) {
-          const siteId = siteData.data._id
-          const productRes = await fetch(`${API_URL}/products/public/${id}?siteId=${siteId}`)
+          const fetchedSiteId = siteData.data._id
+          setSiteId(fetchedSiteId)
+          const productRes = await fetch(`${API_URL}/products/public/${id}?siteId=${fetchedSiteId}`)
           const productData = await productRes.json()
 
           if (productData.success) {
@@ -392,7 +447,7 @@ const ProductDetail = () => {
 
                   <button
                     onClick={() => {
-                      if (isInStock) {
+                      if (canAddToCart) {
                         // Include variant info in cart item
                         const cartItem = selectedVariant
                           ? { ...product, selectedVariant, price: { amount: selectedVariant.price || product.price?.amount } }
@@ -402,11 +457,11 @@ const ProductDetail = () => {
                         setTimeout(() => setAddedToCart(false), 2000)
                       }
                     }}
-                    disabled={!isInStock}
+                    disabled={!canAddToCart}
                     className={`flex-1 flex items-center justify-center gap-3 px-8 py-4 rounded-xl font-semibold transition-all ${
                       addedToCart
                         ? 'bg-green-600 text-white'
-                        : isInStock
+                        : canAddToCart
                         ? 'bg-dark-900 hover:bg-dark-800 text-white'
                         : 'bg-sand-200 text-dark-400 cursor-not-allowed'
                     }`}
@@ -416,14 +471,65 @@ const ProductDetail = () => {
                         <Check className="w-5 h-5" />
                         Ajouté au panier !
                       </>
+                    ) : canAddToCart ? (
+                      <>
+                        <ShoppingCart className="w-5 h-5" />
+                        Ajouter au panier
+                      </>
                     ) : (
                       <>
                         <ShoppingCart className="w-5 h-5" />
-                        {isInStock ? 'Ajouter au panier' : 'Rupture de stock'}
+                        {hasVariants && !selectedVariant ? 'Sélectionnez une variante' : 'Rupture de stock'}
                       </>
                     )}
                   </button>
                 </div>
+
+                {/* Stock Alert Form - Show when product is out of stock */}
+                {!isInStock && (
+                  <div className="mb-8 p-4 bg-amber-50 border border-amber-200 rounded-xl">
+                    {alertSuccess ? (
+                      <div className="flex items-center gap-3 text-green-700">
+                        <Check className="w-5 h-5 flex-shrink-0" />
+                        <p className="font-medium">Vous serez notifié dès que le produit sera de nouveau disponible !</p>
+                      </div>
+                    ) : (
+                      <>
+                        <div className="flex items-center gap-2 mb-3">
+                          <Bell className="w-5 h-5 text-amber-600" />
+                          <p className="font-medium text-dark-900">Être alerté du retour en stock</p>
+                        </div>
+                        <form onSubmit={handleStockAlert} className="flex gap-2">
+                          <div className="relative flex-1">
+                            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-dark-400" />
+                            <input
+                              type="email"
+                              value={alertEmail}
+                              onChange={(e) => setAlertEmail(e.target.value)}
+                              placeholder="Votre email"
+                              className="w-full pl-10 pr-4 py-2.5 border border-sand-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                              required
+                            />
+                          </div>
+                          <button
+                            type="submit"
+                            disabled={alertSubmitting}
+                            className="px-4 py-2.5 bg-dark-900 hover:bg-dark-800 text-white font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                          >
+                            {alertSubmitting ? (
+                              <Loader2 className="w-4 h-4 animate-spin" />
+                            ) : (
+                              'M\'alerter'
+                            )}
+                          </button>
+                        </form>
+                        {alertError && (
+                          <p className="text-red-600 text-sm mt-2">{alertError}</p>
+                        )}
+                      </>
+                    )}
+                  </div>
+                )}
 
                 {/* Trust badges */}
                 <div className="grid grid-cols-3 gap-4 p-4 bg-sand-50 rounded-2xl">

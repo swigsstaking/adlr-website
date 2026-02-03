@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ShoppingCart, Search, Plus, Package, X, Minus, ArrowRight, Filter } from 'lucide-react'
+import { ShoppingCart, Search, Plus, Package, X, Minus, ArrowRight, Filter, ChevronDown, Bell, Mail, Loader2, Check } from 'lucide-react'
 import SEOHead from '../components/SEOHead'
 import { useCart } from '../context/CartContext'
 
@@ -17,7 +17,16 @@ const ShopV2 = () => {
   const [loading, setLoading] = useState(true)
   const [selectedCategory, setSelectedCategory] = useState('all')
   const [searchQuery, setSearchQuery] = useState('')
+  const [sortOption, setSortOption] = useState('pertinence')
+  const [selectedBrand, setSelectedBrand] = useState('all')
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false)
+  const [siteId, setSiteId] = useState(null)
+  // Stock alert modal state
+  const [stockAlertProduct, setStockAlertProduct] = useState(null)
+  const [alertEmail, setAlertEmail] = useState('')
+  const [alertSubmitting, setAlertSubmitting] = useState(false)
+  const [alertSuccess, setAlertSuccess] = useState(false)
+  const [alertError, setAlertError] = useState('')
   const { cart, addToCart, removeFromCart, updateQuantity, getCartTotal, getCartCount, isCartOpen, setIsCartOpen } = useCart()
 
   // Helper to check if product is in stock (considers variants)
@@ -37,10 +46,11 @@ const ShopV2 = () => {
         const siteData = await siteRes.json()
 
         if (siteData.success && siteData.data?._id) {
-          const siteId = siteData.data._id
+          const fetchedSiteId = siteData.data._id
+          setSiteId(fetchedSiteId)
           const [productsRes, categoriesRes] = await Promise.all([
-            fetch(`${API_URL}/products/public?siteId=${siteId}`),
-            fetch(`${API_URL}/categories/public?siteId=${siteId}`)
+            fetch(`${API_URL}/products/public?siteId=${fetchedSiteId}`),
+            fetch(`${API_URL}/categories/public?siteId=${fetchedSiteId}`)
           ])
 
           const productsData = await productsRes.json()
@@ -167,15 +177,130 @@ const ShopV2 = () => {
   const displayProducts = products.length > 0 ? products : demoProducts
   const displayCategories = categories.length > 0 ? categories : demoCategories
 
-  const filteredProducts = displayProducts.filter(product => {
-    const matchesCategory = selectedCategory === 'all' || product.category?.name === selectedCategory
-    const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase())
-    return matchesCategory && matchesSearch
-  })
+  // Get the selected category object (for description display)
+  const selectedCategoryObj = useMemo(() => {
+    if (selectedCategory === 'all') return null
+    return displayCategories.find(cat => cat.name === selectedCategory) || null
+  }, [selectedCategory, displayCategories])
+
+  // Extraire les marques uniques
+  const uniqueBrands = useMemo(() => {
+    const brands = displayProducts
+      .map(p => p.brand?.name || p.brand)
+      .filter(Boolean)
+    return [...new Set(brands)].sort()
+  }, [displayProducts])
+
+  const filteredProducts = useMemo(() => {
+    let result = displayProducts.filter(product => {
+      const matchesCategory = selectedCategory === 'all' || product.category?.name === selectedCategory
+      const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase())
+      const matchesBrand = selectedBrand === 'all' || product.brand?.name === selectedBrand || product.brand === selectedBrand
+      return matchesCategory && matchesSearch && matchesBrand
+    })
+
+    // Tri
+    switch (sortOption) {
+      case 'prix-asc':
+        result = [...result].sort((a, b) => {
+          const priceA = a.price?.amount || a.price || 0
+          const priceB = b.price?.amount || b.price || 0
+          return priceA - priceB
+        })
+        break
+      case 'prix-desc':
+        result = [...result].sort((a, b) => {
+          const priceA = a.price?.amount || a.price || 0
+          const priceB = b.price?.amount || b.price || 0
+          return priceB - priceA
+        })
+        break
+      case 'nom-asc':
+        result = [...result].sort((a, b) => a.name.localeCompare(b.name))
+        break
+      case 'nom-desc':
+        result = [...result].sort((a, b) => b.name.localeCompare(a.name))
+        break
+      case 'nouveau':
+        result = [...result].sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0))
+        break
+      case 'pertinence':
+      default:
+        // Ordre par défaut : produits en stock en premier, puis par badge/popularité
+        result = [...result].sort((a, b) => {
+          const aInStock = a.inStock !== false && (a.stock === undefined || a.stock > 0)
+          const bInStock = b.inStock !== false && (b.stock === undefined || b.stock > 0)
+          if (aInStock !== bInStock) return bInStock - aInStock
+          // Produits avec badge en premier
+          if (a.badge && !b.badge) return -1
+          if (!a.badge && b.badge) return 1
+          return 0
+        })
+        break
+    }
+
+    return result
+  }, [displayProducts, selectedCategory, searchQuery, selectedBrand, sortOption])
 
   const handleAddToCart = (product) => {
+    // If out of stock, show alert modal instead
+    if (!isProductInStock(product)) {
+      setStockAlertProduct(product)
+      setAlertSuccess(false)
+      setAlertEmail('')
+      setAlertError('')
+      return
+    }
     addToCart(product)
     setIsCartOpen(true)
+  }
+
+  // Handler for stock alert subscription
+  const handleStockAlert = async (e) => {
+    e.preventDefault()
+    if (!alertEmail || !siteId || !stockAlertProduct?._id) return
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(alertEmail)) {
+      setAlertError('Veuillez entrer une adresse email valide')
+      return
+    }
+
+    setAlertSubmitting(true)
+    setAlertError('')
+
+    try {
+      const response = await fetch(`${API_URL}/stock-alerts/subscribe`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          siteId,
+          productId: stockAlertProduct._id,
+          email: alertEmail,
+        }),
+      })
+
+      const data = await response.json()
+
+      if (data.success) {
+        setAlertSuccess(true)
+        setAlertEmail('')
+      } else {
+        setAlertError(data.message || 'Une erreur est survenue')
+      }
+    } catch (error) {
+      console.error('Stock alert error:', error)
+      setAlertError('Une erreur est survenue. Veuillez réessayer.')
+    } finally {
+      setAlertSubmitting(false)
+    }
+  }
+
+  const closeStockAlertModal = () => {
+    setStockAlertProduct(null)
+    setAlertSuccess(false)
+    setAlertEmail('')
+    setAlertError('')
   }
 
   const cartTotal = getCartTotal()
@@ -265,10 +390,60 @@ const ShopV2 = () => {
 
             {/* Products Grid */}
             <div className="flex-1">
-              <div className="flex items-center justify-between mb-6">
+              {/* Category Header with Description */}
+              {selectedCategoryObj && (
+                <div className="mb-6 pb-6 border-b border-sand-200">
+                  <h2 className="text-2xl font-display font-bold text-dark-900 mb-2">
+                    {selectedCategoryObj.name}
+                  </h2>
+                  {selectedCategoryObj.description && (
+                    <p className="text-dark-500 leading-relaxed">
+                      {selectedCategoryObj.description}
+                    </p>
+                  )}
+                </div>
+              )}
+
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
                 <p className="text-dark-500">
                   {filteredProducts.length} produit{filteredProducts.length > 1 ? 's' : ''}
                 </p>
+
+                <div className="flex items-center gap-3">
+                  {/* Filtre par marque */}
+                  {uniqueBrands.length > 0 && (
+                    <div className="relative">
+                      <select
+                        value={selectedBrand}
+                        onChange={(e) => setSelectedBrand(e.target.value)}
+                        className="appearance-none bg-white border border-sand-200 rounded-xl px-4 py-2.5 pr-10 text-dark-700 text-sm font-medium focus:outline-none focus:border-dark-400 transition-colors cursor-pointer"
+                      >
+                        <option value="all">Toutes les marques</option>
+                        {uniqueBrands.map(brand => (
+                          <option key={brand} value={brand}>{brand}</option>
+                        ))}
+                      </select>
+                      <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-dark-400 pointer-events-none" />
+                    </div>
+                  )}
+
+                  {/* Tri */}
+                  <div className="relative">
+                    <select
+                      value={sortOption}
+                      onChange={(e) => setSortOption(e.target.value)}
+                      className="appearance-none bg-white border border-sand-200 rounded-xl px-4 py-2.5 pr-10 text-dark-700 text-sm font-medium focus:outline-none focus:border-dark-400 transition-colors cursor-pointer"
+                    >
+                      <option value="pertinence">Pertinence</option>
+                      <option value="prix-asc">Prix croissant</option>
+                      <option value="prix-desc">Prix décroissant</option>
+                      <option value="nom-asc">Nom A-Z</option>
+                      <option value="nom-desc">Nom Z-A</option>
+                      <option value="nouveau">Nouveautés</option>
+                    </select>
+                    <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-dark-400 pointer-events-none" />
+                  </div>
+                </div>
               </div>
 
               {loading ? (
@@ -326,10 +501,18 @@ const ShopV2 = () => {
                         </span>
 
                         <Link to={`/boutique/${product._id}`}>
-                          <h3 className="text-dark-900 font-semibold mt-1 mb-3 line-clamp-1 group-hover:text-primary-600 transition-colors">
+                          <h3 className="text-dark-900 font-semibold mt-1 group-hover:text-primary-600 transition-colors line-clamp-1">
                             {product.name}
                           </h3>
                         </Link>
+
+                        {/* Short description */}
+                        {product.shortDescription && (
+                          <p className="text-dark-400 text-sm mt-1 mb-3 line-clamp-2">
+                            {product.shortDescription}
+                          </p>
+                        )}
+                        {!product.shortDescription && <div className="mb-3" />}
 
                         <div className="flex items-center justify-between">
                           <div className="flex items-baseline gap-2">
@@ -344,14 +527,14 @@ const ShopV2 = () => {
                           </div>
                           <button
                             onClick={() => handleAddToCart(product)}
-                            disabled={!isProductInStock(product)}
                             className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${
                               isProductInStock(product)
                                 ? 'bg-dark-900 hover:bg-dark-800 text-white hover:scale-110'
-                                : 'bg-sand-200 text-dark-400 cursor-not-allowed'
+                                : 'bg-amber-500 hover:bg-amber-600 text-white hover:scale-110'
                             }`}
+                            title={isProductInStock(product) ? 'Ajouter au panier' : 'Me prévenir du retour en stock'}
                           >
-                            <Plus className="w-5 h-5" />
+                            {isProductInStock(product) ? <Plus className="w-5 h-5" /> : <Bell className="w-5 h-5" />}
                           </button>
                         </div>
                       </div>
@@ -490,32 +673,206 @@ const ShopV2 = () => {
               >
                 <div className="p-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))]">
                   <div className="flex items-center justify-between mb-6">
-                    <h3 className="text-lg font-bold text-dark-900">Catégories</h3>
+                    <h3 className="text-lg font-bold text-dark-900">Filtres</h3>
                     <button onClick={() => setIsMobileFilterOpen(false)}>
                       <X className="w-6 h-6" />
                     </button>
                   </div>
-                  <div className="space-y-2">
-                    <button
-                      onClick={() => { setSelectedCategory('all'); setIsMobileFilterOpen(false) }}
-                      className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-left ${
-                        selectedCategory === 'all' ? 'bg-dark-900 text-white' : 'bg-sand-100 text-dark-600'
-                      }`}
-                    >
-                      <span>Tous les produits</span>
-                    </button>
-                    {displayCategories.map((cat) => (
+
+                  {/* Tri */}
+                  <div className="mb-6">
+                    <h4 className="text-sm font-semibold text-dark-700 uppercase tracking-wider mb-3">Trier par</h4>
+                    <div className="grid grid-cols-2 gap-2">
+                      {[
+                        { value: 'pertinence', label: 'Pertinence' },
+                        { value: 'prix-asc', label: 'Prix ↑' },
+                        { value: 'prix-desc', label: 'Prix ↓' },
+                        { value: 'nom-asc', label: 'Nom A-Z' },
+                        { value: 'nom-desc', label: 'Nom Z-A' },
+                        { value: 'nouveau', label: 'Nouveautés' },
+                      ].map((option) => (
+                        <button
+                          key={option.value}
+                          onClick={() => setSortOption(option.value)}
+                          className={`px-4 py-2.5 rounded-xl text-sm font-medium transition-colors ${
+                            sortOption === option.value
+                              ? 'bg-dark-900 text-white'
+                              : 'bg-sand-100 text-dark-600'
+                          }`}
+                        >
+                          {option.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Marques */}
+                  {uniqueBrands.length > 0 && (
+                    <div className="mb-6">
+                      <h4 className="text-sm font-semibold text-dark-700 uppercase tracking-wider mb-3">Marques</h4>
+                      <div className="flex flex-wrap gap-2">
+                        <button
+                          onClick={() => setSelectedBrand('all')}
+                          className={`px-4 py-2.5 rounded-xl text-sm font-medium transition-colors ${
+                            selectedBrand === 'all'
+                              ? 'bg-dark-900 text-white'
+                              : 'bg-sand-100 text-dark-600'
+                          }`}
+                        >
+                          Toutes
+                        </button>
+                        {uniqueBrands.map((brand) => (
+                          <button
+                            key={brand}
+                            onClick={() => setSelectedBrand(brand)}
+                            className={`px-4 py-2.5 rounded-xl text-sm font-medium transition-colors ${
+                              selectedBrand === brand
+                                ? 'bg-dark-900 text-white'
+                                : 'bg-sand-100 text-dark-600'
+                            }`}
+                          >
+                            {brand}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Catégories */}
+                  <div>
+                    <h4 className="text-sm font-semibold text-dark-700 uppercase tracking-wider mb-3">Catégories</h4>
+                    <div className="space-y-2">
                       <button
-                        key={cat._id}
-                        onClick={() => { setSelectedCategory(cat.name); setIsMobileFilterOpen(false) }}
+                        onClick={() => { setSelectedCategory('all'); setIsMobileFilterOpen(false) }}
                         className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-left ${
-                          selectedCategory === cat.name ? 'bg-dark-900 text-white' : 'bg-sand-100 text-dark-600'
+                          selectedCategory === 'all' ? 'bg-dark-900 text-white' : 'bg-sand-100 text-dark-600'
                         }`}
                       >
-                        <span>{cat.name}</span>
+                        <span>Tous les produits</span>
                       </button>
-                    ))}
+                      {displayCategories.map((cat) => (
+                        <button
+                          key={cat._id}
+                          onClick={() => { setSelectedCategory(cat.name); setIsMobileFilterOpen(false) }}
+                          className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-left ${
+                            selectedCategory === cat.name ? 'bg-dark-900 text-white' : 'bg-sand-100 text-dark-600'
+                          }`}
+                        >
+                          <span>{cat.name}</span>
+                        </button>
+                      ))}
+                    </div>
                   </div>
+                </div>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
+
+        {/* Stock Alert Modal */}
+        <AnimatePresence>
+          {stockAlertProduct && (
+            <>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={closeStockAlertModal}
+                className="fixed inset-0 bg-dark-900/50 z-50"
+              />
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                className="fixed inset-0 z-50 flex items-center justify-center p-4"
+              >
+                <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-lg font-display font-bold text-dark-900">
+                      Rupture de stock
+                    </h3>
+                    <button
+                      onClick={closeStockAlertModal}
+                      className="w-8 h-8 rounded-full bg-sand-100 flex items-center justify-center hover:bg-sand-200 transition-colors"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
+
+                  {/* Product info */}
+                  <div className="flex gap-4 mb-6 p-3 bg-sand-50 rounded-xl">
+                    <img
+                      src={stockAlertProduct.images?.[0]?.url || stockAlertProduct.images?.[0] || 'https://via.placeholder.com/80'}
+                      alt={stockAlertProduct.name}
+                      className="w-16 h-16 object-cover rounded-lg"
+                    />
+                    <div>
+                      <p className="font-medium text-dark-900 line-clamp-2">{stockAlertProduct.name}</p>
+                      <p className="text-dark-500 text-sm">Indisponible actuellement</p>
+                    </div>
+                  </div>
+
+                  {alertSuccess ? (
+                    <div className="text-center py-4">
+                      <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <Check className="w-6 h-6 text-green-600" />
+                      </div>
+                      <p className="font-medium text-dark-900 mb-1">C'est noté !</p>
+                      <p className="text-dark-500 text-sm">Vous serez notifié dès que ce produit sera de nouveau disponible.</p>
+                      <button
+                        onClick={closeStockAlertModal}
+                        className="mt-4 px-6 py-2.5 bg-dark-900 hover:bg-dark-800 text-white font-medium rounded-xl transition-colors"
+                      >
+                        Fermer
+                      </button>
+                    </div>
+                  ) : (
+                    <>
+                      <div className="flex items-center gap-2 mb-3 text-amber-600">
+                        <Bell className="w-5 h-5" />
+                        <p className="font-medium">Être alerté du retour en stock</p>
+                      </div>
+                      <p className="text-dark-500 text-sm mb-4">
+                        Entrez votre email pour recevoir une notification dès que ce produit sera de nouveau disponible.
+                      </p>
+                      <form onSubmit={handleStockAlert}>
+                        <div className="relative mb-4">
+                          <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-dark-400" />
+                          <input
+                            type="email"
+                            value={alertEmail}
+                            onChange={(e) => setAlertEmail(e.target.value)}
+                            placeholder="Votre adresse email"
+                            className="w-full pl-12 pr-4 py-3 border border-sand-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                            required
+                          />
+                        </div>
+                        {alertError && (
+                          <p className="text-red-600 text-sm mb-4">{alertError}</p>
+                        )}
+                        <div className="flex gap-3">
+                          <button
+                            type="button"
+                            onClick={closeStockAlertModal}
+                            className="flex-1 px-4 py-3 border border-sand-300 text-dark-700 font-medium rounded-xl hover:bg-sand-50 transition-colors"
+                          >
+                            Annuler
+                          </button>
+                          <button
+                            type="submit"
+                            disabled={alertSubmitting}
+                            className="flex-1 px-4 py-3 bg-dark-900 hover:bg-dark-800 text-white font-medium rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                          >
+                            {alertSubmitting ? (
+                              <Loader2 className="w-5 h-5 animate-spin" />
+                            ) : (
+                              "M'alerter"
+                            )}
+                          </button>
+                        </div>
+                      </form>
+                    </>
+                  )}
                 </div>
               </motion.div>
             </>
