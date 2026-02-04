@@ -1,13 +1,16 @@
 import { useState } from 'react'
-import { Link, useNavigate, useLocation } from 'react-router-dom'
+import { Link, useNavigate, useLocation, useParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Mail, Lock, Eye, EyeOff, ArrowRight, AlertCircle } from 'lucide-react'
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google'
+import { useTranslation } from 'react-i18next'
 import { useAuth } from '../context/AuthContext'
 import { useGoogleOAuth } from '../hooks/useGoogleOAuth'
 import SEOHead from '../components/SEOHead'
 
 const LoginForm = () => {
+  const { lang } = useParams()
+  const { t } = useTranslation('auth')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
@@ -19,7 +22,10 @@ const LoginForm = () => {
   const navigate = useNavigate()
   const location = useLocation()
 
-  const from = location.state?.from?.pathname || '/compte'
+  // Helper for localized paths
+  const localePath = (path) => `/${lang}${path}`
+
+  const from = location.state?.from?.pathname || localePath('/compte')
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -30,7 +36,7 @@ const LoginForm = () => {
       await login({ email, password })
       navigate(from, { replace: true })
     } catch (err) {
-      setError(err.message || 'Erreur de connexion')
+      setError(err.message || t('errors.loginError'))
     } finally {
       setLoading(false)
     }
@@ -44,24 +50,24 @@ const LoginForm = () => {
       await loginWithGoogle(credentialResponse.credential)
       navigate(from, { replace: true })
     } catch (err) {
-      setError(err.message || 'Erreur de connexion Google')
+      setError(err.message || t('errors.googleLoginError'))
     } finally {
       setLoading(false)
     }
   }
 
   const handleGoogleError = () => {
-    setError('Erreur lors de la connexion Google')
+    setError(t('errors.googleLoginError'))
   }
 
   return (
     <div className="w-full max-w-md mx-auto">
       <div className="text-center mb-8">
         <h1 className="text-3xl font-display font-bold text-dark-900 mb-2">
-          Connexion
+          {t('login.title')}
         </h1>
         <p className="text-dark-500">
-          Accédez à votre compte pour suivre vos commandes
+          {t('login.subtitle')}
         </p>
       </div>
 
@@ -79,7 +85,7 @@ const LoginForm = () => {
       <form onSubmit={handleSubmit} className="space-y-5">
         <div>
           <label htmlFor="email" className="block text-sm font-medium text-dark-700 mb-2">
-            Email
+            {t('login.email')}
           </label>
           <div className="relative">
             <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-dark-400" />
@@ -89,7 +95,7 @@ const LoginForm = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full pl-12 pr-4 py-3 border border-sand-300 rounded-xl focus:ring-2 focus:ring-dark-900 focus:border-dark-900 transition-all"
-              placeholder="votre@email.ch"
+              placeholder={t('login.emailPlaceholder')}
               required
             />
           </div>
@@ -97,7 +103,7 @@ const LoginForm = () => {
 
         <div>
           <label htmlFor="password" className="block text-sm font-medium text-dark-700 mb-2">
-            Mot de passe
+            {t('login.password')}
           </label>
           <div className="relative">
             <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-dark-400" />
@@ -107,7 +113,7 @@ const LoginForm = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full pl-12 pr-12 py-3 border border-sand-300 rounded-xl focus:ring-2 focus:ring-dark-900 focus:border-dark-900 transition-all"
-              placeholder="Votre mot de passe"
+              placeholder={t('login.passwordPlaceholder')}
               required
             />
             <button
@@ -129,7 +135,7 @@ const LoginForm = () => {
             <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
           ) : (
             <>
-              Se connecter
+              {t('login.submit')}
               <ArrowRight className="w-5 h-5" />
             </>
           )}
@@ -143,7 +149,7 @@ const LoginForm = () => {
               <div className="w-full border-t border-sand-300" />
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-4 bg-white text-dark-400">ou continuer avec</span>
+              <span className="px-4 bg-white text-dark-400">{t('login.orContinueWith')}</span>
             </div>
           </div>
 
@@ -156,7 +162,7 @@ const LoginForm = () => {
                 size="large"
                 text="continue_with"
                 shape="pill"
-                locale="fr"
+                locale={lang}
               />
             </GoogleOAuthProvider>
           </div>
@@ -164,9 +170,9 @@ const LoginForm = () => {
       )}
 
       <p className="mt-8 text-center text-dark-500">
-        Pas encore de compte ?{' '}
-        <Link to="/inscription" className="text-dark-900 font-semibold hover:underline">
-          Créer un compte
+        {t('login.noAccount')}{' '}
+        <Link to={localePath('/inscription')} className="text-dark-900 font-semibold hover:underline">
+          {t('login.register')}
         </Link>
       </p>
     </div>
@@ -176,10 +182,7 @@ const LoginForm = () => {
 const Login = () => {
   return (
     <>
-      <SEOHead
-        title="Connexion | ADLR Cosmetic Auto"
-        description="Connectez-vous à votre compte ADLR pour suivre vos commandes et accéder à vos informations."
-      />
+      <SEOHead page="login" />
 
       <div className="min-h-screen bg-gradient-to-b from-sand-100 to-white pt-28 pb-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

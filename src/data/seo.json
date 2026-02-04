@@ -2,42 +2,87 @@
   "global": {
     "siteName": "ADLR Cosmetic Auto",
     "siteUrl": "https://adlrcosmeticauto.ch",
-    "language": "fr",
+    "defaultLanguage": "fr",
+    "supportedLanguages": ["fr", "en"],
     "logo": "/logo.png",
     "favicon": "/favicon.svg"
   },
   "pages": {
     "home": {
-      "title": "ADLR Cosmetic Auto | Detailing Automobile Premium en Suisse",
-      "description": "Expert en detailing automobile : nettoyage professionnel, polish, traitement céramique et protection de carrosserie. Redonnez l'éclat à votre véhicule.",
-      "keywords": "detailing automobile, nettoyage voiture, polish, céramique, protection carrosserie, Suisse",
-      "ogTitle": "ADLR Cosmetic Auto - L'Art du Detailing Automobile",
-      "ogDescription": "Transformez votre véhicule avec nos services de detailing premium. Expertise, passion et résultats exceptionnels."
+      "fr": {
+        "title": "ADLR Cosmetic Auto | Detailing Automobile Premium en Suisse",
+        "description": "Expert en detailing automobile : nettoyage professionnel, polish, traitement céramique et protection de carrosserie. Redonnez l'éclat à votre véhicule.",
+        "keywords": "detailing automobile, nettoyage voiture, polish, céramique, protection carrosserie, Suisse",
+        "ogTitle": "ADLR Cosmetic Auto - L'Art du Detailing Automobile",
+        "ogDescription": "Transformez votre véhicule avec nos services de detailing premium. Expertise, passion et résultats exceptionnels."
+      },
+      "en": {
+        "title": "ADLR Cosmetic Auto | Premium Car Detailing in Switzerland",
+        "description": "Expert in automotive detailing: professional cleaning, polish, ceramic coating and bodywork protection. Restore the shine to your vehicle.",
+        "keywords": "car detailing, car cleaning, polish, ceramic, bodywork protection, Switzerland",
+        "ogTitle": "ADLR Cosmetic Auto - The Art of Car Detailing",
+        "ogDescription": "Transform your vehicle with our premium detailing services. Expertise, passion and exceptional results."
+      }
     },
     "services": {
-      "title": "Nos Services de Detailing | ADLR Cosmetic Auto",
-      "description": "Découvrez nos packs detailing : nettoyage intérieur/extérieur, polish correctif, traitement céramique, protection PPF. Services adaptés à tous les véhicules.",
-      "keywords": "services detailing, pack nettoyage, polish correctif, céramique, PPF, protection peinture"
+      "fr": {
+        "title": "Nos Services de Detailing | ADLR Cosmetic Auto",
+        "description": "Découvrez nos packs detailing : nettoyage intérieur/extérieur, polish correctif, traitement céramique, protection PPF. Services adaptés à tous les véhicules.",
+        "keywords": "services detailing, pack nettoyage, polish correctif, céramique, PPF, protection peinture"
+      },
+      "en": {
+        "title": "Our Detailing Services | ADLR Cosmetic Auto",
+        "description": "Discover our detailing packages: interior/exterior cleaning, corrective polish, ceramic coating, PPF protection. Services tailored to all vehicles.",
+        "keywords": "detailing services, cleaning package, corrective polish, ceramic, PPF, paint protection"
+      }
     },
     "configurator": {
-      "title": "Configurateur de Service | ADLR Cosmetic Auto",
-      "description": "Composez votre prestation de detailing sur mesure. Sélectionnez les services dont votre véhicule a besoin et obtenez un devis instantané.",
-      "keywords": "devis detailing, configurateur service, prestation sur mesure, prix detailing"
+      "fr": {
+        "title": "Configurateur de Service | ADLR Cosmetic Auto",
+        "description": "Composez votre prestation de detailing sur mesure. Sélectionnez les services dont votre véhicule a besoin et obtenez un devis instantané.",
+        "keywords": "devis detailing, configurateur service, prestation sur mesure, prix detailing"
+      },
+      "en": {
+        "title": "Service Configurator | ADLR Cosmetic Auto",
+        "description": "Create your custom detailing service. Select the services your vehicle needs and get an instant quote.",
+        "keywords": "detailing quote, service configurator, custom service, detailing prices"
+      }
     },
     "shop": {
-      "title": "Boutique Produits Detailing | ADLR Cosmetic Auto",
-      "description": "Achetez les meilleurs produits de detailing : shampoings, cires, céramiques, accessoires. Produits professionnels sélectionnés par nos experts.",
-      "keywords": "produits detailing, shampoing voiture, cire, céramique, accessoires auto"
+      "fr": {
+        "title": "Boutique Produits Detailing | ADLR Cosmetic Auto",
+        "description": "Achetez les meilleurs produits de detailing : shampoings, cires, céramiques, accessoires. Produits professionnels sélectionnés par nos experts.",
+        "keywords": "produits detailing, shampoing voiture, cire, céramique, accessoires auto"
+      },
+      "en": {
+        "title": "Detailing Products Shop | ADLR Cosmetic Auto",
+        "description": "Buy the best detailing products: shampoos, waxes, ceramics, accessories. Professional products selected by our experts.",
+        "keywords": "detailing products, car shampoo, wax, ceramic, car accessories"
+      }
     },
     "tutorials": {
-      "title": "Tutoriels Detailing | ADLR Cosmetic Auto",
-      "description": "Apprenez les techniques professionnelles de detailing : méthode des deux seaux, polish, application céramique. Guides complets avec produits recommandés.",
-      "keywords": "tutoriel detailing, méthode deux seaux, comment polish, guide céramique"
+      "fr": {
+        "title": "Tutoriels Detailing | ADLR Cosmetic Auto",
+        "description": "Apprenez les techniques professionnelles de detailing : méthode des deux seaux, polish, application céramique. Guides complets avec produits recommandés.",
+        "keywords": "tutoriel detailing, méthode deux seaux, comment polish, guide céramique"
+      },
+      "en": {
+        "title": "Detailing Tutorials | ADLR Cosmetic Auto",
+        "description": "Learn professional detailing techniques: two-bucket method, polish, ceramic application. Complete guides with recommended products.",
+        "keywords": "detailing tutorial, two bucket method, how to polish, ceramic guide"
+      }
     },
     "contact": {
-      "title": "Contact | ADLR Cosmetic Auto",
-      "description": "Contactez ADLR Cosmetic Auto pour un devis gratuit. Réponse rapide, conseils personnalisés pour votre véhicule.",
-      "keywords": "contact detailing, devis gratuit, rendez-vous detailing"
+      "fr": {
+        "title": "Contact | ADLR Cosmetic Auto",
+        "description": "Contactez ADLR Cosmetic Auto pour un devis gratuit. Réponse rapide, conseils personnalisés pour votre véhicule.",
+        "keywords": "contact detailing, devis gratuit, rendez-vous detailing"
+      },
+      "en": {
+        "title": "Contact | ADLR Cosmetic Auto",
+        "description": "Contact ADLR Cosmetic Auto for a free quote. Quick response, personalized advice for your vehicle.",
+        "keywords": "contact detailing, free quote, detailing appointment"
+      }
     }
   }
 }

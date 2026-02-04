@@ -1,12 +1,16 @@
 import { useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Send, Phone, Mail, MapPin, Clock, MessageCircle, CheckCircle, AlertCircle } from 'lucide-react'
+import { Send, Phone, Mail, MapPin, Clock, CheckCircle, AlertCircle } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import SEOHead from '../components/SEOHead'
 import { useSiteInfo } from '../hooks/useSiteInfo'
 
 const API_URL = import.meta.env.VITE_API_URL || '/api'
 
 const Contact = () => {
+  const { lang } = useParams()
+  const { t } = useTranslation('contact')
   const { siteInfo } = useSiteInfo()
   const [formData, setFormData] = useState({
     name: '',
@@ -19,11 +23,11 @@ const Contact = () => {
   const [sending, setSending] = useState(false)
 
   const subjects = [
-    'Demande de devis',
-    'Question sur un service',
-    'Prise de rendez-vous',
-    'Réclamation',
-    'Autre'
+    { key: 'quote', label: t('subjects.quote') },
+    { key: 'question', label: t('subjects.question') },
+    { key: 'appointment', label: t('subjects.appointment') },
+    { key: 'complaint', label: t('subjects.complaint') },
+    { key: 'other', label: t('subjects.other') }
   ]
 
   const handleSubmit = async (e) => {
@@ -37,7 +41,8 @@ const Contact = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...formData,
-          site: 'adlr'
+          site: 'adlr',
+          language: lang
         })
       })
 
@@ -46,16 +51,16 @@ const Contact = () => {
       if (data.success) {
         setStatus({
           type: 'success',
-          message: 'Message envoyé avec succès ! Nous vous répondrons rapidement.'
+          message: t('messages.success')
         })
         setFormData({ name: '', email: '', phone: '', subject: '', message: '' })
       } else {
-        throw new Error(data.message || 'Erreur lors de l\'envoi')
+        throw new Error(data.message || 'Error')
       }
     } catch (error) {
       setStatus({
         type: 'error',
-        message: 'Une erreur est survenue. Veuillez réessayer ou nous contacter par téléphone.'
+        message: t('messages.error')
       })
     } finally {
       setSending(false)
@@ -82,10 +87,10 @@ const Contact = () => {
             className="text-center max-w-3xl mx-auto"
           >
             <h1 className="text-4xl md:text-5xl font-display font-bold text-dark-900 mb-6">
-              Contactez-nous
+              {t('hero.title')}
             </h1>
             <p className="text-xl text-dark-500">
-              Une question, un devis ? Notre équipe vous répond rapidement
+              {t('hero.description')}
             </p>
           </motion.div>
         </div>
@@ -103,10 +108,10 @@ const Contact = () => {
             >
               <div>
                 <h2 className="text-2xl font-bold text-dark-900 mb-6">
-                  Informations de contact
+                  {t('info.title')}
                 </h2>
                 <p className="text-dark-500">
-                  N'hésitez pas à nous contacter pour toute question. Nous sommes là pour vous aider.
+                  {t('info.description')}
                 </p>
               </div>
 
@@ -120,7 +125,7 @@ const Contact = () => {
                       <Phone className="w-6 h-6 text-white" />
                     </div>
                     <div>
-                      <h3 className="text-dark-900 font-semibold mb-1">Téléphone</h3>
+                      <h3 className="text-dark-900 font-semibold mb-1">{t('info.phone')}</h3>
                       <p className="text-dark-500">{siteInfo.contact.phone}</p>
                     </div>
                   </a>
@@ -135,7 +140,7 @@ const Contact = () => {
                       <Mail className="w-6 h-6 text-white" />
                     </div>
                     <div>
-                      <h3 className="text-dark-900 font-semibold mb-1">Email</h3>
+                      <h3 className="text-dark-900 font-semibold mb-1">{t('info.email')}</h3>
                       <p className="text-dark-500">{siteInfo.contact.email}</p>
                     </div>
                   </a>
@@ -147,7 +152,7 @@ const Contact = () => {
                       <MapPin className="w-6 h-6 text-white" />
                     </div>
                     <div>
-                      <h3 className="text-dark-900 font-semibold mb-1">Adresse</h3>
+                      <h3 className="text-dark-900 font-semibold mb-1">{t('info.address')}</h3>
                       <p className="text-dark-500">
                         {siteInfo.contact.address}
                         {siteInfo.contact.postalCode && (
@@ -163,11 +168,11 @@ const Contact = () => {
                     <Clock className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="text-dark-900 font-semibold mb-1">Horaires</h3>
+                    <h3 className="text-dark-900 font-semibold mb-1">{t('info.hours')}</h3>
                     <p className="text-dark-500">
-                      Lundi - Vendredi: 8h - 18h<br />
-                      Samedi: 9h - 16h<br />
-                      Dimanche: Fermé
+                      {t('info.hoursContent.weekdays')}<br />
+                      {t('info.hoursContent.saturday')}<br />
+                      {t('info.hoursContent.sunday')}
                     </p>
                   </div>
                 </div>
@@ -184,7 +189,7 @@ const Contact = () => {
                   <svg className="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
                   </svg>
-                  Nous écrire sur WhatsApp
+                  {t('info.whatsapp')}
                 </a>
               )}
             </motion.div>
@@ -197,7 +202,7 @@ const Contact = () => {
             >
               <form onSubmit={handleSubmit} className="bg-sand-100 rounded-3xl p-8 border border-sand-200">
                 <h2 className="text-2xl font-bold text-dark-900 mb-6">
-                  Envoyez-nous un message
+                  {t('form.title')}
                 </h2>
 
                 {status.message && (
@@ -218,7 +223,7 @@ const Contact = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                   <div>
                     <label className="block text-dark-700 text-sm font-medium mb-2">
-                      Nom complet *
+                      {t('form.name')} {t('form.required')}
                     </label>
                     <input
                       type="text"
@@ -227,12 +232,12 @@ const Contact = () => {
                       value={formData.name}
                       onChange={handleChange}
                       className="w-full px-4 py-3 bg-white border border-sand-300 rounded-xl text-dark-900 focus:outline-none focus:border-dark-900 transition-colors"
-                      placeholder="Jean Dupont"
+                      placeholder={t('form.namePlaceholder')}
                     />
                   </div>
                   <div>
                     <label className="block text-dark-700 text-sm font-medium mb-2">
-                      Email *
+                      {t('form.email')} {t('form.required')}
                     </label>
                     <input
                       type="email"
@@ -241,7 +246,7 @@ const Contact = () => {
                       value={formData.email}
                       onChange={handleChange}
                       className="w-full px-4 py-3 bg-white border border-sand-300 rounded-xl text-dark-900 focus:outline-none focus:border-dark-900 transition-colors"
-                      placeholder="jean@exemple.ch"
+                      placeholder={t('form.emailPlaceholder')}
                     />
                   </div>
                 </div>
@@ -249,7 +254,7 @@ const Contact = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                   <div>
                     <label className="block text-dark-700 text-sm font-medium mb-2">
-                      Téléphone
+                      {t('form.phone')}
                     </label>
                     <input
                       type="tel"
@@ -257,12 +262,12 @@ const Contact = () => {
                       value={formData.phone}
                       onChange={handleChange}
                       className="w-full px-4 py-3 bg-white border border-sand-300 rounded-xl text-dark-900 focus:outline-none focus:border-dark-900 transition-colors"
-                      placeholder="+41 79 123 45 67"
+                      placeholder={t('form.phonePlaceholder')}
                     />
                   </div>
                   <div>
                     <label className="block text-dark-700 text-sm font-medium mb-2">
-                      Sujet *
+                      {t('form.subject')} {t('form.required')}
                     </label>
                     <select
                       name="subject"
@@ -271,9 +276,9 @@ const Contact = () => {
                       onChange={handleChange}
                       className="w-full px-4 py-3 bg-white border border-sand-300 rounded-xl text-dark-900 focus:outline-none focus:border-dark-900 transition-colors"
                     >
-                      <option value="">Sélectionner un sujet</option>
+                      <option value="">{t('form.subjectPlaceholder')}</option>
                       {subjects.map((subject) => (
-                        <option key={subject} value={subject}>{subject}</option>
+                        <option key={subject.key} value={subject.label}>{subject.label}</option>
                       ))}
                     </select>
                   </div>
@@ -281,7 +286,7 @@ const Contact = () => {
 
                 <div className="mb-6">
                   <label className="block text-dark-700 text-sm font-medium mb-2">
-                    Message *
+                    {t('form.message')} {t('form.required')}
                   </label>
                   <textarea
                     name="message"
@@ -290,7 +295,7 @@ const Contact = () => {
                     value={formData.message}
                     onChange={handleChange}
                     className="w-full px-4 py-3 bg-white border border-sand-300 rounded-xl text-dark-900 focus:outline-none focus:border-dark-900 transition-colors resize-none"
-                    placeholder="Décrivez votre demande..."
+                    placeholder={t('form.messagePlaceholder')}
                   />
                 </div>
 
@@ -302,11 +307,11 @@ const Contact = () => {
                   {sending ? (
                     <>
                       <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin mr-2" />
-                      Envoi en cours...
+                      {t('form.sending')}
                     </>
                   ) : (
                     <>
-                      Envoyer le message
+                      {t('form.submit')}
                       <Send className="w-5 h-5 ml-2" />
                     </>
                   )}
@@ -322,8 +327,8 @@ const Contact = () => {
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center">
             <MapPin className="w-12 h-12 text-dark-400 mx-auto mb-4" />
-            <p className="text-dark-500">Carte Google Maps</p>
-            <p className="text-dark-400 text-sm">(À configurer avec l'adresse exacte)</p>
+            <p className="text-dark-500">{t('map.title')}</p>
+            <p className="text-dark-400 text-sm">{t('map.subtitle')}</p>
           </div>
         </div>
       </section>

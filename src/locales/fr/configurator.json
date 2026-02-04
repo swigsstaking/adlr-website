@@ -1,0 +1,110 @@
+{
+  "title": "Configurateur",
+  "stepOf": "Etape {{step}} sur {{total}}",
+  "step1": {
+    "title": "Quel est votre vehicule ?",
+    "description": "Selectionnez la categorie correspondant a votre voiture"
+  },
+  "step2": {
+    "title": "Choisissez votre formule",
+    "description": "Nos packs de services adaptes a vos besoins"
+  },
+  "step3": {
+    "title": "Options supplementaires",
+    "description": "Personnalisez votre service (facultatif)"
+  },
+  "step4": {
+    "title": "Vos coordonnees",
+    "description": "Nous vous recontacterons pour confirmer votre rendez-vous"
+  },
+  "vehicles": {
+    "compact": {
+      "name": "Citadine",
+      "subtitle": "Compacte",
+      "description": "Polo, Golf, A3, Classe A..."
+    },
+    "sedan": {
+      "name": "Berline",
+      "subtitle": "SUV",
+      "description": "3 Series, C-Class, Q5, GLC..."
+    },
+    "large": {
+      "name": "Grand SUV",
+      "subtitle": "Van",
+      "description": "X5, GLE, Q7, Range Rover..."
+    },
+    "supercar": {
+      "name": "Supercar",
+      "subtitle": "Prestige",
+      "description": "Ferrari, Lamborghini, Porsche GT..."
+    }
+  },
+  "packs": {
+    "eclat": {
+      "name": "Eclat Initial",
+      "description": "Nettoyage complet",
+      "features": ["Lavage exterieur", "Aspiration interieur", "Nettoyage vitres", "Lustrage rapide"]
+    },
+    "prestige": {
+      "name": "Prestige",
+      "description": "Notre formule populaire",
+      "features": ["Pack Eclat Initial", "Decontamination clay", "Shampooing sieges", "Cire protection 3 mois"]
+    },
+    "excellence": {
+      "name": "Excellence",
+      "description": "Le summum du detailing",
+      "features": ["Pack Prestige", "Polish leger", "Ceramique express", "Traitement complet"]
+    },
+    "ceramique": {
+      "name": "Ceramique Pro",
+      "description": "Protection longue duree",
+      "features": ["Preparation complete", "Polish correctif", "Ceramique 9H", "Garantie 5 ans"]
+    },
+    "popular": "Populaire"
+  },
+  "options": {
+    "headlights": "Renovation phares",
+    "engine": "Nettoyage moteur",
+    "rainrepel": "Anti-pluie vitres",
+    "ozone": "Desinfection ozone",
+    "leather": "Traitement cuir",
+    "plastics": "Plastiques ext.",
+    "wheels": "Polish jantes",
+    "exhaust": "Polish echappement"
+  },
+  "contact": {
+    "name": "Nom complet",
+    "namePlaceholder": "Jean Dupont",
+    "email": "Email",
+    "emailPlaceholder": "jean@exemple.ch",
+    "phone": "Telephone",
+    "phonePlaceholder": "+41 79 123 45 67",
+    "message": "Message (optionnel)",
+    "messagePlaceholder": "Precisions sur votre vehicule...",
+    "required": "*"
+  },
+  "summary": {
+    "title": "Recapitulatif",
+    "vehicle": "Vehicule",
+    "pack": "Formule",
+    "options": "Options",
+    "notSelected": "Non selectionne",
+    "total": "Total estime",
+    "duration": "Duree"
+  },
+  "buttons": {
+    "next": "Suivant",
+    "continue": "Continuer",
+    "back": "Retour",
+    "send": "Envoyer",
+    "sendRequest": "Envoyer la demande"
+  },
+  "duration": {
+    "hours": "{{count}}h",
+    "days": "{{count}} jour",
+    "days_other": "{{count}} jours"
+  },
+  "alerts": {
+    "success": "Demande envoyee ! Nous vous recontacterons rapidement."
+  }
+}

@@ -1,7 +1,8 @@
 import { useRef } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { ChevronRight, Check, ArrowRight } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import SEOHead from '../components/SEOHead'
 
 /**
@@ -11,6 +12,11 @@ const ServicePage = ({
   service,
   seoPage = 'services'
 }) => {
+  const { lang } = useParams()
+  const { t } = useTranslation('services')
+
+  // Helper for localized paths
+  const localePath = (path) => `/${lang}${path}`
   const heroRef = useRef(null)
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -125,10 +131,10 @@ const ServicePage = ({
               className="text-center mb-16"
             >
               <h2 className="text-4xl md:text-5xl font-display font-black text-dark-900 mb-4">
-                Ce qui est inclus
+                {t('servicePages.common.included')}
               </h2>
               <p className="text-dark-500 text-lg max-w-2xl mx-auto">
-                {service.featuresSubtitle || 'Tous les détails de notre prestation'}
+                {service.featuresSubtitle || t('servicePages.common.includedSubtitle')}
               </p>
             </motion.div>
 
@@ -171,10 +177,10 @@ const ServicePage = ({
               className="text-center mb-16"
             >
               <h2 className="text-4xl md:text-5xl font-display font-black text-dark-900 mb-4">
-                Nos tarifs
+                {t('servicePages.common.pricing')}
               </h2>
               <p className="text-dark-500 text-lg">
-                Prix selon la taille de votre véhicule
+                {t('servicePages.common.pricingSubtitle')}
               </p>
             </motion.div>
 
@@ -211,7 +217,7 @@ const ServicePage = ({
                     <p className={`text-sm ${
                       index === 1 ? 'text-white/60' : 'text-dark-500'
                     }`}>
-                      Durée: {price.duration}
+                      {t('servicePages.common.duration')}: {price.duration}
                     </p>
                   )}
                 </motion.div>
@@ -230,24 +236,24 @@ const ServicePage = ({
             viewport={{ once: true }}
           >
             <h2 className="text-4xl md:text-5xl font-display font-black text-white mb-6">
-              Prêt à réserver ?
+              {t('servicePages.common.ctaTitle')}
             </h2>
             <p className="text-white/60 text-lg mb-10 max-w-2xl mx-auto">
-              Obtenez un devis personnalisé ou prenez rendez-vous directement.
+              {t('servicePages.common.ctaDescription')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
-                to="/configurateur"
+                to={localePath('/configurateur')}
                 className="inline-flex items-center justify-center px-8 py-4 bg-white hover:bg-sand-100 text-dark-900 font-semibold rounded-full transition-all duration-300 group"
               >
-                Configurer mon service
+                {t('servicePages.common.configureService')}
                 <ChevronRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link
-                to="/contact"
+                to={localePath('/contact')}
                 className="inline-flex items-center justify-center px-8 py-4 border-2 border-white/30 hover:border-white text-white font-semibold rounded-full transition-all duration-300"
               >
-                Nous contacter
+                {t('servicePages.common.contactUs')}
               </Link>
             </div>
           </motion.div>
@@ -264,7 +270,7 @@ const ServicePage = ({
             className="text-center mb-12"
           >
             <h2 className="text-3xl md:text-4xl font-display font-black text-dark-900">
-              Nos autres services
+              {t('servicePages.common.otherServices')}
             </h2>
           </motion.div>
 
@@ -272,7 +278,7 @@ const ServicePage = ({
             {service.otherServices?.map((other, index) => (
               <Link
                 key={index}
-                to={other.link}
+                to={localePath(other.link)}
                 className="group bg-white rounded-2xl p-6 text-center hover:shadow-lg transition-all duration-300"
               >
                 <h3 className="font-semibold text-dark-900 group-hover:text-dark-600 transition-colors">

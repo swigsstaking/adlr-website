@@ -8,7 +8,7 @@ import { useCart } from '../context/CartContext'
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api'
 
 const TutorialDetail = () => {
-  const { id } = useParams()
+  const { id, lang } = useParams()
   const [tutorial, setTutorial] = useState(null)
   const [loading, setLoading] = useState(true)
   const [currentStep, setCurrentStep] = useState(0)
@@ -296,7 +296,7 @@ Heureusement, il est facile de leur redonner leur aspect d'origine.`,
     return (
       <div className="min-h-screen bg-white pt-[72px] flex flex-col items-center justify-center">
         <p className="text-dark-500 mb-4">Tutoriel non trouvé</p>
-        <Link to="/tutoriels" className="text-primary-600 hover:underline">
+        <Link to={`/${lang}/tutoriels`} className="text-primary-600 hover:underline">
           Retour aux tutoriels
         </Link>
       </div>
@@ -315,7 +315,7 @@ Heureusement, il est facile de leur redonner leur aspect d'origine.`,
         <div className="bg-sand-50 border-b border-sand-200">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <nav className="flex items-center gap-2 text-sm">
-              <Link to="/tutoriels" className="text-dark-500 hover:text-dark-900 flex items-center gap-1 flex-shrink-0">
+              <Link to={`/${lang}/tutoriels`} className="text-dark-500 hover:text-dark-900 flex items-center gap-1 flex-shrink-0">
                 <ChevronLeft className="w-4 h-4" />
                 <span>Tutoriels</span>
               </Link>
@@ -488,7 +488,7 @@ Heureusement, il est facile de leur redonner leur aspect d'origine.`,
                   <div className="bg-white rounded-2xl border border-sand-200 p-6">
                     <h3 className="font-bold text-dark-900 mb-4">Autres tutoriels</h3>
                     <Link
-                      to="/tutoriels"
+                      to={`/${lang}/tutoriels`}
                       className="flex items-center text-primary-600 hover:text-primary-700 font-medium"
                     >
                       <ChevronLeft className="w-4 h-4 mr-1" />
@@ -511,7 +511,7 @@ Heureusement, il est facile de leur redonner leur aspect d'origine.`,
               Nos experts réalisent cette prestation avec un savoir-faire professionnel
             </p>
             <Link
-              to="/services"
+              to={`/${lang}/services`}
               className="inline-flex items-center px-6 py-3 bg-dark-900 hover:bg-dark-800 text-white font-semibold rounded-full transition-all"
             >
               Découvrir nos services

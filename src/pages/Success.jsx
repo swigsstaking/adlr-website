@@ -1,14 +1,20 @@
 import { useEffect } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams, useParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { CheckCircle, Package, Mail, Truck, ArrowRight } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { useCart } from '../context/CartContext'
 import SEOHead from '../components/SEOHead'
 
 const Success = () => {
+  const { lang } = useParams()
+  const { t } = useTranslation('cart')
   const { clearCart } = useCart()
   const [searchParams] = useSearchParams()
   const sessionId = searchParams.get('session_id')
+
+  // Helper for localized paths
+  const localePath = (path) => `/${lang}${path}`
 
   // Clear cart on successful payment
   useEffect(() => {
@@ -18,27 +24,24 @@ const Success = () => {
   const steps = [
     {
       icon: Mail,
-      title: 'Confirmation par email',
-      description: 'Vous recevrez un email de confirmation avec les détails de votre commande.'
+      title: t('success.steps.email.title'),
+      description: t('success.steps.email.description')
     },
     {
       icon: Package,
-      title: 'Préparation',
-      description: 'Votre commande sera préparée sous 24h ouvrées.'
+      title: t('success.steps.preparation.title'),
+      description: t('success.steps.preparation.description')
     },
     {
       icon: Truck,
-      title: 'Livraison',
-      description: 'Expédition rapide sous 3-5 jours ouvrés en Suisse.'
+      title: t('success.steps.delivery.title'),
+      description: t('success.steps.delivery.description')
     }
   ]
 
   return (
     <>
-      <SEOHead
-        title="Commande confirmée | ADLR Cosmetic Auto"
-        description="Votre commande a été confirmée avec succès."
-      />
+      <SEOHead page="success" />
 
       <div className="min-h-screen bg-gradient-to-b from-sand-100 to-white pt-28 pb-16">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -59,15 +62,15 @@ const Success = () => {
               </motion.div>
 
               <h1 className="text-3xl font-display font-bold text-dark-900 mb-3">
-                Merci pour votre commande !
+                {t('success.title')}
               </h1>
               <p className="text-dark-500 text-lg">
-                Votre paiement a été effectué avec succès.
+                {t('success.subtitle')}
               </p>
 
               {sessionId && (
                 <p className="text-dark-400 text-sm mt-4">
-                  Référence: {sessionId.slice(0, 20)}...
+                  {t('success.reference')}: {sessionId.slice(0, 20)}...
                 </p>
               )}
             </div>
@@ -75,7 +78,7 @@ const Success = () => {
             {/* Next Steps */}
             <div className="mb-10">
               <h2 className="text-lg font-display font-bold text-dark-900 mb-6 text-center">
-                Prochaines étapes
+                {t('success.nextSteps')}
               </h2>
 
               <div className="space-y-4">
@@ -102,24 +105,24 @@ const Success = () => {
             {/* Actions */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
-                to="/boutique"
+                to={localePath('/boutique')}
                 className="px-6 py-3 bg-dark-900 hover:bg-dark-800 text-white font-semibold rounded-full transition-all flex items-center justify-center gap-2"
               >
-                Continuer mes achats
+                {t('success.continueShopping')}
                 <ArrowRight className="w-5 h-5" />
               </Link>
               <Link
-                to="/compte"
+                to={localePath('/compte')}
                 className="px-6 py-3 border-2 border-dark-900 text-dark-900 font-semibold rounded-full hover:bg-dark-900 hover:text-white transition-all flex items-center justify-center"
               >
-                Voir mon compte
+                {t('success.viewAccount')}
               </Link>
             </div>
 
             {/* Support */}
             <div className="mt-10 pt-8 border-t border-sand-200 text-center">
               <p className="text-dark-500 text-sm">
-                Une question ? Contactez-nous à{' '}
+                {t('success.support')}{' '}
                 <a href="mailto:contact@adlrcosmeticauto.ch" className="text-dark-900 font-medium hover:underline">
                   contact@adlrcosmeticauto.ch
                 </a>

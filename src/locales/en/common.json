@@ -1,0 +1,51 @@
+{
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "configurator": "Configurator",
+    "shop": "Shop",
+    "tutorials": "Tutorials",
+    "contact": "Contact",
+    "allServices": "All services",
+    "myAccount": "My account",
+    "login": "Login"
+  },
+  "serviceNames": {
+    "lavage": "Wash",
+    "polish": "Polish",
+    "ceramique": "Ceramic",
+    "cire": "Wax"
+  },
+  "footer": {
+    "description": "Expert in automotive detailing. We restore the shine to your vehicle with professional techniques and premium products.",
+    "servicesTitle": "Services",
+    "usefulLinks": "Useful Links",
+    "contactTitle": "Contact",
+    "copyright": "All rights reserved.",
+    "createdBy": "Website created by"
+  },
+  "loading": "Loading...",
+  "error": "An error occurred",
+  "retry": "Retry",
+  "back": "Back",
+  "next": "Next",
+  "previous": "Previous",
+  "submit": "Submit",
+  "cancel": "Cancel",
+  "save": "Save",
+  "delete": "Delete",
+  "edit": "Edit",
+  "close": "Close",
+  "search": "Search",
+  "seeMore": "See more",
+  "seeAll": "See all",
+  "learnMore": "Learn more",
+  "getQuote": "Get a quote",
+  "bookNow": "Book now",
+  "currency": "CHF",
+  "from": "From",
+  "languages": {
+    "fr": "Français",
+    "en": "English"
+  }
+}

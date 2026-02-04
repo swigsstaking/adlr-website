@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowLeft, Lock, AlertCircle, ChevronDown, Tag, X, Check } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { useCart } from '../context/CartContext'
 import { useAuth } from '../context/AuthContext'
 import SEOHead from '../components/SEOHead'
@@ -9,18 +10,23 @@ import SEOHead from '../components/SEOHead'
 const API_URL = import.meta.env.VITE_API_URL || '/api'
 const SITE_SLUG = import.meta.env.VITE_SITE_SLUG || 'adlr'
 
-const countries = [
-  { code: 'CH', name: 'Suisse' },
-  { code: 'FR', name: 'France' },
-  { code: 'DE', name: 'Allemagne' },
-  { code: 'IT', name: 'Italie' },
-  { code: 'AT', name: 'Autriche' }
-]
-
 const Checkout = () => {
+  const { lang } = useParams()
+  const { t } = useTranslation('cart')
   const { cart, getCartTotal, clearCart } = useCart()
   const { customer, siteId } = useAuth()
   const navigate = useNavigate()
+
+  // Helper for localized paths
+  const localePath = (path) => `/${lang}${path}`
+
+  const countries = [
+    { code: 'CH', name: t('checkout.countries.CH') },
+    { code: 'FR', name: t('checkout.countries.FR') },
+    { code: 'DE', name: t('checkout.countries.DE') },
+    { code: 'IT', name: t('checkout.countries.IT') },
+    { code: 'AT', name: t('checkout.countries.AT') }
+  ]
 
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
@@ -59,9 +65,9 @@ const Checkout = () => {
   // Redirect if cart is empty
   useEffect(() => {
     if (cart.length === 0) {
-      navigate('/panier')
+      navigate(localePath('/panier'))
     }
-  }, [cart, navigate])
+  }, [cart, navigate, lang])
 
   const handleChange = (e) => {
     setFormData(prev => ({
@@ -119,10 +125,10 @@ const Checkout = () => {
         setAppliedPromo(data.data)
         setPromoCode('')
       } else {
-        setPromoError(data.message || 'Code promo invalide')
+        setPromoError(data.message || t('checkout.promo.invalid'))
       }
     } catch (err) {
-      setPromoError('Erreur lors de la validation')
+      setPromoError(t('checkout.promo.validationError'))
     } finally {
       setPromoLoading(false)
     }
@@ -143,14 +149,14 @@ const Checkout = () => {
           currentSiteId = siteData.data._id
         }
       } catch (err) {
-        setError('Erreur lors du chargement. Veuillez réessayer.')
+        setError(t('checkout.errors.loadError'))
         setLoading(false)
         return
       }
     }
 
     if (!currentSiteId) {
-      setError('Erreur de configuration. Veuillez réessayer.')
+      setError(t('checkout.errors.configError'))
       setLoading(false)
       return
     }
@@ -204,11 +210,11 @@ const Checkout = () => {
         // Redirect to Stripe Checkout
         window.location.href = data.data.checkoutUrl
       } else {
-        setError(data.message || 'Erreur lors de la création de la commande')
+        setError(data.message || t('checkout.errors.orderError'))
       }
     } catch (err) {
       console.error('Checkout error:', err)
-      setError('Erreur lors du paiement. Veuillez réessayer.')
+      setError(t('checkout.errors.paymentError'))
     } finally {
       setLoading(false)
     }
@@ -220,24 +226,21 @@ const Checkout = () => {
 
   return (
     <>
-      <SEOHead
-        title="Checkout | ADLR Cosmetic Auto"
-        description="Finalisez votre commande en toute sécurité."
-      />
+      <SEOHead page="checkout" />
 
       <div className="min-h-screen bg-sand-50 pt-28 pb-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="mb-8">
             <Link
-              to="/panier"
+              to={localePath('/panier')}
               className="inline-flex items-center gap-2 text-dark-500 hover:text-dark-900 transition-colors mb-4"
             >
               <ArrowLeft className="w-5 h-5" />
-              Retour au panier
+              {t('checkout.backToCart')}
             </Link>
             <h1 className="text-3xl font-display font-bold text-dark-900">
-              Checkout
+              {t('checkout.title')}
             </h1>
           </div>
 
@@ -263,13 +266,13 @@ const Checkout = () => {
                   className="bg-white rounded-2xl border border-sand-200 p-6"
                 >
                   <h2 className="text-lg font-display font-bold text-dark-900 mb-6">
-                    Informations de contact
+                    {t('checkout.contactInfo.title')}
                   </h2>
 
                   <div className="space-y-4">
                     <div>
                       <label className="block text-sm font-medium text-dark-700 mb-2">
-                        Email *
+                        {t('checkout.contactInfo.email')} {t('checkout.contactInfo.required')}
                       </label>
                       <input
                         type="email"
@@ -284,7 +287,7 @@ const Checkout = () => {
                     <div className="grid grid-cols-2 gap-4">
                       <div>
                         <label className="block text-sm font-medium text-dark-700 mb-2">
-                          Prénom *
+                          {t('checkout.contactInfo.firstName')} {t('checkout.contactInfo.required')}
                         </label>
                         <input
                           type="text"
@@ -297,7 +300,7 @@ const Checkout = () => {
                       </div>
                       <div>
                         <label className="block text-sm font-medium text-dark-700 mb-2">
-                          Nom *
+                          {t('checkout.contactInfo.lastName')} {t('checkout.contactInfo.required')}
                         </label>
                         <input
                           type="text"
@@ -312,7 +315,7 @@ const Checkout = () => {
 
                     <div>
                       <label className="block text-sm font-medium text-dark-700 mb-2">
-                        Téléphone
+                        {t('checkout.contactInfo.phone')}
                       </label>
                       <input
                         type="tel"
@@ -320,7 +323,7 @@ const Checkout = () => {
                         value={formData.phone}
                         onChange={handleChange}
                         className="w-full px-4 py-3 border border-sand-300 rounded-xl focus:ring-2 focus:ring-dark-900 focus:border-dark-900 transition-all"
-                        placeholder="+41 XX XXX XX XX"
+                        placeholder={t('checkout.contactInfo.phonePlaceholder')}
                       />
                     </div>
                   </div>
@@ -334,13 +337,13 @@ const Checkout = () => {
                   className="bg-white rounded-2xl border border-sand-200 p-6"
                 >
                   <h2 className="text-lg font-display font-bold text-dark-900 mb-6">
-                    Adresse de livraison
+                    {t('checkout.shippingAddress.title')}
                   </h2>
 
                   <div className="space-y-4">
                     <div>
                       <label className="block text-sm font-medium text-dark-700 mb-2">
-                        Adresse *
+                        {t('checkout.shippingAddress.address')} {t('checkout.contactInfo.required')}
                       </label>
                       <input
                         type="text"
@@ -348,7 +351,7 @@ const Checkout = () => {
                         value={formData.address}
                         onChange={handleChange}
                         className="w-full px-4 py-3 border border-sand-300 rounded-xl focus:ring-2 focus:ring-dark-900 focus:border-dark-900 transition-all"
-                        placeholder="Rue et numéro"
+                        placeholder={t('checkout.shippingAddress.addressPlaceholder')}
                         required
                       />
                     </div>
@@ -356,7 +359,7 @@ const Checkout = () => {
                     <div className="grid grid-cols-2 gap-4">
                       <div>
                         <label className="block text-sm font-medium text-dark-700 mb-2">
-                          Code postal *
+                          {t('checkout.shippingAddress.postalCode')} {t('checkout.contactInfo.required')}
                         </label>
                         <input
                           type="text"
@@ -369,7 +372,7 @@ const Checkout = () => {
                       </div>
                       <div>
                         <label className="block text-sm font-medium text-dark-700 mb-2">
-                          Ville *
+                          {t('checkout.shippingAddress.city')} {t('checkout.contactInfo.required')}
                         </label>
                         <input
                           type="text"
@@ -384,7 +387,7 @@ const Checkout = () => {
 
                     <div>
                       <label className="block text-sm font-medium text-dark-700 mb-2">
-                        Pays *
+                        {t('checkout.shippingAddress.country')} {t('checkout.contactInfo.required')}
                       </label>
                       <div className="relative">
                         <select
@@ -418,7 +421,7 @@ const Checkout = () => {
                     ) : (
                       <>
                         <Lock className="w-5 h-5" />
-                        Payer CHF {finalTotal.toFixed(2)}
+                        {t('checkout.payment.payAmount', { amount: finalTotal.toFixed(2) })}
                       </>
                     )}
                   </button>
@@ -435,7 +438,7 @@ const Checkout = () => {
                 className="bg-white rounded-2xl border border-sand-200 p-6 sticky top-28"
               >
                 <h2 className="text-lg font-display font-bold text-dark-900 mb-6">
-                  Votre commande
+                  {t('checkout.order.title')}
                 </h2>
 
                 {/* Items */}
@@ -484,7 +487,7 @@ const Checkout = () => {
                           type="text"
                           value={promoCode}
                           onChange={(e) => setPromoCode(e.target.value)}
-                          placeholder="Code promo"
+                          placeholder={t('checkout.promo.placeholder')}
                           className="flex-1 px-4 py-2 border border-sand-300 rounded-lg focus:ring-2 focus:ring-dark-900 focus:border-dark-900 transition-all text-sm"
                         />
                         <button
@@ -493,7 +496,7 @@ const Checkout = () => {
                           disabled={promoLoading || !promoCode.trim()}
                           className="px-4 py-2 bg-dark-900 text-white rounded-lg hover:bg-dark-800 transition-all text-sm disabled:opacity-50"
                         >
-                          {promoLoading ? '...' : 'Appliquer'}
+                          {promoLoading ? '...' : t('checkout.promo.apply')}
                         </button>
                       </div>
                       {promoError && (
@@ -506,27 +509,27 @@ const Checkout = () => {
                 {/* Totals */}
                 <div className="space-y-3 mb-6">
                   <div className="flex justify-between text-dark-600">
-                    <span>Sous-total</span>
+                    <span>{t('checkout.order.subtotal')}</span>
                     <span>CHF {cartTotal.toFixed(2)}</span>
                   </div>
                   {appliedPromo && (
                     <div className="flex justify-between text-green-600">
-                      <span>Réduction</span>
+                      <span>{t('checkout.promo.discount')}</span>
                       <span>-CHF {discount.toFixed(2)}</span>
                     </div>
                   )}
                   <div className="flex justify-between text-dark-600">
-                    <span>Livraison</span>
-                    <span className="text-primary-600">Gratuite</span>
+                    <span>{t('checkout.order.shipping')}</span>
+                    <span className="text-primary-600">{t('checkout.order.shippingFree')}</span>
                   </div>
                 </div>
 
                 <div className="border-t border-sand-200 pt-4 mb-6">
                   <div className="flex justify-between text-dark-900">
-                    <span className="font-semibold">Total</span>
+                    <span className="font-semibold">{t('checkout.order.total')}</span>
                     <span className="text-xl font-bold">CHF {finalTotal.toFixed(2)}</span>
                   </div>
-                  <p className="text-dark-400 text-sm mt-1">TVA incluse</p>
+                  <p className="text-dark-400 text-sm mt-1">{t('checkout.order.vatIncluded')}</p>
                 </div>
 
                 {/* Submit (desktop) */}
@@ -542,7 +545,7 @@ const Checkout = () => {
                   ) : (
                     <>
                       <Lock className="w-5 h-5" />
-                      Payer maintenant
+                      {t('checkout.payment.payNow')}
                     </>
                   )}
                 </button>
@@ -550,7 +553,7 @@ const Checkout = () => {
                 {/* Trust */}
                 <div className="mt-6 flex items-center justify-center gap-2 text-dark-400 text-sm">
                   <Lock className="w-4 h-4" />
-                  <span>Paiement sécurisé par Stripe</span>
+                  <span>{t('checkout.payment.securedBy')}</span>
                 </div>
               </motion.div>
             </div>

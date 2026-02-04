@@ -1,7 +1,8 @@
 import { useRef } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { ChevronRight, ChevronDown, ArrowRight, Star } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import SEOHead from '../components/SEOHead'
 
 /**
@@ -11,6 +12,11 @@ import SEOHead from '../components/SEOHead'
  */
 const HomeV2 = () => {
   const heroRef = useRef(null)
+  const { lang } = useParams()
+  const { t } = useTranslation('home')
+
+  // Helper for localized paths
+  const localePath = (path) => `/${lang}${path}`
 
   const { scrollYProgress: heroProgress } = useScroll({
     target: heroRef,
@@ -21,31 +27,12 @@ const HomeV2 = () => {
   const textOpacity = useTransform(heroProgress, [0, 0.5], [1, 0])
 
   const stats = [
-    { value: '500+', label: 'Véhicules traités' },
-    { value: '98%', label: 'Clients satisfaits' },
-    { value: '5+', label: 'Ans d\'expérience' }
+    { value: '500+', label: t('stats.vehicles') },
+    { value: '98%', label: t('stats.satisfaction') },
+    { value: '5+', label: t('stats.experience') }
   ]
 
-  const testimonials = [
-    {
-      name: 'Marc D.',
-      car: 'Porsche 911 GT3',
-      text: 'Un travail exceptionnel. La céramique est parfaite, ma voiture n\'a jamais autant brillé.',
-      rating: 5
-    },
-    {
-      name: 'Sophie L.',
-      car: 'BMW M4 Competition',
-      text: 'Professionnalisme et résultat bluffant. Je recommande à 100%.',
-      rating: 5
-    },
-    {
-      name: 'Thomas R.',
-      car: 'Mercedes AMG GT',
-      text: 'Le polish correctif a fait des miracles. Les micro-rayures ont totalement disparu.',
-      rating: 5
-    }
-  ]
+  const testimonials = t('testimonials.items', { returnObjects: true })
 
   return (
     <>
@@ -77,23 +64,24 @@ const HomeV2 = () => {
                 </div>
 
                 <p className="text-dark-500 text-base sm:text-lg md:text-xl max-w-md mb-8 lg:mb-10 leading-relaxed">
-                  L'excellence du detailing automobile.
-                  Des prestations haut de gamme pour sublimer votre véhicule.
+                  {t('hero.tagline')}
+                  {' '}
+                  {t('hero.description')}
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                   <Link
-                    to="/configurateur"
+                    to={localePath('/configurateur')}
                     className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 bg-dark-900 hover:bg-dark-800 text-white font-semibold rounded-full transition-all duration-300 group"
                   >
-                    Obtenir un devis
+                    {t('hero.cta')}
                     <ChevronRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                   </Link>
                   <Link
-                    to="/services"
+                    to={localePath('/services')}
                     className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 border-2 border-dark-300 hover:border-dark-900 text-dark-700 hover:text-dark-900 font-semibold rounded-full transition-all duration-300"
                   >
-                    Nos services
+                    {t('hero.secondaryCta')}
                   </Link>
                 </div>
               </motion.div>
@@ -146,7 +134,7 @@ const HomeV2 = () => {
                 onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
                 className="hidden md:flex items-center gap-3 text-dark-400 hover:text-dark-900 transition-colors group"
               >
-                <span className="text-sm">Scroll</span>
+                <span className="text-sm">{t('scroll')}</span>
                 <div className="w-10 h-10 rounded-full border border-dark-300 flex items-center justify-center group-hover:border-dark-900 transition-colors">
                   <ChevronDown className="w-5 h-5" />
                 </div>
@@ -157,7 +145,7 @@ const HomeV2 = () => {
       </section>
 
       {/* Services Section - Parallax Crossover */}
-      <ParallaxServices />
+      <ParallaxServices lang={lang} />
 
       {/* Testimonials Section */}
       <section className="py-24 lg:py-32 bg-white relative z-20">
@@ -168,9 +156,9 @@ const HomeV2 = () => {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <span className="text-primary-500 text-sm font-semibold uppercase tracking-wider">Témoignages</span>
+            <span className="text-primary-500 text-sm font-semibold uppercase tracking-wider">{t('testimonials.sectionLabel')}</span>
             <h2 className="text-4xl md:text-5xl font-display font-black text-dark-900 mt-4">
-              Clients satisfaits<span className="text-primary-500">.</span>
+              {t('testimonials.title')}<span className="text-primary-500">.</span>
             </h2>
           </motion.div>
 
@@ -185,7 +173,7 @@ const HomeV2 = () => {
                 className="bg-sand-50 rounded-3xl p-8"
               >
                 <div className="flex gap-1 mb-4">
-                  {[...Array(testimonial.rating)].map((_, i) => (
+                  {[...Array(5)].map((_, i) => (
                     <Star key={i} className="w-5 h-5 fill-primary-500 text-primary-500" />
                   ))}
                 </div>
@@ -217,24 +205,24 @@ const HomeV2 = () => {
             viewport={{ once: true }}
           >
             <h2 className="text-4xl md:text-6xl lg:text-7xl font-display font-black text-white mb-6">
-              Prêt à transformer<br />votre véhicule<span className="text-primary-500">?</span>
+              {t('cta.title')}<br />{t('cta.titleLine2')}<span className="text-primary-500">?</span>
             </h2>
             <p className="text-white/60 text-lg md:text-xl mb-10 max-w-2xl mx-auto">
-              Obtenez un devis personnalisé en quelques clics avec notre configurateur.
+              {t('cta.description')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
-                to="/configurateur"
+                to={localePath('/configurateur')}
                 className="inline-flex items-center justify-center px-10 py-5 bg-white hover:bg-sand-100 text-dark-900 font-bold rounded-full transition-all duration-300 group"
               >
-                Configurer mon service
+                {t('cta.primaryBtn')}
                 <ChevronRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link
-                to="/contact"
+                to={localePath('/contact')}
                 className="inline-flex items-center justify-center px-10 py-5 border-2 border-white/30 hover:border-white text-white font-semibold rounded-full transition-all duration-300"
               >
-                Nous contacter
+                {t('cta.secondaryBtn')}
               </Link>
             </div>
           </motion.div>
@@ -248,43 +236,53 @@ const HomeV2 = () => {
  * ParallaxServices - Design avec images qui remontent et se chevauchent
  * Effet "stacked cards" élégant
  */
-const ParallaxServices = () => {
-  // Ordre des services: Lavage, Polish, Céramique, Autres, Cire
+const ParallaxServices = ({ lang }) => {
+  const { t } = useTranslation('home')
+
+  // Helper for localized paths
+  const localePath = (path) => `/${lang}${path}`
+
+  // Services with translations
   const services = [
     {
-      title: 'Lavage',
-      subtitle: 'Premium.',
-      description: 'Découvrez notre service de lavage automobile : un nettoyage minutieux intérieur et extérieur, des produits haut de gamme sélectionnés par nos experts.',
+      key: 'lavage',
+      title: t('services.lavage.title'),
+      subtitle: t('services.lavage.subtitle'),
+      description: t('services.lavage.description'),
       video: 'https://video.wixstatic.com/video/bf2329_97a02c74491e4e3b933761a5354c1870/720p/mp4/file.mp4',
-      link: '/services/lavage',
+      link: localePath('/services/lavage'),
     },
     {
-      title: 'Polish',
-      subtitle: 'Correctif.',
-      description: 'Offrez à votre voiture un éclat incomparable. Nous utilisons des techniques professionnelles pour éliminer micro-rayures, swirls et hologrammes.',
+      key: 'polish',
+      title: t('services.polish.title'),
+      subtitle: t('services.polish.subtitle'),
+      description: t('services.polish.description'),
       video: 'https://video.wixstatic.com/video/bf2329_89210701a0a74d41854ab173902a0583/720p/mp4/file.mp4',
-      link: '/services/polish',
+      link: localePath('/services/polish'),
     },
     {
-      title: 'Protection',
-      subtitle: 'Céramique.',
-      description: 'Protégez votre investissement avec notre traitement céramique professionnel. Une barrière invisible haute performance contre les UV.',
+      key: 'ceramique',
+      title: t('services.ceramique.title'),
+      subtitle: t('services.ceramique.subtitle'),
+      description: t('services.ceramique.description'),
       video: 'https://video.wixstatic.com/video/bf2329_89b93bd6dc05409fb7993b679512255e/720p/mp4/file.mp4',
-      link: '/services/ceramique',
+      link: localePath('/services/ceramique'),
     },
     {
-      title: 'Nos autres',
-      subtitle: 'Services.',
-      description: 'Nous proposons d\'autres services en fonction de vos besoins. N\'hésitez pas à nous contacter pour toutes vos questions.',
+      key: 'autres',
+      title: t('services.autres.title'),
+      subtitle: t('services.autres.subtitle'),
+      description: t('services.autres.description'),
       video: 'https://video.wixstatic.com/video/bf2329_8df04913038947498d9e06c66273495a/720p/mp4/file.mp4',
-      link: '/services',
+      link: localePath('/services'),
     },
     {
-      title: 'Cire',
-      subtitle: 'Premium.',
-      description: 'Sublimez votre véhicule avec notre application de cire premium. Un résultat brillant pour révéler toute la profondeur de votre peinture.',
+      key: 'cire',
+      title: t('services.cire.title'),
+      subtitle: t('services.cire.subtitle'),
+      description: t('services.cire.description'),
       video: 'https://video.wixstatic.com/video/bf2329_5458ea175d88432caeed969df129eb8e/720p/mp4/file.mp4',
-      link: '/services/cire',
+      link: localePath('/services/cire'),
       isLast: true,
     },
   ]
@@ -293,11 +291,12 @@ const ParallaxServices = () => {
     <section className="relative bg-[#f8f7f4]">
       {services.map((service, index) => (
         <ServiceCard
-          key={service.title}
+          key={service.key}
           service={service}
           index={index}
           isLast={index === services.length - 1}
           totalCards={services.length}
+          t={t}
         />
       ))}
     </section>
@@ -307,7 +306,7 @@ const ParallaxServices = () => {
 /**
  * ServiceCard - Carte qui colle sous le header et se fait recouvrir par la suivante
  */
-const ServiceCard = ({ service, index, isLast, totalCards }) => {
+const ServiceCard = ({ service, index, isLast, totalCards, t }) => {
   const cardRef = useRef(null)
 
   const { scrollYProgress } = useScroll({
@@ -350,10 +349,10 @@ const ServiceCard = ({ service, index, isLast, totalCards }) => {
                 {service.description}
               </p>
               <Link
-                to={service.link || '/services'}
+                to={service.link}
                 className="inline-flex items-center px-6 sm:px-8 py-3 sm:py-4 bg-dark-900 hover:bg-dark-800 text-white font-semibold rounded-full transition-all duration-300 group text-sm sm:text-base"
               >
-                {service.isLast ? 'Découvrir nos services' : 'En savoir plus'}
+                {service.isLast ? t('services.discoverServices') : t('services.learnMore')}
                 <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2 group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>

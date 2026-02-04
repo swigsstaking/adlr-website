@@ -1,11 +1,17 @@
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ShoppingCart, Plus, Minus, Trash2, ArrowRight, ShoppingBag, ArrowLeft } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { useCart } from '../context/CartContext'
 import SEOHead from '../components/SEOHead'
 
 const Cart = () => {
+  const { lang } = useParams()
+  const { t } = useTranslation('cart')
   const { cart, updateQuantity, removeFromCart, getCartTotal, getCartCount, clearCart } = useCart()
+
+  // Helper for localized paths
+  const localePath = (path) => `/${lang}${path}`
 
   const cartTotal = getCartTotal()
   const cartCount = getCartCount()
@@ -30,10 +36,7 @@ const Cart = () => {
   if (cart.length === 0) {
     return (
       <>
-        <SEOHead
-          title="Panier | ADLR Cosmetic Auto"
-          description="Votre panier est vide. Découvrez notre sélection de produits de detailing."
-        />
+        <SEOHead page="cart" />
 
         <div className="min-h-screen bg-gradient-to-b from-sand-100 to-white pt-28 pb-16">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -46,17 +49,17 @@ const Cart = () => {
                 <ShoppingCart className="w-12 h-12 text-dark-400" />
               </div>
               <h1 className="text-2xl font-display font-bold text-dark-900 mb-3">
-                Votre panier est vide
+                {t('cart.empty')}
               </h1>
               <p className="text-dark-500 mb-8">
-                Découvrez notre sélection de produits de detailing professionnels
+                {t('cart.emptyDescription')}
               </p>
               <Link
-                to="/boutique"
+                to={localePath('/boutique')}
                 className="inline-flex items-center px-6 py-3 bg-dark-900 text-white font-semibold rounded-full hover:bg-dark-800 transition-all"
               >
                 <ShoppingBag className="w-5 h-5 mr-2" />
-                Voir la boutique
+                {t('cart.viewShop')}
               </Link>
             </motion.div>
           </div>
@@ -67,10 +70,7 @@ const Cart = () => {
 
   return (
     <>
-      <SEOHead
-        title={`Panier (${cartCount}) | ADLR Cosmetic Auto`}
-        description="Finalisez votre commande de produits de detailing."
-      />
+      <SEOHead page="cart" />
 
       <div className="min-h-screen bg-gradient-to-b from-sand-100 to-white pt-28 pb-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -78,10 +78,10 @@ const Cart = () => {
           <div className="flex items-center justify-between mb-8">
             <div>
               <h1 className="text-3xl font-display font-bold text-dark-900 mb-2">
-                Votre panier
+                {t('cart.title')}
               </h1>
               <p className="text-dark-500">
-                {cartCount} article{cartCount > 1 ? 's' : ''}
+                {t('cart.itemCount', { count: cartCount })}
               </p>
             </div>
             <button
@@ -89,7 +89,7 @@ const Cart = () => {
               className="text-red-500 hover:text-red-600 text-sm font-medium flex items-center gap-2"
             >
               <Trash2 className="w-4 h-4" />
-              Vider le panier
+              {t('cart.clearCart')}
             </button>
           </div>
 
@@ -106,7 +106,7 @@ const Cart = () => {
                 >
                   <div className="flex gap-4 sm:gap-6">
                     {/* Image */}
-                    <Link to={`/boutique/${item._id}`} className="flex-shrink-0">
+                    <Link to={localePath(`/boutique/${item._id}`)} className="flex-shrink-0">
                       <img
                         src={getProductImage(item)}
                         alt={item.name}
@@ -116,7 +116,7 @@ const Cart = () => {
 
                     {/* Content */}
                     <div className="flex-1 min-w-0">
-                      <Link to={`/boutique/${item._id}`}>
+                      <Link to={localePath(`/boutique/${item._id}`)}>
                         <h3 className="font-semibold text-dark-900 hover:text-primary-600 transition-colors line-clamp-2">
                           {item.name}
                         </h3>
@@ -165,11 +165,11 @@ const Cart = () => {
 
               {/* Continue Shopping */}
               <Link
-                to="/boutique"
+                to={localePath('/boutique')}
                 className="flex items-center gap-2 text-dark-500 hover:text-dark-900 transition-colors py-4"
               >
                 <ArrowLeft className="w-5 h-5" />
-                Continuer mes achats
+                {t('cart.continueShopping')}
               </Link>
             </div>
 
@@ -182,42 +182,42 @@ const Cart = () => {
                 className="bg-white rounded-2xl border border-sand-200 p-6 sticky top-28"
               >
                 <h2 className="text-lg font-display font-bold text-dark-900 mb-6">
-                  Récapitulatif
+                  {t('cart.summary')}
                 </h2>
 
                 <div className="space-y-4 mb-6">
                   <div className="flex justify-between text-dark-600">
-                    <span>Sous-total</span>
+                    <span>{t('cart.subtotal')}</span>
                     <span>CHF {cartTotal.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between text-dark-600">
-                    <span>Livraison</span>
-                    <span className="text-primary-600">Gratuite</span>
+                    <span>{t('cart.shipping')}</span>
+                    <span className="text-primary-600">{t('cart.shippingFree')}</span>
                   </div>
                 </div>
 
                 <div className="border-t border-sand-200 pt-4 mb-6">
                   <div className="flex justify-between text-dark-900">
-                    <span className="font-semibold">Total</span>
+                    <span className="font-semibold">{t('cart.total')}</span>
                     <span className="text-xl font-bold">CHF {cartTotal.toFixed(2)}</span>
                   </div>
-                  <p className="text-dark-400 text-sm mt-1">TVA incluse</p>
+                  <p className="text-dark-400 text-sm mt-1">{t('cart.vatIncluded')}</p>
                 </div>
 
                 <Link
-                  to="/checkout"
+                  to={localePath('/checkout')}
                   className="w-full py-3.5 bg-dark-900 hover:bg-dark-800 text-white font-semibold rounded-xl transition-all flex items-center justify-center gap-2"
                 >
-                  Passer la commande
+                  {t('cart.checkout')}
                   <ArrowRight className="w-5 h-5" />
                 </Link>
 
                 {/* Trust badges */}
                 <div className="mt-6 pt-6 border-t border-sand-200">
                   <div className="flex items-center justify-center gap-4 text-dark-400 text-sm">
-                    <span>Paiement sécurisé</span>
+                    <span>{t('cart.securePayment')}</span>
                     <span>|</span>
-                    <span>Livraison rapide</span>
+                    <span>{t('cart.fastDelivery')}</span>
                   </div>
                 </div>
               </motion.div>

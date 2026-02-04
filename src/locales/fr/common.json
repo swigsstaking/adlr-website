@@ -1,0 +1,51 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "services": "Services",
+    "configurator": "Configurateur",
+    "shop": "Boutique",
+    "tutorials": "Tutoriels",
+    "contact": "Contact",
+    "allServices": "Tous les services",
+    "myAccount": "Mon compte",
+    "login": "Connexion"
+  },
+  "serviceNames": {
+    "lavage": "Lavage",
+    "polish": "Polish",
+    "ceramique": "Céramique",
+    "cire": "Cire"
+  },
+  "footer": {
+    "description": "Expert en detailing automobile. Nous redonnons l'éclat à votre véhicule avec des techniques professionnelles et des produits premium.",
+    "servicesTitle": "Services",
+    "usefulLinks": "Liens Utiles",
+    "contactTitle": "Contact",
+    "copyright": "Tous droits réservés.",
+    "createdBy": "Site créé par"
+  },
+  "loading": "Chargement...",
+  "error": "Une erreur est survenue",
+  "retry": "Réessayer",
+  "back": "Retour",
+  "next": "Suivant",
+  "previous": "Précédent",
+  "submit": "Envoyer",
+  "cancel": "Annuler",
+  "save": "Enregistrer",
+  "delete": "Supprimer",
+  "edit": "Modifier",
+  "close": "Fermer",
+  "search": "Rechercher",
+  "seeMore": "Voir plus",
+  "seeAll": "Voir tout",
+  "learnMore": "En savoir plus",
+  "getQuote": "Obtenir un devis",
+  "bookNow": "Réserver maintenant",
+  "currency": "CHF",
+  "from": "Dès",
+  "languages": {
+    "fr": "Français",
+    "en": "English"
+  }
+}

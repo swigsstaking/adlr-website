@@ -1,0 +1,51 @@
+{
+  "hero": {
+    "title": "Contact Us",
+    "description": "A question, a quote? Our team responds quickly"
+  },
+  "info": {
+    "title": "Contact Information",
+    "description": "Don't hesitate to contact us with any questions. We're here to help.",
+    "phone": "Phone",
+    "email": "Email",
+    "address": "Address",
+    "hours": "Hours",
+    "hoursContent": {
+      "weekdays": "Monday - Friday: 8am - 6pm",
+      "saturday": "Saturday: 9am - 4pm",
+      "sunday": "Sunday: Closed"
+    },
+    "whatsapp": "Message us on WhatsApp"
+  },
+  "form": {
+    "title": "Send us a message",
+    "name": "Full name",
+    "namePlaceholder": "John Doe",
+    "email": "Email",
+    "emailPlaceholder": "john@example.ch",
+    "phone": "Phone",
+    "phonePlaceholder": "+41 79 123 45 67",
+    "subject": "Subject",
+    "subjectPlaceholder": "Select a subject",
+    "message": "Message",
+    "messagePlaceholder": "Describe your request...",
+    "required": "*",
+    "submit": "Send message",
+    "sending": "Sending..."
+  },
+  "subjects": {
+    "quote": "Quote request",
+    "question": "Service question",
+    "appointment": "Appointment booking",
+    "complaint": "Complaint",
+    "other": "Other"
+  },
+  "messages": {
+    "success": "Message sent successfully! We will respond shortly.",
+    "error": "An error occurred. Please try again or contact us by phone."
+  },
+  "map": {
+    "title": "Google Maps",
+    "subtitle": "(To be configured with exact address)"
+  }
+}

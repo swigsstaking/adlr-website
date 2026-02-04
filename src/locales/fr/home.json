@@ -1,0 +1,71 @@
+{
+  "hero": {
+    "tagline": "L'excellence du detailing automobile.",
+    "description": "Des prestations haut de gamme pour sublimer votre véhicule.",
+    "cta": "Obtenir un devis",
+    "secondaryCta": "Nos services"
+  },
+  "stats": {
+    "vehicles": "Véhicules traités",
+    "satisfaction": "Clients satisfaits",
+    "experience": "Ans d'expérience"
+  },
+  "scroll": "Scroll",
+  "testimonials": {
+    "sectionLabel": "Témoignages",
+    "title": "Clients satisfaits",
+    "items": [
+      {
+        "name": "Marc D.",
+        "car": "Porsche 911 GT3",
+        "text": "Un travail exceptionnel. La céramique est parfaite, ma voiture n'a jamais autant brillé."
+      },
+      {
+        "name": "Sophie L.",
+        "car": "BMW M4 Competition",
+        "text": "Professionnalisme et résultat bluffant. Je recommande à 100%."
+      },
+      {
+        "name": "Thomas R.",
+        "car": "Mercedes AMG GT",
+        "text": "Le polish correctif a fait des miracles. Les micro-rayures ont totalement disparu."
+      }
+    ]
+  },
+  "cta": {
+    "title": "Prêt à transformer",
+    "titleLine2": "votre véhicule",
+    "description": "Obtenez un devis personnalisé en quelques clics avec notre configurateur.",
+    "primaryBtn": "Configurer mon service",
+    "secondaryBtn": "Nous contacter"
+  },
+  "services": {
+    "lavage": {
+      "title": "Lavage",
+      "subtitle": "Premium.",
+      "description": "Découvrez notre service de lavage automobile : un nettoyage minutieux intérieur et extérieur, des produits haut de gamme sélectionnés par nos experts."
+    },
+    "polish": {
+      "title": "Polish",
+      "subtitle": "Correctif.",
+      "description": "Offrez à votre voiture un éclat incomparable. Nous utilisons des techniques professionnelles pour éliminer micro-rayures, swirls et hologrammes."
+    },
+    "ceramique": {
+      "title": "Protection",
+      "subtitle": "Céramique.",
+      "description": "Protégez votre investissement avec notre traitement céramique professionnel. Une barrière invisible haute performance contre les UV."
+    },
+    "autres": {
+      "title": "Nos autres",
+      "subtitle": "Services.",
+      "description": "Nous proposons d'autres services en fonction de vos besoins. N'hésitez pas à nous contacter pour toutes vos questions."
+    },
+    "cire": {
+      "title": "Cire",
+      "subtitle": "Premium.",
+      "description": "Sublimez votre véhicule avec notre application de cire premium. Un résultat brillant pour révéler toute la profondeur de votre peinture."
+    },
+    "learnMore": "En savoir plus",
+    "discoverServices": "Découvrir nos services"
+  }
+}

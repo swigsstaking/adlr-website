@@ -1,7 +1,8 @@
 import { useState, useEffect, useMemo } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ShoppingCart, Search, Plus, Package, X, Minus, ArrowRight, Filter, ChevronDown, Bell, Mail, Loader2, Check } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import SEOHead from '../components/SEOHead'
 import { useCart } from '../context/CartContext'
 
@@ -12,6 +13,8 @@ const SITE_SLUG = import.meta.env.VITE_SITE_SLUG || 'adlr'
  * ShopV2 - Design moderne avec sidebar et panier flottant
  */
 const ShopV2 = () => {
+  const { lang } = useParams()
+  const { t } = useTranslation('shop')
   const [products, setProducts] = useState([])
   const [categories, setCategories] = useState([])
   const [loading, setLoading] = useState(true)
@@ -29,14 +32,12 @@ const ShopV2 = () => {
   const [alertError, setAlertError] = useState('')
   const { cart, addToCart, removeFromCart, updateQuantity, getCartTotal, getCartCount, isCartOpen, setIsCartOpen } = useCart()
 
-  // Helper to check if product is in stock (considers variants)
+  // Helper for localized paths
+  const localePath = (path) => `/${lang}${path}`
+
+  // ADLR: Stock management disabled - all products are always available
   const isProductInStock = (product) => {
-    // If product has variants, check if at least one variant has stock
-    if (product.variants?.length > 0) {
-      return product.variants.some(v => v.stock > 0 || v.stock === undefined)
-    }
-    // Otherwise use product-level stock
-    return product.inStock !== false && (product.stock === undefined || product.stock > 0)
+    return true // Always in stock for ADLR
   }
 
   useEffect(() => {
@@ -60,7 +61,7 @@ const ShopV2 = () => {
           if (categoriesData.success) setCategories(categoriesData.data || [])
         }
       } catch (error) {
-        console.error('Erreur chargement boutique:', error)
+        console.error('Error loading shop:', error)
         setProducts(demoProducts)
         setCategories(demoCategories)
       } finally {
@@ -226,11 +227,8 @@ const ShopV2 = () => {
         break
       case 'pertinence':
       default:
-        // Ordre par défaut : produits en stock en premier, puis par badge/popularité
+        // ADLR: Tri par badge/popularité uniquement (pas de tri par stock)
         result = [...result].sort((a, b) => {
-          const aInStock = a.inStock !== false && (a.stock === undefined || a.stock > 0)
-          const bInStock = b.inStock !== false && (b.stock === undefined || b.stock > 0)
-          if (aInStock !== bInStock) return bInStock - aInStock
           // Produits avec badge en premier
           if (a.badge && !b.badge) return -1
           if (!a.badge && b.badge) return 1
@@ -262,7 +260,7 @@ const ShopV2 = () => {
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!emailRegex.test(alertEmail)) {
-      setAlertError('Veuillez entrer une adresse email valide')
+      setAlertError(t('stockAlert.invalidEmail'))
       return
     }
 
@@ -286,11 +284,11 @@ const ShopV2 = () => {
         setAlertSuccess(true)
         setAlertEmail('')
       } else {
-        setAlertError(data.message || 'Une erreur est survenue')
+        setAlertError(data.message || t('stockAlert.error'))
       }
     } catch (error) {
       console.error('Stock alert error:', error)
-      setAlertError('Une erreur est survenue. Veuillez réessayer.')
+      setAlertError(t('stockAlert.error'))
     } finally {
       setAlertSubmitting(false)
     }
@@ -317,9 +315,9 @@ const ShopV2 = () => {
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
               <div>
                 <h1 className="text-3xl font-display font-bold text-dark-900">
-                  Boutique<span className="text-primary-500">.</span>
+                  {t('hero.title')}<span className="text-primary-500">.</span>
                 </h1>
-                <p className="text-dark-500 mt-1">Produits de detailing professionnels</p>
+                <p className="text-dark-500 mt-1">{t('hero.description')}</p>
               </div>
 
               {/* Search */}
@@ -327,7 +325,7 @@ const ShopV2 = () => {
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-dark-400" />
                 <input
                   type="text"
-                  placeholder="Rechercher..."
+                  placeholder={t('filters.search')}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full pl-12 pr-4 py-3 bg-sand-50 border border-sand-200 rounded-xl text-dark-900 focus:outline-none focus:border-dark-400 transition-colors"
@@ -343,7 +341,7 @@ const ShopV2 = () => {
             <aside className="hidden lg:block w-64 flex-shrink-0">
               <div className="sticky top-[100px]">
                 <h3 className="text-sm font-semibold text-dark-900 uppercase tracking-wider mb-4">
-                  Catégories
+                  {t('filters.categories')}
                 </h3>
                 <nav className="space-y-1">
                   <button
@@ -354,7 +352,7 @@ const ShopV2 = () => {
                         : 'text-dark-600 hover:bg-sand-100'
                     }`}
                   >
-                    <span>Tous les produits</span>
+                    <span>{t('filters.all')}</span>
                     <span className={`text-sm ${selectedCategory === 'all' ? 'text-white/60' : 'text-dark-400'}`}>
                       {displayProducts.length}
                     </span>
@@ -385,7 +383,7 @@ const ShopV2 = () => {
               className="lg:hidden fixed bottom-[calc(1.5rem+env(safe-area-inset-bottom))] left-6 z-40 flex items-center gap-2 px-6 py-4 bg-white border border-sand-200 rounded-full shadow-2xl text-dark-700 font-semibold"
             >
               <Filter className="w-5 h-5" />
-              Filtres
+              {t('filters.filters')}
             </button>
 
             {/* Products Grid */}
@@ -406,7 +404,7 @@ const ShopV2 = () => {
 
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
                 <p className="text-dark-500">
-                  {filteredProducts.length} produit{filteredProducts.length > 1 ? 's' : ''}
+                  {t('filters.productCount', { count: filteredProducts.length })}
                 </p>
 
                 <div className="flex items-center gap-3">
@@ -418,7 +416,7 @@ const ShopV2 = () => {
                         onChange={(e) => setSelectedBrand(e.target.value)}
                         className="appearance-none bg-white border border-sand-200 rounded-xl px-4 py-2.5 pr-10 text-dark-700 text-sm font-medium focus:outline-none focus:border-dark-400 transition-colors cursor-pointer"
                       >
-                        <option value="all">Toutes les marques</option>
+                        <option value="all">{t('filters.allBrands')}</option>
                         {uniqueBrands.map(brand => (
                           <option key={brand} value={brand}>{brand}</option>
                         ))}
@@ -434,12 +432,12 @@ const ShopV2 = () => {
                       onChange={(e) => setSortOption(e.target.value)}
                       className="appearance-none bg-white border border-sand-200 rounded-xl px-4 py-2.5 pr-10 text-dark-700 text-sm font-medium focus:outline-none focus:border-dark-400 transition-colors cursor-pointer"
                     >
-                      <option value="pertinence">Pertinence</option>
-                      <option value="prix-asc">Prix croissant</option>
-                      <option value="prix-desc">Prix décroissant</option>
-                      <option value="nom-asc">Nom A-Z</option>
-                      <option value="nom-desc">Nom Z-A</option>
-                      <option value="nouveau">Nouveautés</option>
+                      <option value="pertinence">{t('filters.sortOptions.pertinence')}</option>
+                      <option value="prix-asc">{t('filters.sortOptions.priceAsc')}</option>
+                      <option value="prix-desc">{t('filters.sortOptions.priceDesc')}</option>
+                      <option value="nom-asc">{t('filters.sortOptions.nameAsc')}</option>
+                      <option value="nom-desc">{t('filters.sortOptions.nameDesc')}</option>
+                      <option value="nouveau">{t('filters.sortOptions.newest')}</option>
                     </select>
                     <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-dark-400 pointer-events-none" />
                   </div>
@@ -459,7 +457,7 @@ const ShopV2 = () => {
               ) : filteredProducts.length === 0 ? (
                 <div className="text-center py-20">
                   <Package className="w-16 h-16 text-dark-300 mx-auto mb-4" />
-                  <p className="text-dark-500">Aucun produit trouvé</p>
+                  <p className="text-dark-500">{t('filters.noResults')}</p>
                 </div>
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
@@ -472,7 +470,7 @@ const ShopV2 = () => {
                       className="group bg-white rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300"
                     >
                       {/* Image */}
-                      <Link to={`/boutique/${product._id}`} className="block relative aspect-square overflow-hidden">
+                      <Link to={localePath(`/boutique/${product._id}`)} className="block relative aspect-square overflow-hidden">
                         <img
                           src={product.images?.[0]?.url || product.images?.[0] || 'https://via.placeholder.com/400'}
                           alt={product.name}
@@ -489,7 +487,7 @@ const ShopV2 = () => {
                         )}
                         {!isProductInStock(product) && (
                           <div className="absolute inset-0 bg-white/80 flex items-center justify-center">
-                            <span className="text-dark-500 font-medium">Rupture de stock</span>
+                            <span className="text-dark-500 font-medium">{t('product.outOfStock')}</span>
                           </div>
                         )}
                       </Link>
@@ -500,7 +498,7 @@ const ShopV2 = () => {
                           {product.category?.name}
                         </span>
 
-                        <Link to={`/boutique/${product._id}`}>
+                        <Link to={localePath(`/boutique/${product._id}`)}>
                           <h3 className="text-dark-900 font-semibold mt-1 group-hover:text-primary-600 transition-colors line-clamp-1">
                             {product.name}
                           </h3>
@@ -532,7 +530,7 @@ const ShopV2 = () => {
                                 ? 'bg-dark-900 hover:bg-dark-800 text-white hover:scale-110'
                                 : 'bg-amber-500 hover:bg-amber-600 text-white hover:scale-110'
                             }`}
-                            title={isProductInStock(product) ? 'Ajouter au panier' : 'Me prévenir du retour en stock'}
+                            title={isProductInStock(product) ? t('product.addToCart') : t('product.notifyMe')}
                           >
                             {isProductInStock(product) ? <Plus className="w-5 h-5" /> : <Bell className="w-5 h-5" />}
                           </button>
@@ -580,7 +578,7 @@ const ShopV2 = () => {
               >
                 <div className="flex items-center justify-between p-6 border-b border-sand-200">
                   <h2 className="text-xl font-display font-bold text-dark-900">
-                    Panier ({cartCount})
+                    {t('cart.title')} ({cartCount})
                   </h2>
                   <button
                     onClick={() => setIsCartOpen(false)}
@@ -594,7 +592,7 @@ const ShopV2 = () => {
                   {cart.length === 0 ? (
                     <div className="text-center py-12">
                       <ShoppingCart className="w-16 h-16 text-dark-200 mx-auto mb-4" />
-                      <p className="text-dark-500">Votre panier est vide</p>
+                      <p className="text-dark-500">{t('cart.empty')}</p>
                     </div>
                   ) : (
                     <div className="space-y-4">
@@ -639,11 +637,11 @@ const ShopV2 = () => {
                 {cart.length > 0 && (
                   <div className="p-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))] border-t border-sand-200">
                     <div className="flex items-center justify-between mb-4">
-                      <span className="text-dark-500">Total</span>
+                      <span className="text-dark-500">{t('cart.total')}</span>
                       <span className="text-2xl font-bold text-dark-900">CHF {cartTotal.toFixed(2)}</span>
                     </div>
-                    <Link to="/panier" className="w-full flex items-center justify-center gap-2 px-6 py-4 bg-dark-900 hover:bg-dark-800 text-white font-semibold rounded-xl transition-all">
-                      Voir le panier
+                    <Link to={localePath('/panier')} className="w-full flex items-center justify-center gap-2 px-6 py-4 bg-dark-900 hover:bg-dark-800 text-white font-semibold rounded-xl transition-all">
+                      {t('cart.viewCart')}
                       <ArrowRight className="w-5 h-5" />
                     </Link>
                   </div>
@@ -673,7 +671,7 @@ const ShopV2 = () => {
               >
                 <div className="p-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))]">
                   <div className="flex items-center justify-between mb-6">
-                    <h3 className="text-lg font-bold text-dark-900">Filtres</h3>
+                    <h3 className="text-lg font-bold text-dark-900">{t('filters.filters')}</h3>
                     <button onClick={() => setIsMobileFilterOpen(false)}>
                       <X className="w-6 h-6" />
                     </button>
@@ -681,15 +679,15 @@ const ShopV2 = () => {
 
                   {/* Tri */}
                   <div className="mb-6">
-                    <h4 className="text-sm font-semibold text-dark-700 uppercase tracking-wider mb-3">Trier par</h4>
+                    <h4 className="text-sm font-semibold text-dark-700 uppercase tracking-wider mb-3">{t('filters.sortBy')}</h4>
                     <div className="grid grid-cols-2 gap-2">
                       {[
-                        { value: 'pertinence', label: 'Pertinence' },
-                        { value: 'prix-asc', label: 'Prix ↑' },
-                        { value: 'prix-desc', label: 'Prix ↓' },
-                        { value: 'nom-asc', label: 'Nom A-Z' },
-                        { value: 'nom-desc', label: 'Nom Z-A' },
-                        { value: 'nouveau', label: 'Nouveautés' },
+                        { value: 'pertinence', label: t('filters.sortOptions.pertinence') },
+                        { value: 'prix-asc', label: `${t('filters.sortOptions.priceAsc').split(' ')[0]} ↑` },
+                        { value: 'prix-desc', label: `${t('filters.sortOptions.priceDesc').split(' ')[0]} ↓` },
+                        { value: 'nom-asc', label: t('filters.sortOptions.nameAsc') },
+                        { value: 'nom-desc', label: t('filters.sortOptions.nameDesc') },
+                        { value: 'nouveau', label: t('filters.sortOptions.newest') },
                       ].map((option) => (
                         <button
                           key={option.value}
@@ -709,7 +707,7 @@ const ShopV2 = () => {
                   {/* Marques */}
                   {uniqueBrands.length > 0 && (
                     <div className="mb-6">
-                      <h4 className="text-sm font-semibold text-dark-700 uppercase tracking-wider mb-3">Marques</h4>
+                      <h4 className="text-sm font-semibold text-dark-700 uppercase tracking-wider mb-3">{t('filters.brands')}</h4>
                       <div className="flex flex-wrap gap-2">
                         <button
                           onClick={() => setSelectedBrand('all')}
@@ -719,7 +717,7 @@ const ShopV2 = () => {
                               : 'bg-sand-100 text-dark-600'
                           }`}
                         >
-                          Toutes
+                          {t('filters.allBrandsShort')}
                         </button>
                         {uniqueBrands.map((brand) => (
                           <button
@@ -740,7 +738,7 @@ const ShopV2 = () => {
 
                   {/* Catégories */}
                   <div>
-                    <h4 className="text-sm font-semibold text-dark-700 uppercase tracking-wider mb-3">Catégories</h4>
+                    <h4 className="text-sm font-semibold text-dark-700 uppercase tracking-wider mb-3">{t('filters.categories')}</h4>
                     <div className="space-y-2">
                       <button
                         onClick={() => { setSelectedCategory('all'); setIsMobileFilterOpen(false) }}
@@ -748,7 +746,7 @@ const ShopV2 = () => {
                           selectedCategory === 'all' ? 'bg-dark-900 text-white' : 'bg-sand-100 text-dark-600'
                         }`}
                       >
-                        <span>Tous les produits</span>
+                        <span>{t('filters.all')}</span>
                       </button>
                       {displayCategories.map((cat) => (
                         <button
@@ -789,7 +787,7 @@ const ShopV2 = () => {
                 <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl">
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="text-lg font-display font-bold text-dark-900">
-                      Rupture de stock
+                      {t('stockAlert.title')}
                     </h3>
                     <button
                       onClick={closeStockAlertModal}
@@ -808,7 +806,7 @@ const ShopV2 = () => {
                     />
                     <div>
                       <p className="font-medium text-dark-900 line-clamp-2">{stockAlertProduct.name}</p>
-                      <p className="text-dark-500 text-sm">Indisponible actuellement</p>
+                      <p className="text-dark-500 text-sm">{t('stockAlert.unavailable')}</p>
                     </div>
                   </div>
 
@@ -817,23 +815,23 @@ const ShopV2 = () => {
                       <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
                         <Check className="w-6 h-6 text-green-600" />
                       </div>
-                      <p className="font-medium text-dark-900 mb-1">C'est noté !</p>
-                      <p className="text-dark-500 text-sm">Vous serez notifié dès que ce produit sera de nouveau disponible.</p>
+                      <p className="font-medium text-dark-900 mb-1">{t('stockAlert.success')}</p>
+                      <p className="text-dark-500 text-sm">{t('stockAlert.successMessage')}</p>
                       <button
                         onClick={closeStockAlertModal}
                         className="mt-4 px-6 py-2.5 bg-dark-900 hover:bg-dark-800 text-white font-medium rounded-xl transition-colors"
                       >
-                        Fermer
+                        {t('stockAlert.close')}
                       </button>
                     </div>
                   ) : (
                     <>
                       <div className="flex items-center gap-2 mb-3 text-amber-600">
                         <Bell className="w-5 h-5" />
-                        <p className="font-medium">Être alerté du retour en stock</p>
+                        <p className="font-medium">{t('stockAlert.alertTitle')}</p>
                       </div>
                       <p className="text-dark-500 text-sm mb-4">
-                        Entrez votre email pour recevoir une notification dès que ce produit sera de nouveau disponible.
+                        {t('stockAlert.alertDescription')}
                       </p>
                       <form onSubmit={handleStockAlert}>
                         <div className="relative mb-4">
@@ -842,7 +840,7 @@ const ShopV2 = () => {
                             type="email"
                             value={alertEmail}
                             onChange={(e) => setAlertEmail(e.target.value)}
-                            placeholder="Votre adresse email"
+                            placeholder={t('stockAlert.emailPlaceholder')}
                             className="w-full pl-12 pr-4 py-3 border border-sand-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                             required
                           />
@@ -856,7 +854,7 @@ const ShopV2 = () => {
                             onClick={closeStockAlertModal}
                             className="flex-1 px-4 py-3 border border-sand-300 text-dark-700 font-medium rounded-xl hover:bg-sand-50 transition-colors"
                           >
-                            Annuler
+                            {t('stockAlert.cancel')}
                           </button>
                           <button
                             type="submit"
@@ -866,7 +864,7 @@ const ShopV2 = () => {
                             {alertSubmitting ? (
                               <Loader2 className="w-5 h-5 animate-spin" />
                             ) : (
-                              "M'alerter"
+                              t('stockAlert.submit')
                             )}
                           </button>
                         </div>

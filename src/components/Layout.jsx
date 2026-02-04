@@ -1,14 +1,18 @@
 import { useState, useEffect } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useParams, Outlet } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X, Phone, Mail, MapPin, Instagram, Facebook, ChevronDown, ShoppingCart, User } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import Logo from './Logo'
 import Favicon from './Favicon'
+import { LanguageSwitcher, LanguageSwitcherFooter } from './LanguageSwitcher'
 import { useSiteInfo } from '../hooks/useSiteInfo'
 import { useAuth } from '../context/AuthContext'
 import { useCart } from '../context/CartContext'
 
-const Layout = ({ children }) => {
+const Layout = () => {
+  const { lang } = useParams()
+  const { t } = useTranslation('common')
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
   const [openDropdown, setOpenDropdown] = useState(null)
@@ -33,31 +37,34 @@ const Layout = ({ children }) => {
     window.scrollTo(0, 0)
   }, [location])
 
-  // Navigation
+  // Helper function to create localized paths
+  const localePath = (path) => `/${lang}${path}`
+
+  // Navigation with translations
   const mainNav = [
-    { name: 'Accueil', path: '/' },
+    { name: t('nav.home'), path: localePath('') },
     {
-      name: 'Services',
-      path: '/services',
+      name: t('nav.services'),
+      path: localePath('/services'),
       hasDropdown: true,
       dropdownKey: 'services',
       items: [
-        { name: 'Lavage', path: '/services/lavage' },
-        { name: 'Polish', path: '/services/polish' },
-        { name: 'Céramique', path: '/services/ceramique' },
-        { name: 'Cire', path: '/services/cire' },
+        { name: t('serviceNames.lavage'), path: localePath('/services/lavage') },
+        { name: t('serviceNames.polish'), path: localePath('/services/polish') },
+        { name: t('serviceNames.ceramique'), path: localePath('/services/ceramique') },
+        { name: t('serviceNames.cire'), path: localePath('/services/cire') },
       ]
     },
-    { name: 'Configurateur', path: '/configurateur' },
-    { name: 'Boutique', path: '/boutique' },
-    { name: 'Tutoriels', path: '/tutoriels' },
-    { name: 'Contact', path: '/contact' },
+    { name: t('nav.configurator'), path: localePath('/configurateur') },
+    { name: t('nav.shop'), path: localePath('/boutique') },
+    { name: t('nav.tutorials'), path: localePath('/tutoriels') },
+    { name: t('nav.contact'), path: localePath('/contact') },
   ]
 
   const isActive = (path) => location.pathname === path
 
   // Hide footer on configurator pages for better UX
-  const hideFooter = location.pathname.startsWith('/configurateur')
+  const hideFooter = location.pathname.includes('/configurateur')
 
   return (
     <div className="min-h-screen flex flex-col bg-white">
@@ -69,7 +76,7 @@ const Layout = ({ children }) => {
           <div className="flex justify-between items-center py-4 lg:py-6">
 
             {/* Logo - Left */}
-            <Link to="/" className="flex items-center">
+            <Link to={localePath('')} className="flex items-center">
               <Logo className="h-14" />
             </Link>
 
@@ -121,10 +128,10 @@ const Layout = ({ children }) => {
                           {item.dropdownKey === 'services' && (
                             <div className="border-t border-sand-200 mt-2 pt-2">
                               <Link
-                                to="/services"
+                                to={localePath('/services')}
                                 className="block px-4 py-2.5 text-sm font-medium text-dark-900 hover:bg-sand-100 transition-colors"
                               >
-                                Tous les services →
+                                {t('nav.allServices')} →
                               </Link>
                             </div>
                           )}
@@ -147,10 +154,11 @@ const Layout = ({ children }) => {
                 )
               ))}
 
-              {/* Cart & User Icons */}
+              {/* Language Switcher & Cart & User Icons */}
               <div className="flex items-center gap-2 ml-4 pl-4 border-l border-sand-200">
+                <LanguageSwitcher />
                 <Link
-                  to="/panier"
+                  to={localePath('/panier')}
                   className="relative p-2 rounded-lg text-dark-600 hover:text-dark-900 hover:bg-sand-100 transition-colors"
                 >
                   <ShoppingCart className="w-5 h-5" />
@@ -161,7 +169,7 @@ const Layout = ({ children }) => {
                   )}
                 </Link>
                 <Link
-                  to={isAuthenticated ? '/compte' : '/connexion'}
+                  to={isAuthenticated ? localePath('/compte') : localePath('/connexion')}
                   className="p-2 rounded-lg text-dark-600 hover:text-dark-900 hover:bg-sand-100 transition-colors"
                 >
                   <User className="w-5 h-5" />
@@ -172,7 +180,7 @@ const Layout = ({ children }) => {
             {/* Mobile Cart & User + Menu Button */}
             <div className="lg:hidden flex items-center gap-2">
               <Link
-                to="/panier"
+                to={localePath('/panier')}
                 className="relative p-2 rounded-lg text-dark-900 hover:bg-sand-200 transition-colors"
               >
                 <ShoppingCart className="w-5 h-5" />
@@ -255,12 +263,17 @@ const Layout = ({ children }) => {
                 {/* Account link */}
                 <div className="border-t border-sand-200 mt-4 pt-4">
                   <Link
-                    to={isAuthenticated ? '/compte' : '/connexion'}
+                    to={isAuthenticated ? localePath('/compte') : localePath('/connexion')}
                     className="flex items-center py-3 px-4 rounded-lg font-medium text-dark-600 hover:bg-sand-100 hover:text-dark-900 transition-colors"
                   >
                     <User className="w-5 h-5 mr-3" />
-                    {isAuthenticated ? 'Mon compte' : 'Connexion'}
+                    {isAuthenticated ? t('nav.myAccount') : t('nav.login')}
                   </Link>
+                </div>
+
+                {/* Language Switcher Mobile */}
+                <div className="border-t border-sand-200 mt-4 pt-4 px-4">
+                  <LanguageSwitcherFooter />
                 </div>
               </nav>
             </motion.div>
@@ -270,7 +283,7 @@ const Layout = ({ children }) => {
 
       {/* Main Content */}
       <main className="flex-grow">
-        {children}
+        <Outlet />
       </main>
 
       {/* Footer - hidden on configurator pages */}
@@ -282,7 +295,7 @@ const Layout = ({ children }) => {
             <div className="lg:col-span-1">
               <Logo className="h-10 mb-6" />
               <p className="text-dark-500 text-sm leading-relaxed mb-6">
-                {siteInfo?.description || "Expert en detailing automobile. Nous redonnons l'éclat à votre véhicule avec des techniques professionnelles et des produits premium."}
+                {siteInfo?.description || t('footer.description')}
               </p>
               <div className="flex space-x-3">
                 {siteInfo?.social?.instagram && (
@@ -310,29 +323,29 @@ const Layout = ({ children }) => {
 
             {/* Services */}
             <div>
-              <h4 className="text-dark-900 font-semibold mb-6">Services</h4>
+              <h4 className="text-dark-900 font-semibold mb-6">{t('footer.servicesTitle')}</h4>
               <ul className="space-y-3">
-                <li><Link to="/services/lavage" className="text-dark-500 hover:text-dark-900 transition-colors text-sm">Lavage</Link></li>
-                <li><Link to="/services/polish" className="text-dark-500 hover:text-dark-900 transition-colors text-sm">Polish</Link></li>
-                <li><Link to="/services/ceramique" className="text-dark-500 hover:text-dark-900 transition-colors text-sm">Céramique</Link></li>
-                <li><Link to="/services/cire" className="text-dark-500 hover:text-dark-900 transition-colors text-sm">Cire</Link></li>
+                <li><Link to={localePath('/services/lavage')} className="text-dark-500 hover:text-dark-900 transition-colors text-sm">{t('serviceNames.lavage')}</Link></li>
+                <li><Link to={localePath('/services/polish')} className="text-dark-500 hover:text-dark-900 transition-colors text-sm">{t('serviceNames.polish')}</Link></li>
+                <li><Link to={localePath('/services/ceramique')} className="text-dark-500 hover:text-dark-900 transition-colors text-sm">{t('serviceNames.ceramique')}</Link></li>
+                <li><Link to={localePath('/services/cire')} className="text-dark-500 hover:text-dark-900 transition-colors text-sm">{t('serviceNames.cire')}</Link></li>
               </ul>
             </div>
 
             {/* Liens Utiles */}
             <div>
-              <h4 className="text-dark-900 font-semibold mb-6">Liens Utiles</h4>
+              <h4 className="text-dark-900 font-semibold mb-6">{t('footer.usefulLinks')}</h4>
               <ul className="space-y-3">
-                <li><Link to="/configurateur" className="text-dark-500 hover:text-dark-900 transition-colors text-sm">Configurateur</Link></li>
-                <li><Link to="/boutique" className="text-dark-500 hover:text-dark-900 transition-colors text-sm">Boutique</Link></li>
-                <li><Link to="/tutoriels" className="text-dark-500 hover:text-dark-900 transition-colors text-sm">Tutoriels</Link></li>
-                <li><Link to="/contact" className="text-dark-500 hover:text-dark-900 transition-colors text-sm">Contact</Link></li>
+                <li><Link to={localePath('/configurateur')} className="text-dark-500 hover:text-dark-900 transition-colors text-sm">{t('nav.configurator')}</Link></li>
+                <li><Link to={localePath('/boutique')} className="text-dark-500 hover:text-dark-900 transition-colors text-sm">{t('nav.shop')}</Link></li>
+                <li><Link to={localePath('/tutoriels')} className="text-dark-500 hover:text-dark-900 transition-colors text-sm">{t('nav.tutorials')}</Link></li>
+                <li><Link to={localePath('/contact')} className="text-dark-500 hover:text-dark-900 transition-colors text-sm">{t('nav.contact')}</Link></li>
               </ul>
             </div>
 
             {/* Contact */}
             <div>
-              <h4 className="text-dark-900 font-semibold mb-6">Contact</h4>
+              <h4 className="text-dark-900 font-semibold mb-6">{t('footer.contactTitle')}</h4>
               <ul className="space-y-4">
                 {siteInfo?.contact?.address && (
                   <li className="flex items-start text-sm">
@@ -364,21 +377,27 @@ const Layout = ({ children }) => {
           </div>
 
           {/* Bottom Bar */}
-          <div className="border-t border-sand-400 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
-            <p className="text-dark-400 text-sm">
-              &copy; {new Date().getFullYear()} {siteInfo?.name || 'ADLR Cosmetic Auto'}. Tous droits réservés.
-            </p>
-            <p className="text-dark-400 text-sm mt-2 md:mt-0">
-              Site créé par{' '}
-              <a
-                href="https://swigs.ch/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-dark-900 transition-colors"
-              >
-                Swigs
-              </a>
-            </p>
+          <div className="border-t border-sand-400 mt-12 pt-8">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+              <p className="text-dark-400 text-sm">
+                &copy; {new Date().getFullYear()} {siteInfo?.name || 'ADLR Cosmetic Auto'}. {t('footer.copyright')}
+              </p>
+              <div className="flex items-center gap-6">
+                <LanguageSwitcherFooter />
+                <span className="text-dark-300 hidden md:inline">|</span>
+                <p className="text-dark-400 text-sm">
+                  {t('footer.createdBy')}{' '}
+                  <a
+                    href="https://swigs.ch/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-dark-900 transition-colors"
+                  >
+                    Swigs
+                  </a>
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </footer>

@@ -1,7 +1,8 @@
 import { useState, useRef } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Check, ChevronRight, ChevronLeft, Car, CarFront, Truck, Zap, Sparkles, Shield, Plus, Minus, Send, Lightbulb, Wrench, Droplets, Wind, Armchair, PaintBucket, CircleDot, Flame, X, ShoppingCart } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import SEOHead from '../components/SEOHead'
 
 /**
@@ -11,6 +12,8 @@ import SEOHead from '../components/SEOHead'
  * - Navigation fluide
  */
 const ConfiguratorV2 = () => {
+  const { lang } = useParams()
+  const { t } = useTranslation('configurator')
   const [step, setStep] = useState(1)
   const [config, setConfig] = useState({
     vehicleType: null,
@@ -20,61 +23,49 @@ const ConfiguratorV2 = () => {
   })
 
   const vehicleTypes = [
-    { id: 'compact', name: 'Citadine', subtitle: 'Compacte', description: 'Polo, Golf, A3, Classe A...', multiplier: 1, Icon: Car, image: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=400&auto=format&fit=crop' },
-    { id: 'sedan', name: 'Berline', subtitle: 'SUV', description: '3 Series, C-Class, Q5, GLC...', multiplier: 1.25, Icon: CarFront, image: 'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=400&auto=format&fit=crop' },
-    { id: 'large', name: 'Grand SUV', subtitle: 'Van', description: 'X5, GLE, Q7, Range Rover...', multiplier: 1.5, Icon: Truck, image: 'https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=400&auto=format&fit=crop' },
-    { id: 'supercar', name: 'Supercar', subtitle: 'Prestige', description: 'Ferrari, Lamborghini, Porsche GT...', multiplier: 1.8, Icon: Zap, image: 'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=400&auto=format&fit=crop' },
+    { id: 'compact', Icon: Car, image: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=400&auto=format&fit=crop', multiplier: 1 },
+    { id: 'sedan', Icon: CarFront, image: 'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=400&auto=format&fit=crop', multiplier: 1.25 },
+    { id: 'large', Icon: Truck, image: 'https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=400&auto=format&fit=crop', multiplier: 1.5 },
+    { id: 'supercar', Icon: Zap, image: 'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=400&auto=format&fit=crop', multiplier: 1.8 },
   ]
 
   const basePacks = [
     {
       id: 'eclat',
-      name: 'Éclat Initial',
-      description: 'Nettoyage complet',
       basePrice: 150,
       duration: '2-3h',
       color: 'from-blue-500 to-blue-600',
-      features: ['Lavage extérieur', 'Aspiration intérieur', 'Nettoyage vitres', 'Lustrage rapide']
     },
     {
       id: 'prestige',
-      name: 'Prestige',
-      description: 'Notre formule populaire',
       basePrice: 280,
       duration: '4-5h',
       popular: true,
       color: 'from-amber-500 to-orange-500',
-      features: ['Pack Éclat Initial', 'Décontamination clay', 'Shampooing sièges', 'Cire protection 3 mois']
     },
     {
       id: 'excellence',
-      name: 'Excellence',
-      description: 'Le summum du detailing',
       basePrice: 450,
       duration: '6-8h',
       color: 'from-purple-500 to-purple-600',
-      features: ['Pack Prestige', 'Polish léger', 'Céramique express', 'Traitement complet']
     },
     {
       id: 'ceramique',
-      name: 'Céramique Pro',
-      description: 'Protection longue durée',
       basePrice: 800,
-      duration: '2 jours',
+      duration: lang === 'fr' ? '2 jours' : '2 days',
       color: 'from-dark-800 to-dark-900',
-      features: ['Préparation complète', 'Polish correctif', 'Céramique 9H', 'Garantie 5 ans']
     }
   ]
 
   const additionalOptions = [
-    { id: 'headlights', name: 'Rénovation phares', price: 80, Icon: Lightbulb },
-    { id: 'engine', name: 'Nettoyage moteur', price: 60, Icon: Wrench },
-    { id: 'rainrepel', name: 'Anti-pluie vitres', price: 50, Icon: Droplets },
-    { id: 'ozone', name: 'Désinfection ozone', price: 40, Icon: Wind },
-    { id: 'leather', name: 'Traitement cuir', price: 120, Icon: Armchair },
-    { id: 'plastics', name: 'Plastiques ext.', price: 50, Icon: PaintBucket },
-    { id: 'wheels', name: 'Polish jantes', price: 80, Icon: CircleDot },
-    { id: 'exhaust', name: 'Polish échappement', price: 40, Icon: Flame },
+    { id: 'headlights', price: 80, Icon: Lightbulb },
+    { id: 'engine', price: 60, Icon: Wrench },
+    { id: 'rainrepel', price: 50, Icon: Droplets },
+    { id: 'ozone', price: 40, Icon: Wind },
+    { id: 'leather', price: 120, Icon: Armchair },
+    { id: 'plastics', price: 50, Icon: PaintBucket },
+    { id: 'wheels', price: 80, Icon: CircleDot },
+    { id: 'exhaust', price: 40, Icon: Flame },
   ]
 
   const getPrice = () => {
@@ -112,7 +103,7 @@ const ConfiguratorV2 = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    alert('Demande envoyée ! Nous vous recontacterons rapidement.')
+    alert(t('alerts.success'))
   }
 
   const selectedVehicle = vehicleTypes.find(v => v.id === config.vehicleType)
@@ -130,10 +121,10 @@ const ConfiguratorV2 = () => {
               <div className="max-w-3xl">
                 <div className="flex items-center justify-between mb-4">
                   <h1 className="text-xl font-display font-bold text-dark-900">
-                    Configurateur
+                    {t('title')}
                   </h1>
                   <span className="text-sm text-dark-500">
-                    Étape {step} sur 4
+                    {t('stepOf', { step, total: 4 })}
                   </span>
                 </div>
 
@@ -171,10 +162,10 @@ const ConfiguratorV2 = () => {
                   >
                     <div className="mb-8">
                       <h2 className="text-3xl font-display font-bold text-dark-900 mb-2">
-                        Quel est votre véhicule ?
+                        {t('step1.title')}
                       </h2>
                       <p className="text-dark-500">
-                        Sélectionnez la catégorie correspondant à votre voiture
+                        {t('step1.description')}
                       </p>
                     </div>
 
@@ -207,9 +198,9 @@ const ConfiguratorV2 = () => {
                               </motion.div>
                             )}
                           </div>
-                          <h3 className="text-dark-900 font-bold text-lg">{vehicle.name}</h3>
-                          <p className="text-dark-500 text-sm">{vehicle.subtitle}</p>
-                          <p className="text-dark-400 text-xs mt-2">{vehicle.description}</p>
+                          <h3 className="text-dark-900 font-bold text-lg">{t(`vehicles.${vehicle.id}.name`)}</h3>
+                          <p className="text-dark-500 text-sm">{t(`vehicles.${vehicle.id}.subtitle`)}</p>
+                          <p className="text-dark-400 text-xs mt-2">{t(`vehicles.${vehicle.id}.description`)}</p>
                         </button>
                       ))}
                     </div>
@@ -227,16 +218,17 @@ const ConfiguratorV2 = () => {
                   >
                     <div className="mb-8">
                       <h2 className="text-3xl font-display font-bold text-dark-900 mb-2">
-                        Choisissez votre formule
+                        {t('step2.title')}
                       </h2>
                       <p className="text-dark-500">
-                        Nos packs de services adaptés à vos besoins
+                        {t('step2.description')}
                       </p>
                     </div>
 
                     <div className="space-y-4">
                       {basePacks.map((pack) => {
                         const price = Math.round(pack.basePrice * (selectedVehicle?.multiplier || 1))
+                        const packData = t(`packs.${pack.id}`, { returnObjects: true })
                         return (
                           <button
                             key={pack.id}
@@ -255,14 +247,14 @@ const ConfiguratorV2 = () => {
                                 <div className="flex items-start justify-between mb-3">
                                   <div>
                                     <div className="flex items-center gap-2">
-                                      <h3 className="text-lg font-bold text-dark-900">{pack.name}</h3>
+                                      <h3 className="text-lg font-bold text-dark-900">{packData.name}</h3>
                                       {pack.popular && (
                                         <span className="px-2 py-0.5 bg-amber-100 text-amber-700 text-xs font-semibold rounded-full">
-                                          Populaire
+                                          {t('packs.popular')}
                                         </span>
                                       )}
                                     </div>
-                                    <p className="text-dark-500 text-sm">{pack.description}</p>
+                                    <p className="text-dark-500 text-sm">{packData.description}</p>
                                   </div>
                                   <div className="text-right">
                                     <p className="text-2xl font-bold text-dark-900">CHF {price}.-</p>
@@ -271,7 +263,7 @@ const ConfiguratorV2 = () => {
                                 </div>
 
                                 <div className="flex flex-wrap gap-2">
-                                  {pack.features.map((feature, i) => (
+                                  {packData.features?.map((feature, i) => (
                                     <span key={i} className="px-2 py-1 bg-sand-100 text-dark-600 text-xs rounded-lg">
                                       {feature}
                                     </span>
@@ -308,10 +300,10 @@ const ConfiguratorV2 = () => {
                   >
                     <div className="mb-8">
                       <h2 className="text-3xl font-display font-bold text-dark-900 mb-2">
-                        Options supplémentaires
+                        {t('step3.title')}
                       </h2>
                       <p className="text-dark-500">
-                        Personnalisez votre service (facultatif)
+                        {t('step3.description')}
                       </p>
                     </div>
 
@@ -332,7 +324,7 @@ const ConfiguratorV2 = () => {
                           <h3 className={`text-sm font-medium mb-1 ${
                             config.options.includes(option.id) ? 'text-white' : 'text-dark-900'
                           }`}>
-                            {option.name}
+                            {t(`options.${option.id}`)}
                           </h3>
                           <p className={`text-xs font-semibold ${
                             config.options.includes(option.id) ? 'text-white/80' : 'text-dark-500'
@@ -356,17 +348,17 @@ const ConfiguratorV2 = () => {
                   >
                     <div className="mb-8">
                       <h2 className="text-3xl font-display font-bold text-dark-900 mb-2">
-                        Vos coordonnées
+                        {t('step4.title')}
                       </h2>
                       <p className="text-dark-500">
-                        Nous vous recontacterons pour confirmer votre rendez-vous
+                        {t('step4.description')}
                       </p>
                     </div>
 
                     <form onSubmit={handleSubmit} className="space-y-5">
                       <div>
                         <label className="block text-dark-700 text-sm font-medium mb-2">
-                          Nom complet *
+                          {t('contact.name')} {t('contact.required')}
                         </label>
                         <input
                           type="text"
@@ -377,13 +369,13 @@ const ConfiguratorV2 = () => {
                             contact: { ...prev.contact, name: e.target.value }
                           }))}
                           className="w-full px-4 py-3 bg-white border border-sand-300 rounded-xl text-dark-900 focus:outline-none focus:ring-2 focus:ring-dark-900/20 focus:border-dark-900 transition-all"
-                          placeholder="Jean Dupont"
+                          placeholder={t('contact.namePlaceholder')}
                         />
                       </div>
                       <div className="grid grid-cols-2 gap-4">
                         <div>
                           <label className="block text-dark-700 text-sm font-medium mb-2">
-                            Email *
+                            {t('contact.email')} {t('contact.required')}
                           </label>
                           <input
                             type="email"
@@ -394,12 +386,12 @@ const ConfiguratorV2 = () => {
                               contact: { ...prev.contact, email: e.target.value }
                             }))}
                             className="w-full px-4 py-3 bg-white border border-sand-300 rounded-xl text-dark-900 focus:outline-none focus:ring-2 focus:ring-dark-900/20 focus:border-dark-900 transition-all"
-                            placeholder="jean@exemple.ch"
+                            placeholder={t('contact.emailPlaceholder')}
                           />
                         </div>
                         <div>
                           <label className="block text-dark-700 text-sm font-medium mb-2">
-                            Téléphone *
+                            {t('contact.phone')} {t('contact.required')}
                           </label>
                           <input
                             type="tel"
@@ -410,13 +402,13 @@ const ConfiguratorV2 = () => {
                               contact: { ...prev.contact, phone: e.target.value }
                             }))}
                             className="w-full px-4 py-3 bg-white border border-sand-300 rounded-xl text-dark-900 focus:outline-none focus:ring-2 focus:ring-dark-900/20 focus:border-dark-900 transition-all"
-                            placeholder="+41 79 123 45 67"
+                            placeholder={t('contact.phonePlaceholder')}
                           />
                         </div>
                       </div>
                       <div>
                         <label className="block text-dark-700 text-sm font-medium mb-2">
-                          Message (optionnel)
+                          {t('contact.message')}
                         </label>
                         <textarea
                           rows={3}
@@ -426,7 +418,7 @@ const ConfiguratorV2 = () => {
                             contact: { ...prev.contact, message: e.target.value }
                           }))}
                           className="w-full px-4 py-3 bg-white border border-sand-300 rounded-xl text-dark-900 focus:outline-none focus:ring-2 focus:ring-dark-900/20 focus:border-dark-900 transition-all resize-none"
-                          placeholder="Précisions sur votre véhicule..."
+                          placeholder={t('contact.messagePlaceholder')}
                         />
                       </div>
                     </form>
@@ -464,7 +456,7 @@ const ConfiguratorV2 = () => {
                         : 'bg-sand-200 text-dark-400 cursor-not-allowed'
                     }`}
                   >
-                    Suivant
+                    {t('buttons.next')}
                     <ChevronRight className="w-5 h-5 ml-1" />
                   </button>
                 ) : (
@@ -477,7 +469,7 @@ const ConfiguratorV2 = () => {
                         : 'bg-sand-200 text-dark-400 cursor-not-allowed'
                     }`}
                   >
-                    Envoyer
+                    {t('buttons.send')}
                     <Send className="w-5 h-5 ml-1" />
                   </button>
                 )}
@@ -492,49 +484,49 @@ const ConfiguratorV2 = () => {
                 <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
                   <ShoppingCart className="w-5 h-5" />
                 </div>
-                <h2 className="text-xl font-display font-bold">Récapitulatif</h2>
+                <h2 className="text-xl font-display font-bold">{t('summary.title')}</h2>
               </div>
 
               <div className="flex-1 space-y-6 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                 {/* Vehicle */}
                 <div className={`p-4 rounded-xl transition-all ${selectedVehicle ? 'bg-white/10' : 'bg-white/5 border border-dashed border-white/20'}`}>
-                  <p className="text-white/60 text-xs uppercase tracking-wider mb-2">Véhicule</p>
+                  <p className="text-white/60 text-xs uppercase tracking-wider mb-2">{t('summary.vehicle')}</p>
                   {selectedVehicle ? (
                     <div className="flex items-center gap-3">
                       <selectedVehicle.Icon className="w-6 h-6" />
                       <div>
-                        <p className="font-semibold">{selectedVehicle.name}</p>
-                        <p className="text-white/60 text-sm">{selectedVehicle.subtitle}</p>
+                        <p className="font-semibold">{t(`vehicles.${selectedVehicle.id}.name`)}</p>
+                        <p className="text-white/60 text-sm">{t(`vehicles.${selectedVehicle.id}.subtitle`)}</p>
                       </div>
                     </div>
                   ) : (
-                    <p className="text-white/40 text-sm">Non sélectionné</p>
+                    <p className="text-white/40 text-sm">{t('summary.notSelected')}</p>
                   )}
                 </div>
 
                 {/* Pack */}
                 <div className={`p-4 rounded-xl transition-all ${selectedPack ? 'bg-white/10' : 'bg-white/5 border border-dashed border-white/20'}`}>
-                  <p className="text-white/60 text-xs uppercase tracking-wider mb-2">Formule</p>
+                  <p className="text-white/60 text-xs uppercase tracking-wider mb-2">{t('summary.pack')}</p>
                   {selectedPack ? (
                     <div>
-                      <p className="font-semibold">{selectedPack.name}</p>
+                      <p className="font-semibold">{t(`packs.${selectedPack.id}.name`)}</p>
                       <p className="text-white/60 text-sm">{selectedPack.duration}</p>
                     </div>
                   ) : (
-                    <p className="text-white/40 text-sm">Non sélectionné</p>
+                    <p className="text-white/40 text-sm">{t('summary.notSelected')}</p>
                   )}
                 </div>
 
                 {/* Options */}
                 {config.options.length > 0 && (
                   <div className="p-4 rounded-xl bg-white/10">
-                    <p className="text-white/60 text-xs uppercase tracking-wider mb-2">Options</p>
+                    <p className="text-white/60 text-xs uppercase tracking-wider mb-2">{t('summary.options')}</p>
                     <div className="space-y-2">
                       {config.options.map(optId => {
                         const opt = additionalOptions.find(o => o.id === optId)
                         return (
                           <div key={optId} className="flex items-center justify-between text-sm">
-                            <span>{opt?.name}</span>
+                            <span>{t(`options.${optId}`)}</span>
                             <span className="text-white/60">+CHF {opt?.price}</span>
                           </div>
                         )
@@ -547,11 +539,11 @@ const ConfiguratorV2 = () => {
               {/* Total & CTA */}
               <div className="pt-6 border-t border-white/20 mt-6">
                 <div className="flex items-end justify-between mb-6">
-                  <span className="text-white/60">Total estimé</span>
+                  <span className="text-white/60">{t('summary.total')}</span>
                   <div className="text-right">
                     <p className="text-4xl font-bold">CHF {getPrice()}.-</p>
                     {selectedPack && (
-                      <p className="text-white/40 text-sm">Durée: {selectedPack.duration}</p>
+                      <p className="text-white/40 text-sm">{t('summary.duration')}: {selectedPack.duration}</p>
                     )}
                   </div>
                 </div>
@@ -563,7 +555,7 @@ const ConfiguratorV2 = () => {
                       className="flex-1 flex items-center justify-center px-4 py-4 rounded-xl font-medium bg-white/10 hover:bg-white/20 transition-all"
                     >
                       <ChevronLeft className="w-5 h-5 mr-1" />
-                      Retour
+                      {t('buttons.back')}
                     </button>
                   )}
 
@@ -577,7 +569,7 @@ const ConfiguratorV2 = () => {
                           : 'bg-white/20 text-white/40 cursor-not-allowed'
                       }`}
                     >
-                      Continuer
+                      {t('buttons.continue')}
                       <ChevronRight className="w-5 h-5 ml-1" />
                     </button>
                   ) : (
@@ -591,7 +583,7 @@ const ConfiguratorV2 = () => {
                       }`}
                     >
                       <Send className="w-5 h-5 mr-2" />
-                      Envoyer la demande
+                      {t('buttons.sendRequest')}
                     </button>
                   )}
                 </div>

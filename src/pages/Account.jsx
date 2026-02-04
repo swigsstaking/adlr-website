@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate, Link, useParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { User, Package, MapPin, LogOut, Edit2, Save, X, AlertCircle, Check } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { useAuth } from '../context/AuthContext'
 import SEOHead from '../components/SEOHead'
 
 const Account = () => {
+  const { lang } = useParams()
+  const { t } = useTranslation('auth')
   const { customer, isAuthenticated, loading, logout, updateProfile } = useAuth()
   const navigate = useNavigate()
 
@@ -21,11 +24,14 @@ const Account = () => {
     phone: ''
   })
 
+  // Helper for localized paths
+  const localePath = (path) => `/${lang}${path}`
+
   useEffect(() => {
     if (!loading && !isAuthenticated) {
-      navigate('/connexion', { state: { from: { pathname: '/compte' } } })
+      navigate(localePath('/connexion'), { state: { from: { pathname: localePath('/compte') } } })
     }
-  }, [loading, isAuthenticated, navigate])
+  }, [loading, isAuthenticated, navigate, lang])
 
   useEffect(() => {
     if (customer) {
@@ -39,7 +45,7 @@ const Account = () => {
 
   const handleLogout = () => {
     logout()
-    navigate('/')
+    navigate(localePath('/'))
   }
 
   const handleSave = async () => {
@@ -49,19 +55,19 @@ const Account = () => {
 
     try {
       await updateProfile(formData)
-      setSuccess('Profil mis à jour avec succès')
+      setSuccess(t('account.profile.success'))
       setIsEditing(false)
     } catch (err) {
-      setError(err.message || 'Erreur lors de la mise à jour')
+      setError(err.message || t('errors.updateError'))
     } finally {
       setSaving(false)
     }
   }
 
   const tabs = [
-    { id: 'profile', label: 'Profil', icon: User },
-    { id: 'orders', label: 'Mes commandes', icon: Package },
-    { id: 'addresses', label: 'Mes adresses', icon: MapPin }
+    { id: 'profile', label: t('account.tabs.profile'), icon: User },
+    { id: 'orders', label: t('account.tabs.orders'), icon: Package },
+    { id: 'addresses', label: t('account.tabs.addresses'), icon: MapPin }
   ]
 
   if (loading) {
@@ -78,20 +84,17 @@ const Account = () => {
 
   return (
     <>
-      <SEOHead
-        title="Mon compte | ADLR Cosmetic Auto"
-        description="Gérez votre compte ADLR, consultez vos commandes et modifiez vos informations."
-      />
+      <SEOHead page="account" />
 
       <div className="min-h-screen bg-gradient-to-b from-sand-100 to-white pt-28 pb-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="mb-8">
             <h1 className="text-3xl font-display font-bold text-dark-900 mb-2">
-              Mon compte
+              {t('account.title')}
             </h1>
             <p className="text-dark-500">
-              Bienvenue, {customer?.firstName || 'Client'}
+              {t('account.welcome')}, {customer?.firstName || 'Client'}
             </p>
           </div>
 
@@ -122,7 +125,7 @@ const Account = () => {
                     className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-red-600 hover:bg-red-50 transition-all"
                   >
                     <LogOut className="w-5 h-5" />
-                    <span className="font-medium">Déconnexion</span>
+                    <span className="font-medium">{t('account.logout')}</span>
                   </button>
                 </div>
               </div>
@@ -141,7 +144,7 @@ const Account = () => {
                   <div>
                     <div className="flex items-center justify-between mb-6">
                       <h2 className="text-xl font-display font-bold text-dark-900">
-                        Informations personnelles
+                        {t('account.profile.title')}
                       </h2>
                       {!isEditing ? (
                         <button
@@ -149,7 +152,7 @@ const Account = () => {
                           className="flex items-center gap-2 px-4 py-2 text-dark-600 hover:text-dark-900 hover:bg-sand-100 rounded-lg transition-all"
                         >
                           <Edit2 className="w-4 h-4" />
-                          Modifier
+                          {t('account.profile.edit')}
                         </button>
                       ) : (
                         <div className="flex gap-2">
@@ -165,7 +168,7 @@ const Account = () => {
                             className="flex items-center gap-2 px-4 py-2 text-dark-600 hover:text-dark-900 hover:bg-sand-100 rounded-lg transition-all"
                           >
                             <X className="w-4 h-4" />
-                            Annuler
+                            {t('account.profile.cancel')}
                           </button>
                           <button
                             onClick={handleSave}
@@ -177,7 +180,7 @@ const Account = () => {
                             ) : (
                               <Save className="w-4 h-4" />
                             )}
-                            Enregistrer
+                            {t('account.profile.save')}
                           </button>
                         </div>
                       )}
@@ -201,7 +204,7 @@ const Account = () => {
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div>
                           <label className="block text-sm font-medium text-dark-700 mb-2">
-                            Prénom
+                            {t('account.profile.firstName')}
                           </label>
                           {isEditing ? (
                             <input
@@ -217,7 +220,7 @@ const Account = () => {
 
                         <div>
                           <label className="block text-sm font-medium text-dark-700 mb-2">
-                            Nom
+                            {t('account.profile.lastName')}
                           </label>
                           {isEditing ? (
                             <input
@@ -234,15 +237,15 @@ const Account = () => {
 
                       <div>
                         <label className="block text-sm font-medium text-dark-700 mb-2">
-                          Email
+                          {t('account.profile.email')}
                         </label>
                         <p className="text-dark-900 py-3">{customer?.email}</p>
-                        <p className="text-dark-400 text-sm">L'email ne peut pas être modifié</p>
+                        <p className="text-dark-400 text-sm">{t('account.profile.emailNote')}</p>
                       </div>
 
                       <div>
                         <label className="block text-sm font-medium text-dark-700 mb-2">
-                          Téléphone
+                          {t('account.profile.phone')}
                         </label>
                         {isEditing ? (
                           <input
@@ -250,7 +253,7 @@ const Account = () => {
                             value={formData.phone}
                             onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
                             className="w-full px-4 py-3 border border-sand-300 rounded-xl focus:ring-2 focus:ring-dark-900 focus:border-dark-900 transition-all"
-                            placeholder="+41 XX XXX XX XX"
+                            placeholder={t('account.profile.phonePlaceholder')}
                           />
                         ) : (
                           <p className="text-dark-900 py-3">{customer?.phone || '-'}</p>
@@ -264,17 +267,17 @@ const Account = () => {
                 {activeTab === 'orders' && (
                   <div>
                     <h2 className="text-xl font-display font-bold text-dark-900 mb-6">
-                      Mes commandes
+                      {t('account.orders.title')}
                     </h2>
 
                     <div className="text-center py-12">
                       <Package className="w-16 h-16 text-dark-300 mx-auto mb-4" />
-                      <p className="text-dark-500 mb-4">Vous n'avez pas encore de commandes</p>
+                      <p className="text-dark-500 mb-4">{t('account.orders.noOrders')}</p>
                       <Link
-                        to="/boutique"
+                        to={localePath('/boutique')}
                         className="inline-flex items-center px-6 py-3 bg-dark-900 text-white font-semibold rounded-full hover:bg-dark-800 transition-all"
                       >
-                        Découvrir la boutique
+                        {t('account.orders.discoverShop')}
                       </Link>
                     </div>
                   </div>
@@ -284,14 +287,14 @@ const Account = () => {
                 {activeTab === 'addresses' && (
                   <div>
                     <h2 className="text-xl font-display font-bold text-dark-900 mb-6">
-                      Mes adresses
+                      {t('account.addresses.title')}
                     </h2>
 
                     <div className="text-center py-12">
                       <MapPin className="w-16 h-16 text-dark-300 mx-auto mb-4" />
-                      <p className="text-dark-500 mb-4">Aucune adresse enregistrée</p>
+                      <p className="text-dark-500 mb-4">{t('account.addresses.noAddresses')}</p>
                       <p className="text-dark-400 text-sm">
-                        Vos adresses seront sauvegardées lors de votre première commande
+                        {t('account.addresses.noAddressesNote')}
                       </p>
                     </div>
                   </div>

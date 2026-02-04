@@ -9,7 +9,7 @@ const API_URL = import.meta.env.VITE_API_URL || '/api'
 const SITE_SLUG = import.meta.env.VITE_SITE_SLUG || 'adlr'
 
 const ProductDetail = () => {
-  const { id } = useParams()
+  const { id, lang } = useParams()
   const [product, setProduct] = useState(null)
   const [loading, setLoading] = useState(true)
   const [quantity, setQuantity] = useState(1)
@@ -35,16 +35,14 @@ const ProductDetail = () => {
   const currentPrice = selectedVariant?.price || product?.price?.amount || product?.price || 0
   const currentImage = selectedVariant?.image || product?.images?.[selectedImage]?.url || product?.images?.[selectedImage] || product?.images?.[0]?.url || product?.images?.[0]
 
-  // Check stock availability - use variant stock if variant selected, otherwise product stock
-  const isInStock = selectedVariant
-    ? (selectedVariant.stock > 0 || selectedVariant.stock === undefined)
-    : (product?.stock > 0 || product?.inStock !== false)
+  // ADLR: Stock management disabled - all products are always available
+  const isInStock = true // Always in stock for ADLR
 
-  // Can add to cart: only if in stock
+  // Can add to cart: always enabled (no stock checking)
   const hasVariants = product?.variants?.length > 0
   const canAddToCart = hasVariants
-    ? selectedVariant && (selectedVariant.stock > 0 || selectedVariant.stock === undefined)
-    : isInStock // Products without variants can only be added if in stock
+    ? selectedVariant !== null // Only check if variant is selected
+    : true // Always can add to cart for non-variant products
 
   // Handler for stock alert subscription
   const handleStockAlert = async (e) => {
@@ -283,7 +281,7 @@ const ProductDetail = () => {
         <div className="text-center">
           <Package className="w-16 h-16 text-dark-300 mx-auto mb-4" />
           <p className="text-dark-500 mb-4">Produit non trouvé</p>
-          <Link to="/boutique" className="text-primary-500 hover:underline">
+          <Link to={`/${lang}/boutique`} className="text-primary-500 hover:underline">
             Retour à la boutique
           </Link>
         </div>
@@ -303,7 +301,7 @@ const ProductDetail = () => {
         <div className="bg-sand-50 border-b border-sand-200">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <nav className="flex items-center gap-2 text-sm">
-              <Link to="/boutique" className="text-dark-500 hover:text-dark-900 flex items-center gap-1 flex-shrink-0">
+              <Link to={`/${lang}/boutique`} className="text-dark-500 hover:text-dark-900 flex items-center gap-1 flex-shrink-0">
                 <ChevronLeft className="w-4 h-4" />
                 <span>Boutique</span>
               </Link>
@@ -576,7 +574,7 @@ const ProductDetail = () => {
                 {relatedProducts.map((relProduct) => (
                   <Link
                     key={relProduct._id}
-                    to={`/boutique/${relProduct._id}`}
+                    to={`/${lang}/boutique/${relProduct._id}`}
                     className="group bg-white rounded-2xl border border-sand-200 overflow-hidden hover:shadow-lg transition-all"
                   >
                     <div className="aspect-square overflow-hidden">

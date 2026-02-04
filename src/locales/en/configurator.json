@@ -1,0 +1,110 @@
+{
+  "title": "Configurator",
+  "stepOf": "Step {{step}} of {{total}}",
+  "step1": {
+    "title": "What is your vehicle?",
+    "description": "Select the category that matches your car"
+  },
+  "step2": {
+    "title": "Choose your package",
+    "description": "Our service packages tailored to your needs"
+  },
+  "step3": {
+    "title": "Additional options",
+    "description": "Customize your service (optional)"
+  },
+  "step4": {
+    "title": "Your contact details",
+    "description": "We will contact you to confirm your appointment"
+  },
+  "vehicles": {
+    "compact": {
+      "name": "City car",
+      "subtitle": "Compact",
+      "description": "Polo, Golf, A3, A-Class..."
+    },
+    "sedan": {
+      "name": "Sedan",
+      "subtitle": "SUV",
+      "description": "3 Series, C-Class, Q5, GLC..."
+    },
+    "large": {
+      "name": "Large SUV",
+      "subtitle": "Van",
+      "description": "X5, GLE, Q7, Range Rover..."
+    },
+    "supercar": {
+      "name": "Supercar",
+      "subtitle": "Prestige",
+      "description": "Ferrari, Lamborghini, Porsche GT..."
+    }
+  },
+  "packs": {
+    "eclat": {
+      "name": "Initial Shine",
+      "description": "Complete cleaning",
+      "features": ["Exterior wash", "Interior vacuuming", "Window cleaning", "Quick polish"]
+    },
+    "prestige": {
+      "name": "Prestige",
+      "description": "Our popular formula",
+      "features": ["Initial Shine pack", "Clay decontamination", "Seat shampoo", "3-month protection wax"]
+    },
+    "excellence": {
+      "name": "Excellence",
+      "description": "The pinnacle of detailing",
+      "features": ["Prestige pack", "Light polish", "Express ceramic", "Complete treatment"]
+    },
+    "ceramique": {
+      "name": "Ceramic Pro",
+      "description": "Long-lasting protection",
+      "features": ["Complete preparation", "Corrective polish", "9H Ceramic", "5-year warranty"]
+    },
+    "popular": "Popular"
+  },
+  "options": {
+    "headlights": "Headlight restoration",
+    "engine": "Engine cleaning",
+    "rainrepel": "Rain repellent",
+    "ozone": "Ozone disinfection",
+    "leather": "Leather treatment",
+    "plastics": "Exterior plastics",
+    "wheels": "Wheel polish",
+    "exhaust": "Exhaust polish"
+  },
+  "contact": {
+    "name": "Full name",
+    "namePlaceholder": "John Doe",
+    "email": "Email",
+    "emailPlaceholder": "john@example.ch",
+    "phone": "Phone",
+    "phonePlaceholder": "+41 79 123 45 67",
+    "message": "Message (optional)",
+    "messagePlaceholder": "Details about your vehicle...",
+    "required": "*"
+  },
+  "summary": {
+    "title": "Summary",
+    "vehicle": "Vehicle",
+    "pack": "Package",
+    "options": "Options",
+    "notSelected": "Not selected",
+    "total": "Estimated total",
+    "duration": "Duration"
+  },
+  "buttons": {
+    "next": "Next",
+    "continue": "Continue",
+    "back": "Back",
+    "send": "Send",
+    "sendRequest": "Send request"
+  },
+  "duration": {
+    "hours": "{{count}}h",
+    "days": "{{count}} day",
+    "days_other": "{{count}} days"
+  },
+  "alerts": {
+    "success": "Request sent! We will contact you shortly."
+  }
+}

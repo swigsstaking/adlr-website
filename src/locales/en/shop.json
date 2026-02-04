@@ -1,0 +1,67 @@
+{
+  "hero": {
+    "title": "Shop",
+    "description": "Professional detailing products"
+  },
+  "filters": {
+    "all": "All products",
+    "search": "Search...",
+    "categories": "Categories",
+    "filters": "Filters",
+    "sortBy": "Sort by",
+    "brands": "Brands",
+    "allBrands": "All brands",
+    "allBrandsShort": "All",
+    "sortOptions": {
+      "pertinence": "Relevance",
+      "priceAsc": "Price ascending",
+      "priceDesc": "Price descending",
+      "nameAsc": "Name A-Z",
+      "nameDesc": "Name Z-A",
+      "newest": "Newest"
+    },
+    "noResults": "No products found",
+    "productCount": "{{count}} product",
+    "productCount_other": "{{count}} products"
+  },
+  "product": {
+    "addToCart": "Add to cart",
+    "outOfStock": "Out of stock",
+    "notifyMe": "Notify me when back in stock",
+    "inStock": "In stock",
+    "quantity": "Quantity",
+    "description": "Description",
+    "features": "Features",
+    "reviews": "Reviews",
+    "relatedProducts": "Related products",
+    "backToShop": "Back to shop"
+  },
+  "cart": {
+    "title": "Cart",
+    "empty": "Your cart is empty",
+    "total": "Total",
+    "viewCart": "View cart"
+  },
+  "stockAlert": {
+    "title": "Out of stock",
+    "unavailable": "Currently unavailable",
+    "alertTitle": "Get notified when back in stock",
+    "alertDescription": "Enter your email to receive a notification when this product is back in stock.",
+    "emailPlaceholder": "Your email address",
+    "invalidEmail": "Please enter a valid email address",
+    "error": "An error occurred. Please try again.",
+    "success": "Got it!",
+    "successMessage": "You will be notified when this product is back in stock.",
+    "cancel": "Cancel",
+    "submit": "Notify me",
+    "close": "Close"
+  },
+  "categories": {
+    "all": "All",
+    "shampoing": "Shampoos",
+    "cire": "Waxes",
+    "polish": "Polish",
+    "accessoires": "Accessories",
+    "interieur": "Interior"
+  }
+}

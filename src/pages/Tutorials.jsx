@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Clock, BookOpen, ShoppingBag, ShoppingCart, ChevronRight, Droplets, Sparkles, Shield, Armchair, Loader2, Check } from 'lucide-react'
 import SEOHead from '../components/SEOHead'
@@ -8,6 +8,7 @@ import { useCart } from '../context/CartContext'
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api'
 
 const Tutorials = () => {
+  const { lang } = useParams()
   const [selectedCategory, setSelectedCategory] = useState('all')
   const [tutorials, setTutorials] = useState([])
   const [loading, setLoading] = useState(true)
@@ -253,7 +254,7 @@ const Tutorials = () => {
                   <div className="flex flex-col lg:flex-row">
                     {/* Image */}
                     <Link
-                      to={`/tutoriels/${tutorial.slug || tutorial._id || tutorial.id}`}
+                      to={`/${lang}/tutoriels/${tutorial.slug || tutorial._id || tutorial.id}`}
                       className="relative lg:w-2/5 aspect-[4/3] lg:aspect-auto overflow-hidden group"
                     >
                       <img
@@ -281,7 +282,7 @@ const Tutorials = () => {
                         <span className="text-dark-400 text-sm font-semibold uppercase tracking-wider">
                           {categories.find(c => c.id === tutorial.category)?.name || tutorial.category}
                         </span>
-                        <Link to={`/tutoriels/${tutorial.slug || tutorial._id || tutorial.id}`}>
+                        <Link to={`/${lang}/tutoriels/${tutorial.slug || tutorial._id || tutorial.id}`}>
                           <h3 className="text-dark-900 font-bold text-2xl mt-3 mb-4 hover:text-dark-600 transition-colors line-clamp-2">
                             {tutorial.title}
                           </h3>
@@ -347,7 +348,7 @@ const Tutorials = () => {
 
                       {/* CTA */}
                       <Link
-                        to={`/tutoriels/${tutorial.slug || tutorial._id || tutorial.id}`}
+                        to={`/${lang}/tutoriels/${tutorial.slug || tutorial._id || tutorial.id}`}
                         className="mt-5 inline-flex items-center text-dark-900 text-base font-semibold hover:text-dark-600 transition-colors group"
                       >
                         Voir le tutoriel
@@ -376,7 +377,7 @@ const Tutorials = () => {
                 Nos experts réalisent ces prestations avec un savoir-faire inégalé
               </p>
               <Link
-                to="/services"
+                to={`/${lang}/services`}
                 className="inline-flex items-center justify-center px-6 py-3 bg-white hover:bg-sand-100 text-dark-900 font-semibold rounded-full transition-all"
               >
                 Découvrir nos services

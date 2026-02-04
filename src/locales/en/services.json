@@ -1,0 +1,243 @@
+{
+  "hero": {
+    "label": "Our services",
+    "title": "Detailing Services",
+    "description": "Packages tailored to all needs, from simple cleaning to high-end protection."
+  },
+  "categories": {
+    "all": "All",
+    "nettoyage": "Cleaning",
+    "protection": "Protection",
+    "correction": "Correction"
+  },
+  "packs": {
+    "popular": "Popular",
+    "duration": "Duration",
+    "reserve": "Book",
+    "priceSedan": "Sedan / SUV",
+    "priceLarge": "Large",
+    "onQuote": "On quote",
+    "items": {
+      "eclatInitial": {
+        "name": "Initial Shine",
+        "description": "Complete cleaning to restore shine to your vehicle",
+        "features": [
+          "High pressure exterior wash",
+          "Wheel and tire cleaning",
+          "Body shampoo",
+          "Quick drying and polishing",
+          "Window cleaning",
+          "Complete interior vacuuming",
+          "Interior plastic cleaning"
+        ]
+      },
+      "prestige": {
+        "name": "Prestige",
+        "description": "Our most requested package for impeccable results",
+        "features": [
+          "Everything in Initial Shine package",
+          "Clay bar decontamination",
+          "Seals and crevices cleaning",
+          "Seat and carpet shampooing",
+          "Leather treatment (if applicable)",
+          "Engine bay cleaning",
+          "3-month wax protection",
+          "Premium interior fragrance"
+        ]
+      },
+      "excellence": {
+        "name": "Excellence",
+        "description": "The pinnacle of detailing for perfectionists",
+        "features": [
+          "Everything in Prestige package",
+          "Light 1-pass polish",
+          "Rain repellent window treatment",
+          "Exterior plastic restoration",
+          "Anti-UV plastic treatment",
+          "Express ceramic protection (6 months)",
+          "Detailed certification"
+        ]
+      },
+      "polishCorrectif": {
+        "name": "Corrective Polish",
+        "description": "Paint defect correction for perfect shine",
+        "features": [
+          "Paint condition analysis",
+          "Complete decontamination",
+          "2-3 pass corrective polish",
+          "Micro-scratch elimination",
+          "Swirl removal",
+          "Hologram correction",
+          "High gloss finish",
+          "3-month wax protection included"
+        ]
+      },
+      "ceramiquePro": {
+        "name": "Ceramic Pro",
+        "description": "Professional long-lasting ceramic protection",
+        "features": [
+          "Complete preparation (Excellence package)",
+          "Corrective polish if necessary",
+          "IPA degreasing",
+          "9H ceramic application",
+          "3-5 year protection",
+          "Extreme hydrophobic effect",
+          "UV and chemical resistance",
+          "Certificate of authenticity",
+          "Free maintenance kit"
+        ]
+      },
+      "ppfPremium": {
+        "name": "PPF Premium",
+        "description": "Invisible paint protection film",
+        "features": [
+          "Personalized consultation",
+          "High quality PPF film",
+          "Front bumper protection",
+          "Hood protection",
+          "Front fender protection",
+          "Mirror protection",
+          "10 year warranty",
+          "Self-healing"
+        ]
+      }
+    }
+  },
+  "extras": {
+    "title": "À La Carte Services",
+    "description": "Customize your service with our additional options",
+    "items": {
+      "renovationPhares": "Headlight restoration",
+      "nettoyageMoteur": "Engine cleaning",
+      "antiPluie": "Rain repellent treatment",
+      "desinfectionOzone": "Ozone disinfection",
+      "nettoyageToit": "Sunroof cleaning",
+      "traitementCuir": "Complete leather treatment",
+      "renovationPlastiques": "Plastic restoration",
+      "polishJantes": "Wheel polish"
+    }
+  },
+  "cta": {
+    "title": "Need a personalized quote?",
+    "description": "Use our configurator to create your custom service or contact us directly.",
+    "configureBtn": "Configure my service",
+    "contactBtn": "Contact us"
+  },
+  "servicePages": {
+    "common": {
+      "included": "What's included",
+      "includedSubtitle": "All the details of our service",
+      "pricing": "Our rates",
+      "pricingSubtitle": "Prices according to your vehicle size",
+      "duration": "Duration",
+      "ctaTitle": "Ready to book?",
+      "ctaDescription": "Get a personalized quote or book an appointment directly.",
+      "configureService": "Configure my service",
+      "contactUs": "Contact us",
+      "otherServices": "Our other services",
+      "allServices": "All services"
+    },
+    "vehicleCategories": {
+      "compact": "City car / Compact",
+      "compactExamples": "Polo, Golf, A3, A-Class...",
+      "sedan": "Sedan / SUV",
+      "sedanExamples": "3 Series, C-Class, Q5, GLC...",
+      "large": "Large SUV / Van",
+      "largeExamples": "X5, GLE, Q7, Range Rover..."
+    },
+    "lavage": {
+      "title": "Premium Wash",
+      "subtitle": "Meticulous interior and exterior cleaning, high-end products selected by our experts, and special attention to the smallest details.",
+      "category": "Cleaning",
+      "descriptionTitle": "The art of car washing",
+      "description": "At ADLR Cosmetic Auto, we consider washing as the essential first step in any quality car maintenance. Our two-bucket method, combined with high-end pH neutral products, guarantees deep cleaning without ever risking damage to your paint.\n\nEach vehicle receives special attention, from the initial preparation with active foam pre-wash, to meticulous drying with premium microfibers. We clean every corner, every crevice, for an impeccable result.\n\nOur team takes care of your vehicle as if it were our own, with passion and expertise.",
+      "features": [
+        { "title": "Active foam pre-wash", "description": "Loosens dirt without contact" },
+        { "title": "Two-bucket method", "description": "Prevents micro-scratches" },
+        { "title": "pH neutral shampoo", "description": "Respects existing treatments" },
+        { "title": "Wheel & tire cleaning", "description": "Dedicated non-acidic products" },
+        { "title": "Microfiber drying", "description": "Premium 400 GSM microfibers" },
+        { "title": "Window cleaning", "description": "Interior and exterior streak-free" },
+        { "title": "Complete vacuuming", "description": "Seats, carpets, trunk" },
+        { "title": "Plastic cleaning", "description": "Dashboard, door panels" },
+        { "title": "Interior fragrance", "description": "Premium fragrance of your choice" }
+      ],
+      "pricing": [
+        { "price": "80", "duration": "1h30-2h" },
+        { "price": "100", "duration": "2h-2h30" },
+        { "price": "120", "duration": "2h30-3h" }
+      ]
+    },
+    "polish": {
+      "title": "Corrective Polish",
+      "subtitle": "Give your car an incomparable shine. We use professional techniques to eliminate micro-scratches, swirls and holograms.",
+      "category": "Correction",
+      "descriptionTitle": "Professional paint correction",
+      "description": "Corrective polish is the art of restoring your paint to its original shine by eliminating surface defects. Micro-scratches, swirls, holograms and other unsightly marks disappear under our professional machines.\n\nOur process begins with a thorough analysis of your paint condition using special lamps. We then determine the level of correction needed and select the appropriate pads and compounds.\n\nEach polisher pass is performed with precision, section by section, for a uniform and lasting result. Corrective polish reveals all the depth and brilliance of your paint.",
+      "features": [
+        { "title": "Paint analysis", "description": "LED/halogen lamp evaluation" },
+        { "title": "Decontamination", "description": "Clay bar and complete degreasing" },
+        { "title": "Multi-pass polish", "description": "2 to 3 passes depending on defects" },
+        { "title": "Swirl elimination", "description": "Removal of swirl marks" },
+        { "title": "Hologram correction", "description": "Perfect finish" },
+        { "title": "Orbital polisher", "description": "Professional Rupes machines" },
+        { "title": "Premium compounds", "description": "Menzerna, Sonax, Koch Chemie" },
+        { "title": "Final inspection", "description": "Verification under different lighting" },
+        { "title": "Protection included", "description": "3-month finishing wax" }
+      ],
+      "pricing": [
+        { "price": "350", "duration": "1 day" },
+        { "price": "450", "duration": "1-1.5 days" },
+        { "price": "550", "duration": "1.5-2 days" }
+      ]
+    },
+    "ceramique": {
+      "title": "Ceramic Protection",
+      "subtitle": "Protect your investment with our professional ceramic treatment. An invisible high-performance barrier against UV and pollution.",
+      "category": "Protection",
+      "descriptionTitle": "Ultimate protection for your bodywork",
+      "description": "Ceramic coating represents the pinnacle of automotive protection. This advanced technology creates a permanent chemical bond with your paint, forming a protective layer with a hardness of 9H on the Mohs scale.\n\nOur professional ceramic offers exceptional protection against UV, pollution, bird droppings, tree resin and chemical contaminants. The extreme hydrophobic effect makes water bead up and significantly facilitates daily maintenance.\n\nBefore application, we meticulously prepare your vehicle with a corrective polish if necessary, ensuring an impeccable result under the ceramic layer.",
+      "features": [
+        { "title": "Complete preparation", "description": "Wash, decontamination, polish" },
+        { "title": "9H Ceramic", "description": "Maximum professional hardness" },
+        { "title": "3-5 year protection", "description": "Guaranteed durability" },
+        { "title": "Hydrophobic effect", "description": "Water beads instantly" },
+        { "title": "Anti-UV", "description": "Protection against fading" },
+        { "title": "Chemical resistance", "description": "Against pollution and contaminants" },
+        { "title": "Intense shine", "description": "Deep mirror effect" },
+        { "title": "Certificate", "description": "Certificate of authenticity provided" },
+        { "title": "Maintenance kit", "description": "Free maintenance products" }
+      ],
+      "pricing": [
+        { "price": "800", "duration": "2-3 days" },
+        { "price": "1000", "duration": "2-3 days" },
+        { "price": "1300", "duration": "3-4 days" }
+      ]
+    },
+    "cire": {
+      "title": "Premium Wax",
+      "subtitle": "Enhance your vehicle with our premium wax application. A brilliant result to reveal all the depth of your paint.",
+      "category": "Protection",
+      "descriptionTitle": "The elegance of natural wax",
+      "description": "Carnauba wax remains the choice of purists to enhance their vehicle. From the Brazilian palm, this natural wax offers a warm and deep shine that synthetic protections cannot match.\n\nOur premium wax contains a high content of pure carnauba, applied by hand by our experts. The result is an incomparable shine that highlights every curve of your bodywork.\n\nAlthough its durability is shorter than ceramic (2-3 months), wax offers a unique visual finish and a maintenance ritual appreciated by car enthusiasts.",
+      "features": [
+        { "title": "Pre-wash", "description": "Complete vehicle preparation" },
+        { "title": "Decontamination", "description": "Clay bar for smooth surface" },
+        { "title": "Carnauba wax", "description": "High content of pure wax" },
+        { "title": "Manual application", "description": "Expert hand application" },
+        { "title": "Warm shine", "description": "Deep natural reflections" },
+        { "title": "UV Protection", "description": "Natural protection" },
+        { "title": "Hydrophobia", "description": "Moderate beading effect" },
+        { "title": "2-3 month duration", "description": "Reapplication recommended" },
+        { "title": "Easy maintenance", "description": "Compatible with all shampoos" }
+      ],
+      "pricing": [
+        { "price": "150", "duration": "3-4h" },
+        { "price": "200", "duration": "4-5h" },
+        { "price": "250", "duration": "5-6h" }
+      ]
+    },
+    "backToServices": "Back to services",
+    "bookService": "Book this service"
+  }
+}

@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { lazy, Suspense } from 'react'
 import Layout from './components/Layout'
+import LanguageLayout, { DEFAULT_LANGUAGE } from './components/LanguageLayout'
 
 // Lazy load pages for better performance
 const Home = lazy(() => import('./pages/HomeV2'))
@@ -42,36 +43,44 @@ const PageLoader = () => (
 function App() {
   return (
     <Router>
-      <Layout>
-        <Suspense fallback={<PageLoader />}>
-          <Routes>
-            {/* Home */}
-            <Route path="/" element={<Home />} />
-            {/* Services */}
-            <Route path="/services" element={<Services />} />
-            <Route path="/services/lavage" element={<LavageService />} />
-            <Route path="/services/polish" element={<PolishService />} />
-            <Route path="/services/ceramique" element={<CeramiqueService />} />
-            <Route path="/services/cire" element={<CireService />} />
-            {/* Configurateur */}
-            <Route path="/configurateur" element={<Configurator />} />
-            {/* Boutique */}
-            <Route path="/boutique" element={<Shop />} />
-            <Route path="/boutique/:id" element={<ProductDetail />} />
-            {/* Tutoriels */}
-            <Route path="/tutoriels" element={<Tutorials />} />
-            <Route path="/tutoriels/:id" element={<TutorialDetail />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/connexion" element={<Login />} />
-            <Route path="/inscription" element={<Register />} />
-            <Route path="/compte" element={<Account />} />
-            <Route path="/panier" element={<Cart />} />
-            <Route path="/checkout" element={<Checkout />} />
-            <Route path="/success" element={<Success />} />
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </Suspense>
-      </Layout>
+      <Suspense fallback={<PageLoader />}>
+        <Routes>
+          {/* Redirect root to default language */}
+          <Route path="/" element={<Navigate to={`/${DEFAULT_LANGUAGE}`} replace />} />
+
+          {/* Language-prefixed routes */}
+          <Route path="/:lang" element={<LanguageLayout />}>
+            <Route element={<Layout />}>
+              {/* Home */}
+              <Route index element={<Home />} />
+              {/* Services */}
+              <Route path="services" element={<Services />} />
+              <Route path="services/lavage" element={<LavageService />} />
+              <Route path="services/polish" element={<PolishService />} />
+              <Route path="services/ceramique" element={<CeramiqueService />} />
+              <Route path="services/cire" element={<CireService />} />
+              {/* Configurateur */}
+              <Route path="configurateur" element={<Configurator />} />
+              {/* Boutique */}
+              <Route path="boutique" element={<Shop />} />
+              <Route path="boutique/:id" element={<ProductDetail />} />
+              {/* Tutoriels */}
+              <Route path="tutoriels" element={<Tutorials />} />
+              <Route path="tutoriels/:id" element={<TutorialDetail />} />
+              <Route path="contact" element={<Contact />} />
+              <Route path="connexion" element={<Login />} />
+              <Route path="inscription" element={<Register />} />
+              <Route path="compte" element={<Account />} />
+              <Route path="panier" element={<Cart />} />
+              <Route path="checkout" element={<Checkout />} />
+              <Route path="success" element={<Success />} />
+            </Route>
+          </Route>
+
+          {/* Catch-all redirect to default language home */}
+          <Route path="*" element={<Navigate to={`/${DEFAULT_LANGUAGE}`} replace />} />
+        </Routes>
+      </Suspense>
     </Router>
   )
 }

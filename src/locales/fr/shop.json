@@ -1,0 +1,67 @@
+{
+  "hero": {
+    "title": "Boutique",
+    "description": "Produits de detailing professionnels"
+  },
+  "filters": {
+    "all": "Tous les produits",
+    "search": "Rechercher...",
+    "categories": "Catégories",
+    "filters": "Filtres",
+    "sortBy": "Trier par",
+    "brands": "Marques",
+    "allBrands": "Toutes les marques",
+    "allBrandsShort": "Toutes",
+    "sortOptions": {
+      "pertinence": "Pertinence",
+      "priceAsc": "Prix croissant",
+      "priceDesc": "Prix décroissant",
+      "nameAsc": "Nom A-Z",
+      "nameDesc": "Nom Z-A",
+      "newest": "Nouveautés"
+    },
+    "noResults": "Aucun produit trouvé",
+    "productCount": "{{count}} produit",
+    "productCount_other": "{{count}} produits"
+  },
+  "product": {
+    "addToCart": "Ajouter au panier",
+    "outOfStock": "Rupture de stock",
+    "notifyMe": "Me prévenir du retour en stock",
+    "inStock": "En stock",
+    "quantity": "Quantité",
+    "description": "Description",
+    "features": "Caractéristiques",
+    "reviews": "Avis",
+    "relatedProducts": "Produits similaires",
+    "backToShop": "Retour à la boutique"
+  },
+  "cart": {
+    "title": "Panier",
+    "empty": "Votre panier est vide",
+    "total": "Total",
+    "viewCart": "Voir le panier"
+  },
+  "stockAlert": {
+    "title": "Rupture de stock",
+    "unavailable": "Indisponible actuellement",
+    "alertTitle": "Être alerté du retour en stock",
+    "alertDescription": "Entrez votre email pour recevoir une notification dès que ce produit sera de nouveau disponible.",
+    "emailPlaceholder": "Votre adresse email",
+    "invalidEmail": "Veuillez entrer une adresse email valide",
+    "error": "Une erreur est survenue. Veuillez réessayer.",
+    "success": "C'est noté !",
+    "successMessage": "Vous serez notifié dès que ce produit sera de nouveau disponible.",
+    "cancel": "Annuler",
+    "submit": "M'alerter",
+    "close": "Fermer"
+  },
+  "categories": {
+    "all": "Tous",
+    "shampoing": "Shampoings",
+    "cire": "Cires",
+    "polish": "Polish",
+    "accessoires": "Accessoires",
+    "interieur": "Intérieur"
+  }
+}

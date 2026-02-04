@@ -1,0 +1,103 @@
+{
+  "cart": {
+    "title": "Your cart",
+    "empty": "Your cart is empty",
+    "emptyDescription": "Discover our selection of professional detailing products",
+    "viewShop": "View shop",
+    "continueShopping": "Continue shopping",
+    "clearCart": "Clear cart",
+    "item": "item",
+    "items": "items",
+    "itemCount": "{{count}} item",
+    "itemCount_other": "{{count}} items",
+    "remove": "Remove",
+    "quantity": "Quantity",
+    "subtotal": "Subtotal",
+    "shipping": "Shipping",
+    "shippingFree": "Free",
+    "shippingCalculated": "Calculated at next step",
+    "total": "Total",
+    "vatIncluded": "VAT included",
+    "checkout": "Proceed to checkout",
+    "summary": "Summary",
+    "securePayment": "Secure payment",
+    "fastDelivery": "Fast delivery"
+  },
+  "checkout": {
+    "title": "Checkout",
+    "backToCart": "Back to cart",
+    "contactInfo": {
+      "title": "Contact information",
+      "email": "Email",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "phone": "Phone",
+      "phonePlaceholder": "+41 XX XXX XX XX",
+      "required": "*"
+    },
+    "shippingAddress": {
+      "title": "Shipping address",
+      "address": "Address",
+      "addressPlaceholder": "Street and number",
+      "postalCode": "Postal code",
+      "city": "City",
+      "country": "Country"
+    },
+    "countries": {
+      "CH": "Switzerland",
+      "FR": "France",
+      "DE": "Germany",
+      "IT": "Italy",
+      "AT": "Austria"
+    },
+    "promo": {
+      "placeholder": "Promo code",
+      "apply": "Apply",
+      "invalid": "Invalid promo code",
+      "validationError": "Validation error",
+      "discount": "Discount"
+    },
+    "order": {
+      "title": "Your order",
+      "subtotal": "Subtotal",
+      "shipping": "Shipping",
+      "shippingFree": "Free",
+      "total": "Total",
+      "vatIncluded": "VAT included"
+    },
+    "payment": {
+      "payNow": "Pay now",
+      "payAmount": "Pay CHF {{amount}}",
+      "securedBy": "Payment secured by Stripe"
+    },
+    "errors": {
+      "loadError": "Loading error. Please try again.",
+      "configError": "Configuration error. Please try again.",
+      "orderError": "Error creating order",
+      "paymentError": "Payment error. Please try again."
+    }
+  },
+  "success": {
+    "title": "Thank you for your order!",
+    "subtitle": "Your payment was successful.",
+    "reference": "Reference",
+    "nextSteps": "Next steps",
+    "steps": {
+      "email": {
+        "title": "Email confirmation",
+        "description": "You will receive a confirmation email with your order details."
+      },
+      "preparation": {
+        "title": "Preparation",
+        "description": "Your order will be prepared within 24 business hours."
+      },
+      "delivery": {
+        "title": "Delivery",
+        "description": "Fast shipping within 3-5 business days in Switzerland."
+      }
+    },
+    "continueShopping": "Continue shopping",
+    "viewAccount": "View my account",
+    "support": "Questions? Contact us at"
+  }
+}

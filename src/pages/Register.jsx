@@ -1,13 +1,16 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Mail, Lock, Eye, EyeOff, User, Phone, ArrowRight, AlertCircle, Check } from 'lucide-react'
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google'
+import { useTranslation } from 'react-i18next'
 import { useAuth } from '../context/AuthContext'
 import { useGoogleOAuth } from '../hooks/useGoogleOAuth'
 import SEOHead from '../components/SEOHead'
 
 const RegisterForm = () => {
+  const { lang } = useParams()
+  const { t } = useTranslation('auth')
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -24,6 +27,9 @@ const RegisterForm = () => {
   const { googleConfig, isEnabled: isGoogleEnabled } = useGoogleOAuth()
   const navigate = useNavigate()
 
+  // Helper for localized paths
+  const localePath = (path) => `/${lang}${path}`
+
   const handleChange = (e) => {
     setFormData(prev => ({
       ...prev,
@@ -36,12 +42,12 @@ const RegisterForm = () => {
     setError('')
 
     if (formData.password !== formData.confirmPassword) {
-      setError('Les mots de passe ne correspondent pas')
+      setError(t('errors.passwordMismatch'))
       return
     }
 
     if (formData.password.length < 6) {
-      setError('Le mot de passe doit contenir au moins 6 caractères')
+      setError(t('errors.passwordTooShort'))
       return
     }
 
@@ -55,9 +61,9 @@ const RegisterForm = () => {
         lastName: formData.lastName,
         phone: formData.phone
       })
-      navigate('/compte')
+      navigate(localePath('/compte'))
     } catch (err) {
-      setError(err.message || 'Erreur lors de l\'inscription')
+      setError(err.message || t('errors.registerError'))
     } finally {
       setLoading(false)
     }
@@ -69,31 +75,26 @@ const RegisterForm = () => {
 
     try {
       await loginWithGoogle(credentialResponse.credential)
-      navigate('/compte')
+      navigate(localePath('/compte'))
     } catch (err) {
-      setError(err.message || 'Erreur de connexion Google')
+      setError(err.message || t('errors.googleLoginError'))
     } finally {
       setLoading(false)
     }
   }
 
   const handleGoogleError = () => {
-    setError('Erreur lors de la connexion Google')
+    setError(t('errors.googleLoginError'))
   }
 
-  const benefits = [
-    'Suivi de vos commandes en temps réel',
-    'Historique de vos achats',
-    'Accès aux offres exclusives',
-    'Sauvegarde de vos adresses'
-  ]
+  const benefits = t('register.benefits', { returnObjects: true })
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
       {/* Benefits */}
       <div className="hidden lg:block">
         <h2 className="text-2xl font-display font-bold text-dark-900 mb-6">
-          Pourquoi créer un compte ?
+          {t('register.whyTitle')}
         </h2>
         <ul className="space-y-4">
           {benefits.map((benefit, index) => (
@@ -114,9 +115,9 @@ const RegisterForm = () => {
 
         <div className="mt-10 p-6 bg-sand-100 rounded-2xl">
           <p className="text-dark-600 italic">
-            "Je commande régulièrement mes produits de detailing chez ADLR. Le suivi de commande est super pratique !"
+            "{t('register.testimonial')}"
           </p>
-          <p className="mt-4 text-dark-900 font-semibold">- Marc D., client fidèle</p>
+          <p className="mt-4 text-dark-900 font-semibold">- {t('register.testimonialAuthor')}</p>
         </div>
       </div>
 
@@ -124,10 +125,10 @@ const RegisterForm = () => {
       <div>
         <div className="text-center lg:text-left mb-8">
           <h1 className="text-3xl font-display font-bold text-dark-900 mb-2">
-            Créer un compte
+            {t('register.title')}
           </h1>
           <p className="text-dark-500">
-            Rejoignez la communauté ADLR
+            {t('register.subtitle')}
           </p>
         </div>
 
@@ -146,7 +147,7 @@ const RegisterForm = () => {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label htmlFor="firstName" className="block text-sm font-medium text-dark-700 mb-2">
-                Prénom
+                {t('register.firstName')}
               </label>
               <div className="relative">
                 <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-dark-400" />
@@ -157,7 +158,7 @@ const RegisterForm = () => {
                   value={formData.firstName}
                   onChange={handleChange}
                   className="w-full pl-12 pr-4 py-3 border border-sand-300 rounded-xl focus:ring-2 focus:ring-dark-900 focus:border-dark-900 transition-all"
-                  placeholder="Jean"
+                  placeholder={t('register.firstNamePlaceholder')}
                   required
                 />
               </div>
@@ -165,7 +166,7 @@ const RegisterForm = () => {
 
             <div>
               <label htmlFor="lastName" className="block text-sm font-medium text-dark-700 mb-2">
-                Nom
+                {t('register.lastName')}
               </label>
               <input
                 type="text"
@@ -174,7 +175,7 @@ const RegisterForm = () => {
                 value={formData.lastName}
                 onChange={handleChange}
                 className="w-full px-4 py-3 border border-sand-300 rounded-xl focus:ring-2 focus:ring-dark-900 focus:border-dark-900 transition-all"
-                placeholder="Dupont"
+                placeholder={t('register.lastNamePlaceholder')}
                 required
               />
             </div>
@@ -182,7 +183,7 @@ const RegisterForm = () => {
 
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-dark-700 mb-2">
-              Email
+              {t('register.email')}
             </label>
             <div className="relative">
               <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-dark-400" />
@@ -193,7 +194,7 @@ const RegisterForm = () => {
                 value={formData.email}
                 onChange={handleChange}
                 className="w-full pl-12 pr-4 py-3 border border-sand-300 rounded-xl focus:ring-2 focus:ring-dark-900 focus:border-dark-900 transition-all"
-                placeholder="votre@email.ch"
+                placeholder={t('register.emailPlaceholder')}
                 required
               />
             </div>
@@ -201,7 +202,7 @@ const RegisterForm = () => {
 
           <div>
             <label htmlFor="phone" className="block text-sm font-medium text-dark-700 mb-2">
-              Téléphone (optionnel)
+              {t('register.phone')}
             </label>
             <div className="relative">
               <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-dark-400" />
@@ -212,14 +213,14 @@ const RegisterForm = () => {
                 value={formData.phone}
                 onChange={handleChange}
                 className="w-full pl-12 pr-4 py-3 border border-sand-300 rounded-xl focus:ring-2 focus:ring-dark-900 focus:border-dark-900 transition-all"
-                placeholder="+41 XX XXX XX XX"
+                placeholder={t('register.phonePlaceholder')}
               />
             </div>
           </div>
 
           <div>
             <label htmlFor="password" className="block text-sm font-medium text-dark-700 mb-2">
-              Mot de passe
+              {t('register.password')}
             </label>
             <div className="relative">
               <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-dark-400" />
@@ -230,7 +231,7 @@ const RegisterForm = () => {
                 value={formData.password}
                 onChange={handleChange}
                 className="w-full pl-12 pr-12 py-3 border border-sand-300 rounded-xl focus:ring-2 focus:ring-dark-900 focus:border-dark-900 transition-all"
-                placeholder="Minimum 6 caractères"
+                placeholder={t('register.passwordPlaceholder')}
                 required
               />
               <button
@@ -245,7 +246,7 @@ const RegisterForm = () => {
 
           <div>
             <label htmlFor="confirmPassword" className="block text-sm font-medium text-dark-700 mb-2">
-              Confirmer le mot de passe
+              {t('register.confirmPassword')}
             </label>
             <div className="relative">
               <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-dark-400" />
@@ -256,7 +257,7 @@ const RegisterForm = () => {
                 value={formData.confirmPassword}
                 onChange={handleChange}
                 className="w-full pl-12 pr-4 py-3 border border-sand-300 rounded-xl focus:ring-2 focus:ring-dark-900 focus:border-dark-900 transition-all"
-                placeholder="Confirmez votre mot de passe"
+                placeholder={t('register.confirmPasswordPlaceholder')}
                 required
               />
             </div>
@@ -271,7 +272,7 @@ const RegisterForm = () => {
               <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
             ) : (
               <>
-                Créer mon compte
+                {t('register.submit')}
                 <ArrowRight className="w-5 h-5" />
               </>
             )}
@@ -285,7 +286,7 @@ const RegisterForm = () => {
                 <div className="w-full border-t border-sand-300" />
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-4 bg-white text-dark-400">ou continuer avec</span>
+                <span className="px-4 bg-white text-dark-400">{t('register.orContinueWith')}</span>
               </div>
             </div>
 
@@ -298,7 +299,7 @@ const RegisterForm = () => {
                   size="large"
                   text="signup_with"
                   shape="pill"
-                  locale="fr"
+                  locale={lang}
                 />
               </GoogleOAuthProvider>
             </div>
@@ -306,9 +307,9 @@ const RegisterForm = () => {
         )}
 
         <p className="mt-8 text-center text-dark-500">
-          Déjà un compte ?{' '}
-          <Link to="/connexion" className="text-dark-900 font-semibold hover:underline">
-            Se connecter
+          {t('register.hasAccount')}{' '}
+          <Link to={localePath('/connexion')} className="text-dark-900 font-semibold hover:underline">
+            {t('register.login')}
           </Link>
         </p>
       </div>
@@ -319,10 +320,7 @@ const RegisterForm = () => {
 const Register = () => {
   return (
     <>
-      <SEOHead
-        title="Créer un compte | ADLR Cosmetic Auto"
-        description="Créez votre compte ADLR pour suivre vos commandes et accéder à des offres exclusives."
-      />
+      <SEOHead page="register" />
 
       <div className="min-h-screen bg-gradient-to-b from-sand-100 to-white pt-28 pb-16">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">

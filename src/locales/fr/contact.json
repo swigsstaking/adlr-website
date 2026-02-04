@@ -1,0 +1,51 @@
+{
+  "hero": {
+    "title": "Contactez-nous",
+    "description": "Une question, un devis ? Notre équipe vous répond rapidement"
+  },
+  "info": {
+    "title": "Informations de contact",
+    "description": "N'hésitez pas à nous contacter pour toute question. Nous sommes là pour vous aider.",
+    "phone": "Téléphone",
+    "email": "Email",
+    "address": "Adresse",
+    "hours": "Horaires",
+    "hoursContent": {
+      "weekdays": "Lundi - Vendredi: 8h - 18h",
+      "saturday": "Samedi: 9h - 16h",
+      "sunday": "Dimanche: Fermé"
+    },
+    "whatsapp": "Nous écrire sur WhatsApp"
+  },
+  "form": {
+    "title": "Envoyez-nous un message",
+    "name": "Nom complet",
+    "namePlaceholder": "Jean Dupont",
+    "email": "Email",
+    "emailPlaceholder": "jean@exemple.ch",
+    "phone": "Téléphone",
+    "phonePlaceholder": "+41 79 123 45 67",
+    "subject": "Sujet",
+    "subjectPlaceholder": "Sélectionner un sujet",
+    "message": "Message",
+    "messagePlaceholder": "Décrivez votre demande...",
+    "required": "*",
+    "submit": "Envoyer le message",
+    "sending": "Envoi en cours..."
+  },
+  "subjects": {
+    "quote": "Demande de devis",
+    "question": "Question sur un service",
+    "appointment": "Prise de rendez-vous",
+    "complaint": "Réclamation",
+    "other": "Autre"
+  },
+  "messages": {
+    "success": "Message envoyé avec succès ! Nous vous répondrons rapidement.",
+    "error": "Une erreur est survenue. Veuillez réessayer ou nous contacter par téléphone."
+  },
+  "map": {
+    "title": "Carte Google Maps",
+    "subtitle": "(À configurer avec l'adresse exacte)"
+  }
+}

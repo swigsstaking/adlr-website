@@ -1,0 +1,103 @@
+{
+  "cart": {
+    "title": "Votre panier",
+    "empty": "Votre panier est vide",
+    "emptyDescription": "Decouvrez notre selection de produits de detailing professionnels",
+    "viewShop": "Voir la boutique",
+    "continueShopping": "Continuer mes achats",
+    "clearCart": "Vider le panier",
+    "item": "article",
+    "items": "articles",
+    "itemCount": "{{count}} article",
+    "itemCount_other": "{{count}} articles",
+    "remove": "Supprimer",
+    "quantity": "Quantite",
+    "subtotal": "Sous-total",
+    "shipping": "Livraison",
+    "shippingFree": "Gratuite",
+    "shippingCalculated": "Calculee a l'etape suivante",
+    "total": "Total",
+    "vatIncluded": "TVA incluse",
+    "checkout": "Passer la commande",
+    "summary": "Recapitulatif",
+    "securePayment": "Paiement securise",
+    "fastDelivery": "Livraison rapide"
+  },
+  "checkout": {
+    "title": "Checkout",
+    "backToCart": "Retour au panier",
+    "contactInfo": {
+      "title": "Informations de contact",
+      "email": "Email",
+      "firstName": "Prenom",
+      "lastName": "Nom",
+      "phone": "Telephone",
+      "phonePlaceholder": "+41 XX XXX XX XX",
+      "required": "*"
+    },
+    "shippingAddress": {
+      "title": "Adresse de livraison",
+      "address": "Adresse",
+      "addressPlaceholder": "Rue et numero",
+      "postalCode": "Code postal",
+      "city": "Ville",
+      "country": "Pays"
+    },
+    "countries": {
+      "CH": "Suisse",
+      "FR": "France",
+      "DE": "Allemagne",
+      "IT": "Italie",
+      "AT": "Autriche"
+    },
+    "promo": {
+      "placeholder": "Code promo",
+      "apply": "Appliquer",
+      "invalid": "Code promo invalide",
+      "validationError": "Erreur lors de la validation",
+      "discount": "Reduction"
+    },
+    "order": {
+      "title": "Votre commande",
+      "subtotal": "Sous-total",
+      "shipping": "Livraison",
+      "shippingFree": "Gratuite",
+      "total": "Total",
+      "vatIncluded": "TVA incluse"
+    },
+    "payment": {
+      "payNow": "Payer maintenant",
+      "payAmount": "Payer CHF {{amount}}",
+      "securedBy": "Paiement securise par Stripe"
+    },
+    "errors": {
+      "loadError": "Erreur lors du chargement. Veuillez reessayer.",
+      "configError": "Erreur de configuration. Veuillez reessayer.",
+      "orderError": "Erreur lors de la creation de la commande",
+      "paymentError": "Erreur lors du paiement. Veuillez reessayer."
+    }
+  },
+  "success": {
+    "title": "Merci pour votre commande !",
+    "subtitle": "Votre paiement a ete effectue avec succes.",
+    "reference": "Reference",
+    "nextSteps": "Prochaines etapes",
+    "steps": {
+      "email": {
+        "title": "Confirmation par email",
+        "description": "Vous recevrez un email de confirmation avec les details de votre commande."
+      },
+      "preparation": {
+        "title": "Preparation",
+        "description": "Votre commande sera preparee sous 24h ouvrees."
+      },
+      "delivery": {
+        "title": "Livraison",
+        "description": "Expedition rapide sous 3-5 jours ouvres en Suisse."
+      }
+    },
+    "continueShopping": "Continuer mes achats",
+    "viewAccount": "Voir mon compte",
+    "support": "Une question ? Contactez-nous a"
+  }
+}

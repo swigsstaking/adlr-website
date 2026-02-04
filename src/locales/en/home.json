@@ -1,0 +1,71 @@
+{
+  "hero": {
+    "tagline": "Excellence in automotive detailing.",
+    "description": "Premium services to enhance the beauty of your vehicle.",
+    "cta": "Get a quote",
+    "secondaryCta": "Our services"
+  },
+  "stats": {
+    "vehicles": "Vehicles treated",
+    "satisfaction": "Satisfied customers",
+    "experience": "Years of experience"
+  },
+  "scroll": "Scroll",
+  "testimonials": {
+    "sectionLabel": "Testimonials",
+    "title": "Satisfied customers",
+    "items": [
+      {
+        "name": "Marc D.",
+        "car": "Porsche 911 GT3",
+        "text": "Exceptional work. The ceramic coating is perfect, my car has never looked this good."
+      },
+      {
+        "name": "Sophie L.",
+        "car": "BMW M4 Competition",
+        "text": "Professionalism and stunning results. I recommend 100%."
+      },
+      {
+        "name": "Thomas R.",
+        "car": "Mercedes AMG GT",
+        "text": "The corrective polish worked wonders. The micro-scratches have completely disappeared."
+      }
+    ]
+  },
+  "cta": {
+    "title": "Ready to transform",
+    "titleLine2": "your vehicle",
+    "description": "Get a personalized quote in just a few clicks with our configurator.",
+    "primaryBtn": "Configure my service",
+    "secondaryBtn": "Contact us"
+  },
+  "services": {
+    "lavage": {
+      "title": "Wash",
+      "subtitle": "Premium.",
+      "description": "Discover our car wash service: meticulous interior and exterior cleaning, with premium products selected by our experts."
+    },
+    "polish": {
+      "title": "Polish",
+      "subtitle": "Corrective.",
+      "description": "Give your car an incomparable shine. We use professional techniques to eliminate micro-scratches, swirls and holograms."
+    },
+    "ceramique": {
+      "title": "Protection",
+      "subtitle": "Ceramic.",
+      "description": "Protect your investment with our professional ceramic coating. An invisible high-performance barrier against UV rays."
+    },
+    "autres": {
+      "title": "Our other",
+      "subtitle": "Services.",
+      "description": "We offer other services according to your needs. Don't hesitate to contact us with any questions."
+    },
+    "cire": {
+      "title": "Wax",
+      "subtitle": "Premium.",
+      "description": "Enhance your vehicle with our premium wax application. A brilliant result to reveal all the depth of your paintwork."
+    },
+    "learnMore": "Learn more",
+    "discoverServices": "Discover our services"
+  }
+}
