@@ -242,14 +242,14 @@ const ParallaxServices = ({ lang }) => {
   // Helper for localized paths
   const localePath = (path) => `/${lang}${path}`
 
-  // Services with translations
+  // Services with translations - Ordre: Lavage, Polish, Céramique, Cire, Autres
   const services = [
     {
       key: 'lavage',
       title: t('services.lavage.title'),
       subtitle: t('services.lavage.subtitle'),
       description: t('services.lavage.description'),
-      video: 'https://video.wixstatic.com/video/bf2329_97a02c74491e4e3b933761a5354c1870/720p/mp4/file.mp4',
+      video: 'https://swigs.online/uploads/adlr/1770457763210-200960664.webm',
       link: localePath('/services/lavage'),
     },
     {
@@ -257,7 +257,7 @@ const ParallaxServices = ({ lang }) => {
       title: t('services.polish.title'),
       subtitle: t('services.polish.subtitle'),
       description: t('services.polish.description'),
-      video: 'https://video.wixstatic.com/video/bf2329_89210701a0a74d41854ab173902a0583/720p/mp4/file.mp4',
+      video: 'https://swigs.online/uploads/adlr/1770457766809-323124336.webm',
       link: localePath('/services/polish'),
     },
     {
@@ -265,24 +265,24 @@ const ParallaxServices = ({ lang }) => {
       title: t('services.ceramique.title'),
       subtitle: t('services.ceramique.subtitle'),
       description: t('services.ceramique.description'),
-      video: 'https://video.wixstatic.com/video/bf2329_89b93bd6dc05409fb7993b679512255e/720p/mp4/file.mp4',
+      video: 'https://swigs.online/uploads/adlr/1770455314751-364132429.webm',
       link: localePath('/services/ceramique'),
-    },
-    {
-      key: 'autres',
-      title: t('services.autres.title'),
-      subtitle: t('services.autres.subtitle'),
-      description: t('services.autres.description'),
-      video: 'https://video.wixstatic.com/video/bf2329_8df04913038947498d9e06c66273495a/720p/mp4/file.mp4',
-      link: localePath('/services'),
     },
     {
       key: 'cire',
       title: t('services.cire.title'),
       subtitle: t('services.cire.subtitle'),
       description: t('services.cire.description'),
-      video: 'https://video.wixstatic.com/video/bf2329_5458ea175d88432caeed969df129eb8e/720p/mp4/file.mp4',
+      video: 'https://swigs.online/uploads/adlr/1770457758251-787538743.webm',
       link: localePath('/services/cire'),
+    },
+    {
+      key: 'autres',
+      title: t('services.autres.title'),
+      subtitle: t('services.autres.subtitle'),
+      description: t('services.autres.description'),
+      video: 'https://swigs.online/uploads/adlr/1770455288895-743240030.webm',
+      link: localePath('/services'),
       isLast: true,
     },
   ]
