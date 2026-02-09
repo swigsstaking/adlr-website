@@ -1,7 +1,15 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Navigate, useSearchParams } from 'react-router-dom'
 import { lazy, Suspense } from 'react'
 import Layout from './components/Layout'
 import LanguageLayout, { DEFAULT_LANGUAGE } from './components/LanguageLayout'
+
+// Redirect component that preserves query params (for Stripe success redirect)
+const RedirectWithParams = ({ to }) => {
+  const [searchParams] = useSearchParams()
+  const queryString = searchParams.toString()
+  const destination = queryString ? `${to}?${queryString}` : to
+  return <Navigate to={destination} replace />
+}
 
 // Lazy load pages for better performance
 const Home = lazy(() => import('./pages/HomeV2'))
@@ -47,6 +55,9 @@ function App() {
         <Routes>
           {/* Redirect root to default language */}
           <Route path="/" element={<Navigate to={`/${DEFAULT_LANGUAGE}`} replace />} />
+
+          {/* Stripe success redirect - preserves session_id query param */}
+          <Route path="/success" element={<RedirectWithParams to={`/${DEFAULT_LANGUAGE}/success`} />} />
 
           {/* Language-prefixed routes */}
           <Route path="/:lang" element={<LanguageLayout />}>
