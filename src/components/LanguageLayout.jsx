@@ -14,6 +14,11 @@ const LanguageLayout = () => {
   useEffect(() => {
     // If language is not supported, redirect to default language
     if (!SUPPORTED_LANGUAGES.includes(lang)) {
+      // Special case: if lang is 'success', redirect to /fr/success (for Stripe redirect)
+      if (lang === 'success') {
+        navigate(`/${DEFAULT_LANGUAGE}/success${location.search}`, { replace: true })
+        return
+      }
       const newPath = `/${DEFAULT_LANGUAGE}${location.pathname.replace(`/${lang}`, '')}${location.search}`
       navigate(newPath, { replace: true })
       return
