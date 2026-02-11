@@ -6,7 +6,6 @@ const PolishService = () => {
   const { lang } = useParams()
   const { t } = useTranslation('services')
 
-  // Get translated content
   const serviceData = t('servicePages.polish', { returnObjects: true })
   const vehicleCategories = t('servicePages.vehicleCategories', { returnObjects: true })
   const common = t('servicePages.common', { returnObjects: true })
@@ -30,21 +29,33 @@ const PolishService = () => {
         category: vehicleCategories.compact,
         examples: vehicleCategories.compactExamples,
         price: serviceData.pricing[0].price,
+        priceMax: serviceData.pricing[0].priceMax,
         duration: serviceData.pricing[0].duration,
       },
       {
-        category: vehicleCategories.sedan,
-        examples: vehicleCategories.sedanExamples,
+        category: vehicleCategories.coupe,
+        examples: vehicleCategories.coupeExamples,
         price: serviceData.pricing[1].price,
+        priceMax: serviceData.pricing[1].priceMax,
         duration: serviceData.pricing[1].duration,
       },
       {
-        category: vehicleCategories.large,
-        examples: vehicleCategories.largeExamples,
+        category: vehicleCategories.berline,
+        examples: vehicleCategories.berlineExamples,
         price: serviceData.pricing[2].price,
+        priceMax: serviceData.pricing[2].priceMax,
         duration: serviceData.pricing[2].duration,
       },
+      {
+        category: vehicleCategories.monospace,
+        examples: vehicleCategories.monospaceExamples,
+        price: serviceData.pricing[3].price,
+        priceMax: serviceData.pricing[3].priceMax,
+        duration: serviceData.pricing[3].duration,
+      },
     ],
+
+    priceNote: serviceData.priceNote,
 
     otherServices: [
       { title: t('servicePages.lavage.title'), link: '/services/lavage' },

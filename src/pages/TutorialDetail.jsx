@@ -63,9 +63,9 @@ Le principe est simple : un seau contient l'eau savonneuse, l'autre l'eau de rin
         }
       ],
       products: [
-        { name: 'Shampoing pH Neutre Premium', link: '/boutique' },
-        { name: 'Kit Microfibre Premium', link: '/boutique' },
-        { name: 'Kit 2 seaux + grilles', link: '/boutique' },
+        { name: 'Shampoing pH Neutre Premium', link: '/boutique', price: 24.90 },
+        { name: 'Kit Microfibre Premium', link: '/boutique', price: 34.90 },
+        { name: 'Kit 2 seaux + grilles', link: '/boutique', price: 49.90 },
       ],
     },
     {
@@ -89,9 +89,9 @@ Ces contaminants incluent les retombées industrielles, le goudron, la sève d'a
         { title: 'Essuyer et vérifier', description: 'Essuyez chaque section avec une microfibre propre.', tips: 'Si vous sentez encore des aspérités, repassez la clay.' }
       ],
       products: [
-        { name: 'Clay Bar Kit Décontamination', link: '/boutique' },
-        { name: 'Lubrifiant Clay 500ml', link: '/boutique' },
-        { name: 'Kit Microfibre Premium', link: '/boutique' },
+        { name: 'Clay Bar Kit Décontamination', link: '/boutique', price: 29.90 },
+        { name: 'Lubrifiant Clay 500ml', link: '/boutique', price: 19.90 },
+        { name: 'Kit Microfibre Premium', link: '/boutique', price: 34.90 },
       ],
     },
     {
@@ -115,10 +115,10 @@ Cette opération doit être réalisée avant toute protection (cire ou céramiqu
         { title: 'Finition', description: 'Terminez avec un polish de finition.', tips: 'Indispensable avant d\'appliquer une protection.' }
       ],
       products: [
-        { name: 'Polisseuse orbitale', link: '/boutique' },
-        { name: 'Set de pads (4 pcs)', link: '/boutique' },
-        { name: 'Compound correctif', link: '/boutique' },
-        { name: 'Polish finition', link: '/boutique' },
+        { name: 'Polisseuse orbitale', link: '/boutique', price: 289.00 },
+        { name: 'Set de pads (4 pcs)', link: '/boutique', price: 39.90 },
+        { name: 'Compound correctif', link: '/boutique', price: 29.90 },
+        { name: 'Polish finition', link: '/boutique', price: 27.90 },
       ],
     },
     {
@@ -142,10 +142,10 @@ L'application demande une préparation minutieuse et une technique précise.`,
         { title: 'Buffer et vérifier', description: 'Buffez délicatement avec une microfibre ultra-douce.', tips: 'Vérifiez sous différents angles.' }
       ],
       products: [
-        { name: 'Coating Céramique 9H', link: '/boutique' },
-        { name: 'IPA Dégraissant 500ml', link: '/boutique' },
-        { name: 'Applicateur suède (5 pcs)', link: '/boutique' },
-        { name: 'Kit Microfibre Premium', link: '/boutique' },
+        { name: 'Coating Céramique 9H', link: '/boutique', price: 89.90 },
+        { name: 'IPA Dégraissant 500ml', link: '/boutique', price: 14.90 },
+        { name: 'Applicateur suède (5 pcs)', link: '/boutique', price: 12.90 },
+        { name: 'Kit Microfibre Premium', link: '/boutique', price: 34.90 },
       ],
     },
     {
@@ -169,9 +169,9 @@ Le nettoyage et la protection du cuir se font idéalement tous les 2-3 mois.`,
         { title: 'Appliquer le protecteur', description: 'Appliquez la crème protectrice en fine couche.', tips: 'N\'en mettez pas trop pour éviter l\'aspect gras.' }
       ],
       products: [
-        { name: 'Nettoyant Cuir Premium', link: '/boutique' },
-        { name: 'Crème protection cuir', link: '/boutique' },
-        { name: 'Brosse cuir souple', link: '/boutique' },
+        { name: 'Nettoyant Cuir Premium', link: '/boutique', price: 22.90 },
+        { name: 'Crème protection cuir', link: '/boutique', price: 24.90 },
+        { name: 'Brosse cuir souple', link: '/boutique', price: 14.90 },
       ],
     },
     {
@@ -195,12 +195,38 @@ Heureusement, il est facile de leur redonner leur aspect d'origine.`,
         { title: 'Buffer l\'excédent', description: 'Essuyez l\'excédent de produit avec une microfibre propre.', tips: 'Une deuxième couche peut être appliquée.' }
       ],
       products: [
-        { name: 'Rénovateur plastiques', link: '/boutique' },
-        { name: 'APC nettoyant multi-surfaces', link: '/boutique' },
-        { name: 'Pinceau applicateur', link: '/boutique' },
+        { name: 'Rénovateur plastiques', link: '/boutique', price: 19.90 },
+        { name: 'APC nettoyant multi-surfaces', link: '/boutique', price: 16.90 },
+        { name: 'Pinceau applicateur', link: '/boutique', price: 9.90 },
       ],
     }
   ]
+
+  // Enrich products with prices from the product API
+  const enrichProductsWithPrices = async (tutorialData) => {
+    if (!tutorialData.products || tutorialData.products.length === 0) return tutorialData
+    const enrichedProducts = await Promise.all(
+      tutorialData.products.map(async (product) => {
+        if (product.productId && !product.price) {
+          try {
+            const res = await fetch(`${API_URL}/products/public/${product.productId}?siteId=adlr`)
+            const d = await res.json()
+            if (d.success && d.data) {
+              let price = d.data.price?.amount
+              // Try matching variant by name for correct variant price
+              if (d.data.variants?.length > 0) {
+                const match = d.data.variants.find(v => product.name && v.name && product.name.includes(v.name))
+                if (match?.price != null) price = match.price
+              }
+              if (price != null) return { ...product, price }
+            }
+          } catch (err) { /* ignore */ }
+        }
+        return product
+      })
+    )
+    return { ...tutorialData, products: enrichedProducts }
+  }
 
   useEffect(() => {
     const fetchTutorial = async () => {
@@ -210,7 +236,8 @@ Heureusement, il est facile de leur redonner leur aspect d'origine.`,
         if (!response.ok) throw new Error('Not found')
         const data = await response.json()
         if (data.success && data.data) {
-          setTutorial(data.data)
+          const enriched = await enrichProductsWithPrices(data.data)
+          setTutorial(enriched)
         } else {
           throw new Error('No data')
         }
@@ -434,55 +461,79 @@ Heureusement, il est facile de leur redonner leur aspect d'origine.`,
               <div className="lg:col-span-1">
                 <div className="sticky top-24 space-y-6">
                   {/* Products Card */}
-                  {tutorial.products && tutorial.products.length > 0 && (
-                    <div className="bg-sand-50 rounded-2xl p-6">
-                      <div className="flex items-center gap-2 mb-4">
-                        <ShoppingBag className="w-5 h-5 text-dark-900" />
-                        <h3 className="font-bold text-dark-900">Produits nécessaires</h3>
-                      </div>
-                      <ul className="space-y-3 mb-4">
-                        {tutorial.products.map((product, i) => (
-                          <li key={i} className="flex items-center justify-between">
-                            {product.link ? (
-                              <Link to={product.link} className="text-dark-700 hover:text-primary-600 transition-colors">
-                                {product.quantity && product.quantity > 1 ? `${product.quantity}x ` : ''}{product.name}
-                              </Link>
-                            ) : (
-                              <span className="text-dark-700">
-                                {product.quantity && product.quantity > 1 ? `${product.quantity}x ` : ''}{product.name}
-                              </span>
-                            )}
-                          </li>
-                        ))}
-                      </ul>
-                      <button
-                        onClick={handleAddAllToCart}
-                        disabled={addingToCart}
-                        className={`w-full flex items-center justify-center gap-2 px-4 py-3 font-semibold rounded-xl transition-all ${
-                          productsAdded
-                            ? 'bg-green-600 text-white'
-                            : 'bg-dark-900 hover:bg-dark-800 text-white'
-                        }`}
-                      >
-                        {addingToCart ? (
-                          <>
-                            <Loader2 className="w-4 h-4 animate-spin" />
-                            Ajout en cours...
-                          </>
-                        ) : productsAdded ? (
-                          <>
-                            <Check className="w-4 h-4" />
-                            Ajouté au panier !
-                          </>
-                        ) : (
-                          <>
-                            <ShoppingCart className="w-4 h-4" />
-                            Ajouter tout au panier
-                          </>
+                  {tutorial.products && tutorial.products.length > 0 && (() => {
+                    const total = tutorial.products.reduce((sum, p) => {
+                      const qty = p.quantity || 1
+                      return sum + (p.price ? p.price * qty : 0)
+                    }, 0)
+                    const hasAnyPrice = tutorial.products.some(p => p.price)
+
+                    return (
+                      <div className="bg-sand-50 rounded-2xl p-6">
+                        <div className="flex items-center gap-2 mb-4">
+                          <ShoppingBag className="w-5 h-5 text-dark-900" />
+                          <h3 className="font-bold text-dark-900">Produits nécessaires</h3>
+                        </div>
+                        <ul className="space-y-3 mb-4">
+                          {tutorial.products.map((product, i) => (
+                            <li key={i} className="flex items-center justify-between gap-2">
+                              <div className="flex-1 min-w-0">
+                                {product.link ? (
+                                  <Link to={product.link} className="text-dark-700 hover:text-primary-600 transition-colors text-sm">
+                                    {product.quantity && product.quantity > 1 ? `${product.quantity}x ` : ''}{product.name}
+                                  </Link>
+                                ) : (
+                                  <span className="text-dark-700 text-sm">
+                                    {product.quantity && product.quantity > 1 ? `${product.quantity}x ` : ''}{product.name}
+                                  </span>
+                                )}
+                              </div>
+                              {product.price && (
+                                <span className="text-dark-900 font-semibold text-sm flex-shrink-0">
+                                  CHF {(product.price * (product.quantity || 1)).toFixed(2)}
+                                </span>
+                              )}
+                            </li>
+                          ))}
+                        </ul>
+
+                        {/* Total */}
+                        {hasAnyPrice && (
+                          <div className="flex items-center justify-between pt-3 mb-4 border-t border-sand-300">
+                            <span className="font-bold text-dark-900">Total</span>
+                            <span className="text-lg font-bold text-dark-900">CHF {total.toFixed(2)}</span>
+                          </div>
                         )}
-                      </button>
-                    </div>
-                  )}
+
+                        <button
+                          onClick={handleAddAllToCart}
+                          disabled={addingToCart}
+                          className={`w-full flex items-center justify-center gap-2 px-4 py-3 font-semibold rounded-xl transition-all ${
+                            productsAdded
+                              ? 'bg-green-600 text-white'
+                              : 'bg-dark-900 hover:bg-dark-800 text-white'
+                          }`}
+                        >
+                          {addingToCart ? (
+                            <>
+                              <Loader2 className="w-4 h-4 animate-spin" />
+                              Ajout en cours...
+                            </>
+                          ) : productsAdded ? (
+                            <>
+                              <Check className="w-4 h-4" />
+                              Ajouté au panier !
+                            </>
+                          ) : (
+                            <>
+                              <ShoppingCart className="w-4 h-4" />
+                              Ajouter tout au panier
+                            </>
+                          )}
+                        </button>
+                      </div>
+                    )
+                  })()}
 
                   {/* Back to tutorials */}
                   <div className="bg-white rounded-2xl border border-sand-200 p-6">

@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Check, ChevronRight, ChevronLeft, Car, CarFront, Truck, Zap, Sparkles, Shield, Plus, Minus, Send, Lightbulb, Wrench, Droplets, Wind, Armchair, PaintBucket, CircleDot, Flame, X, ShoppingCart } from 'lucide-react'
+import { Check, ChevronRight, ChevronLeft, Car, CarFront, Truck, Zap, Send, Lightbulb, Wrench, Droplets, Wind, Armchair, PaintBucket, CircleDot, ShoppingCart } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import SEOHead from '../components/SEOHead'
 
@@ -23,60 +23,74 @@ const ConfiguratorV2 = () => {
   })
 
   const vehicleTypes = [
-    { id: 'compact', Icon: Car, image: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=400&auto=format&fit=crop', multiplier: 1 },
-    { id: 'sedan', Icon: CarFront, image: 'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=400&auto=format&fit=crop', multiplier: 1.25 },
-    { id: 'large', Icon: Truck, image: 'https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=400&auto=format&fit=crop', multiplier: 1.5 },
-    { id: 'supercar', Icon: Zap, image: 'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=400&auto=format&fit=crop', multiplier: 1.8 },
+    { id: 'compact', Icon: Car, image: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=400&auto=format&fit=crop' },
+    { id: 'coupe', Icon: Zap, image: 'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=400&auto=format&fit=crop' },
+    { id: 'berline', Icon: CarFront, image: 'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=400&auto=format&fit=crop' },
+    { id: 'monospace', Icon: Truck, image: 'https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=400&auto=format&fit=crop' },
   ]
 
   const basePacks = [
     {
-      id: 'eclat',
-      basePrice: 150,
-      duration: '2-3h',
+      id: 'lavageSimple',
+      prices: { compact: 150, coupe: 160, berline: 180, monospace: 190 },
+      durations: { compact: '1h30', coupe: '1h45', berline: '2h', monospace: '2h15' },
       color: 'from-blue-500 to-blue-600',
     },
     {
-      id: 'prestige',
-      basePrice: 280,
-      duration: '4-5h',
+      id: 'lavageProfondeur',
+      prices: { compact: 300, coupe: 325, berline: 350, monospace: 375 },
+      durations: { compact: '3h', coupe: '3h15', berline: '3h30', monospace: '3h45' },
       popular: true,
       color: 'from-amber-500 to-orange-500',
     },
     {
-      id: 'excellence',
-      basePrice: 450,
-      duration: '6-8h',
+      id: 'polish',
+      prices: { compact: 1000, coupe: 1200, berline: 1400, monospace: 1600 },
+      durations: { compact: '1-2 jours', coupe: '1-2 jours', berline: '2-3 jours', monospace: '2-3 jours' },
+      isRange: true,
       color: 'from-purple-500 to-purple-600',
     },
     {
       id: 'ceramique',
-      basePrice: 800,
-      duration: lang === 'fr' ? '2 jours' : '2 days',
+      prices: { compact: 2000, coupe: 2200, berline: 2400, monospace: 2600 },
+      durations: { compact: '2-3 jours', coupe: '2-3 jours', berline: '3-4 jours', monospace: '3-4 jours' },
+      isRange: true,
       color: 'from-dark-800 to-dark-900',
+    },
+    {
+      id: 'cire',
+      prices: { compact: 175, coupe: 200, berline: 225, monospace: 250 },
+      durations: { compact: '2h', coupe: '2h', berline: '2h', monospace: '2h30' },
+      color: 'from-emerald-500 to-emerald-600',
     }
   ]
 
   const additionalOptions = [
-    { id: 'headlights', price: 80, Icon: Lightbulb },
-    { id: 'engine', price: 60, Icon: Wrench },
-    { id: 'rainrepel', price: 50, Icon: Droplets },
-    { id: 'ozone', price: 40, Icon: Wind },
-    { id: 'leather', price: 120, Icon: Armchair },
-    { id: 'plastics', price: 50, Icon: PaintBucket },
-    { id: 'wheels', price: 80, Icon: CircleDot },
-    { id: 'exhaust', price: 40, Icon: Flame },
+    { id: 'ceramiqueVitres', price: 250, Icon: Droplets },
+    { id: 'ceramiqueJantesVisibles', price: 250, Icon: CircleDot },
+    { id: 'ceramiqueJantesComplete', price: 600, Icon: CircleDot },
+    { id: 'renovationPhares', price: 110, Icon: Lightbulb },
+    { id: 'nettoyageMoteur', price: 100, Icon: Wrench },
+    { id: 'traitementCuir', price: 250, Icon: Armchair },
+    { id: 'shampoingSieges', price: 250, Icon: Wind },
+    { id: 'renovationPlastiques', price: 200, Icon: PaintBucket },
   ]
 
   const getPrice = () => {
     if (!config.vehicleType || !config.basePack) return 0
-    const vehicle = vehicleTypes.find(v => v.id === config.vehicleType)
     const pack = basePacks.find(p => p.id === config.basePack)
+    const basePrice = pack.prices[config.vehicleType] || 0
     const optionsTotal = config.options.reduce((sum, optId) => {
       const opt = additionalOptions.find(o => o.id === optId)
       return sum + (opt?.price || 0)
     }, 0)
-    return Math.round(pack.basePrice * vehicle.multiplier + optionsTotal)
+    return basePrice + optionsTotal
+  }
+
+  const getSelectedDuration = () => {
+    if (!config.vehicleType || !config.basePack) return ''
+    const pack = basePacks.find(p => p.id === config.basePack)
+    return pack.durations[config.vehicleType] || ''
   }
 
   const toggleOption = (optionId) => {
@@ -113,11 +127,12 @@ const ConfiguratorV2 = () => {
     <>
       <SEOHead page="configurator" />
 
-      <div className="min-h-screen bg-sand-50 pt-24">
-        {/* Header avec steps */}
-        <div className="bg-white border-b border-sand-200">
-          <div className="flex flex-col lg:flex-row">
-            <div className="flex-1 lg:max-w-[65%] px-6 lg:px-10 py-4">
+      <div className="min-h-screen bg-sand-50 pt-[104px]">
+        <div className="flex flex-col lg:flex-row">
+          {/* Main Content Area */}
+          <div className="flex-1 lg:max-w-[65%]">
+            {/* Header avec steps */}
+            <div className="bg-white border-b border-sand-200 px-6 lg:px-10 py-4">
               <div className="max-w-3xl">
                 <div className="flex items-center justify-between mb-4">
                   <h1 className="text-xl font-display font-bold text-dark-900">
@@ -142,12 +157,7 @@ const ConfiguratorV2 = () => {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
 
-        <div className="flex flex-col lg:flex-row min-h-[calc(100vh-156px)]">
-          {/* Main Content Area */}
-          <div className="flex-1 lg:max-w-[65%]">
             {/* Content */}
             <div className="p-6 lg:p-10 pb-32 lg:pb-10">
               <AnimatePresence mode="wait">
@@ -227,7 +237,8 @@ const ConfiguratorV2 = () => {
 
                     <div className="space-y-4">
                       {basePacks.map((pack) => {
-                        const price = Math.round(pack.basePrice * (selectedVehicle?.multiplier || 1))
+                        const price = config.vehicleType ? pack.prices[config.vehicleType] : pack.prices.compact
+                        const duration = config.vehicleType ? pack.durations[config.vehicleType] : pack.durations.compact
                         const packData = t(`packs.${pack.id}`, { returnObjects: true })
                         return (
                           <button
@@ -257,8 +268,10 @@ const ConfiguratorV2 = () => {
                                     <p className="text-dark-500 text-sm">{packData.description}</p>
                                   </div>
                                   <div className="text-right">
-                                    <p className="text-2xl font-bold text-dark-900">CHF {price}.-</p>
-                                    <p className="text-dark-400 text-xs">{pack.duration}</p>
+                                    <p className="text-2xl font-bold text-dark-900">
+                                      {pack.isRange ? `${t('packs.fromPrice')} ` : ''}CHF {price}.-
+                                    </p>
+                                    <p className="text-dark-400 text-xs">{duration}</p>
                                   </div>
                                 </div>
 
@@ -478,7 +491,7 @@ const ConfiguratorV2 = () => {
           </div>
 
           {/* Sidebar - Summary (Desktop only) */}
-          <div className="hidden lg:block w-[35%] bg-sand-700 text-white sticky top-[156px] h-[calc(100vh-156px)] overflow-hidden">
+          <div className="hidden lg:block w-[35%] bg-sand-700 text-white sticky top-[104px] h-[calc(100vh-104px)] overflow-hidden">
             <div className="p-8 h-full flex flex-col">
               <div className="flex items-center gap-3 mb-8">
                 <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
@@ -510,7 +523,7 @@ const ConfiguratorV2 = () => {
                   {selectedPack ? (
                     <div>
                       <p className="font-semibold">{t(`packs.${selectedPack.id}.name`)}</p>
-                      <p className="text-white/60 text-sm">{selectedPack.duration}</p>
+                      <p className="text-white/60 text-sm">{getSelectedDuration()}</p>
                     </div>
                   ) : (
                     <p className="text-white/40 text-sm">{t('summary.notSelected')}</p>
@@ -542,8 +555,8 @@ const ConfiguratorV2 = () => {
                   <span className="text-white/60">{t('summary.total')}</span>
                   <div className="text-right">
                     <p className="text-4xl font-bold">CHF {getPrice()}.-</p>
-                    {selectedPack && (
-                      <p className="text-white/40 text-sm">{t('summary.duration')}: {selectedPack.duration}</p>
+                    {selectedPack && config.vehicleType && (
+                      <p className="text-white/40 text-sm">{t('summary.duration')}: {getSelectedDuration()}</p>
                     )}
                   </div>
                 </div>

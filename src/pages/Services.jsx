@@ -24,63 +24,59 @@ const Services = () => {
   const packs = [
     {
       id: 1,
-      key: 'eclatInitial',
+      key: 'lavageSimple',
       category: 'nettoyage',
-      price: { small: 150, medium: 180, large: 220 },
-      duration: '2-3h',
+      price: { small: 150, medium: 160, large: 180, xlarge: 190 },
+      duration: '1h30-2h15',
       popular: false,
     },
     {
       id: 2,
-      key: 'prestige',
+      key: 'lavageProfondeur',
       category: 'nettoyage',
-      price: { small: 280, medium: 350, large: 420 },
-      duration: '4-5h',
+      price: { small: 300, medium: 325, large: 350, xlarge: 375 },
+      duration: '3h-3h45',
       popular: true,
     },
     {
       id: 3,
-      key: 'excellence',
-      category: 'nettoyage',
-      price: { small: 450, medium: 550, large: 680 },
-      duration: '6-8h',
+      key: 'polishCorrectif',
+      category: 'correction',
+      price: { small: 1000, medium: 1200, large: 1400, xlarge: 1600 },
+      duration: lang === 'fr' ? '1-3 jours' : '1-3 days',
       popular: false,
+      isRange: true,
+      hasNote: true,
     },
     {
       id: 4,
-      key: 'polishCorrectif',
-      category: 'correction',
-      price: { small: 400, medium: 500, large: 650 },
-      duration: lang === 'fr' ? '1 jour' : '1 day',
-      popular: false,
+      key: 'ceramiquePro',
+      category: 'protection',
+      price: { small: 2000, medium: 2200, large: 2400, xlarge: 2600 },
+      duration: lang === 'fr' ? '2-4 jours' : '2-4 days',
+      popular: true,
+      isRange: true,
+      hasNote: true,
     },
     {
       id: 5,
-      key: 'ceramiquePro',
+      key: 'cire',
       category: 'protection',
-      price: { small: 800, medium: 1000, large: 1300 },
-      duration: lang === 'fr' ? '2 jours' : '2 days',
-      popular: true,
-    },
-    {
-      id: 6,
-      key: 'ppfPremium',
-      category: 'protection',
-      price: { small: t('packs.onQuote'), medium: t('packs.onQuote'), large: t('packs.onQuote') },
-      duration: lang === 'fr' ? '2-4 jours' : '2-4 days',
+      price: { small: 175, medium: 200, large: 225, xlarge: 250 },
+      duration: '2h-2h30',
       popular: false,
     }
   ]
 
   const extras = [
-    { key: 'renovationPhares', price: 80 },
-    { key: 'nettoyageMoteur', price: 60 },
-    { key: 'antiPluie', price: 50 },
-    { key: 'desinfectionOzone', price: 40 },
-    { key: 'nettoyageToit', price: 30 },
-    { key: 'traitementCuir', price: 120 },
-    { key: 'renovationPlastiques', price: 50 },
-    { key: 'polishJantes', price: 80 },
+    { key: 'ceramiqueVitres', price: 250 },
+    { key: 'ceramiqueJantesVisibles', price: 250 },
+    { key: 'ceramiqueJantesComplete', price: 600 },
+    { key: 'renovationPhares', price: 110 },
+    { key: 'nettoyageMoteur', price: 100 },
+    { key: 'traitementCuir', price: 250 },
+    { key: 'shampoingSieges', price: 250 },
+    { key: 'renovationPlastiques', price: 200 },
   ]
 
   const serviceLinks = [
@@ -192,15 +188,18 @@ const Services = () => {
 
                     <div className="mb-6">
                       <div className="text-4xl font-bold text-dark-900 mb-1">
-                        {typeof pack.price.small === 'number' ? (
-                          <>CHF {pack.price.small}.-</>
+                        {pack.isRange ? (
+                          <>{t('packs.fromPrice')} CHF {pack.price.small}.-</>
                         ) : (
-                          <span className="text-2xl">{pack.price.small}</span>
+                          <>CHF {pack.price.small}.-</>
                         )}
                       </div>
-                      {typeof pack.price.small === 'number' && (
-                        <p className="text-dark-400 text-sm">
-                          {t('packs.priceSedan')}: CHF {pack.price.medium}.- | {t('packs.priceLarge')}: CHF {pack.price.large}.-
+                      <p className="text-dark-400 text-sm">
+                        {t('packs.priceCoupe')}: CHF {pack.price.medium}.- | {t('packs.priceBerline')}: CHF {pack.price.large}.- | {t('packs.priceMonospace')}: CHF {pack.price.xlarge}.-
+                      </p>
+                      {pack.hasNote && (
+                        <p className="text-dark-400 text-xs mt-1 italic">
+                          {t('packs.priceNote')}
                         </p>
                       )}
                     </div>

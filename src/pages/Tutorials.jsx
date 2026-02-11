@@ -145,6 +145,32 @@ const Tutorials = () => {
     }
   ]
 
+  // Enrich products with prices from the product API
+  const enrichProductsWithPrices = async (tutorialData) => {
+    if (!tutorialData.products || tutorialData.products.length === 0) return tutorialData
+    const enrichedProducts = await Promise.all(
+      tutorialData.products.map(async (product) => {
+        if (product.productId && !product.price) {
+          try {
+            const res = await fetch(`${API_URL}/products/public/${product.productId}?siteId=adlr`)
+            const d = await res.json()
+            if (d.success && d.data) {
+              let price = d.data.price?.amount
+              // Try matching variant by name for correct variant price
+              if (d.data.variants?.length > 0) {
+                const match = d.data.variants.find(v => product.name && v.name && product.name.includes(v.name))
+                if (match?.price != null) price = match.price
+              }
+              if (price != null) return { ...product, price }
+            }
+          } catch (err) { /* ignore */ }
+        }
+        return product
+      })
+    )
+    return { ...tutorialData, products: enrichedProducts }
+  }
+
   useEffect(() => {
     const fetchTutorials = async () => {
       try {
@@ -153,7 +179,8 @@ const Tutorials = () => {
         if (!response.ok) throw new Error('Erreur de chargement')
         const data = await response.json()
         if (data.success && data.data && data.data.length > 0) {
-          setTutorials(data.data)
+          const enriched = await Promise.all(data.data.map(t => enrichProductsWithPrices(t)))
+          setTutorials(enriched)
         } else {
           setTutorials(fallbackTutorials)
         }
@@ -300,12 +327,22 @@ const Tutorials = () => {
                       </div>
 
                       {/* Products */}
-                      {tutorial.products && tutorial.products.length > 0 && (
+                      {tutorial.products && tutorial.products.length > 0 && (() => {
+                        const total = tutorial.products.reduce((sum, p) => {
+                          const qty = p.quantity || 1
+                          return sum + (p.price ? p.price * qty : 0)
+                        }, 0)
+                        const hasAnyPrice = tutorial.products.some(p => p.price)
+
+                        return (
                         <div className="pt-4 border-t border-sand-200">
                           <div className="flex items-center justify-between mb-3">
                             <div className="flex items-center gap-2 text-dark-900 text-sm font-semibold">
                               <ShoppingBag className="w-4 h-4" />
                               Produits nécessaires
+                              {hasAnyPrice && (
+                                <span className="text-dark-500 font-normal">— CHF {total.toFixed(2)}</span>
+                              )}
                             </div>
                             <button
                               onClick={(e) => {
@@ -335,6 +372,9 @@ const Tutorials = () => {
                             {tutorial.products.slice(0, 4).map((product, i) => (
                               <span key={i} className="text-sm text-dark-600 bg-sand-100 px-3 py-1.5 rounded-full font-medium">
                                 {product.quantity && product.quantity > 1 ? `${product.quantity}x ` : ''}{product.name}
+                                {product.price && (
+                                  <span className="text-dark-900 ml-1">CHF {(product.price * (product.quantity || 1)).toFixed(2)}</span>
+                                )}
                               </span>
                             ))}
                             {tutorial.products.length > 4 && (
@@ -344,7 +384,8 @@ const Tutorials = () => {
                             )}
                           </div>
                         </div>
-                      )}
+                        )
+                      })()}
 
                       {/* CTA */}
                       <Link

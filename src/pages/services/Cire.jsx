@@ -6,7 +6,6 @@ const CireService = () => {
   const { lang } = useParams()
   const { t } = useTranslation('services')
 
-  // Get translated content
   const serviceData = t('servicePages.cire', { returnObjects: true })
   const vehicleCategories = t('servicePages.vehicleCategories', { returnObjects: true })
   const common = t('servicePages.common', { returnObjects: true })
@@ -33,16 +32,22 @@ const CireService = () => {
         duration: serviceData.pricing[0].duration,
       },
       {
-        category: vehicleCategories.sedan,
-        examples: vehicleCategories.sedanExamples,
+        category: vehicleCategories.coupe,
+        examples: vehicleCategories.coupeExamples,
         price: serviceData.pricing[1].price,
         duration: serviceData.pricing[1].duration,
       },
       {
-        category: vehicleCategories.large,
-        examples: vehicleCategories.largeExamples,
+        category: vehicleCategories.berline,
+        examples: vehicleCategories.berlineExamples,
         price: serviceData.pricing[2].price,
         duration: serviceData.pricing[2].duration,
+      },
+      {
+        category: vehicleCategories.monospace,
+        examples: vehicleCategories.monospaceExamples,
+        price: serviceData.pricing[3].price,
+        duration: serviceData.pricing[3].duration,
       },
     ],
 

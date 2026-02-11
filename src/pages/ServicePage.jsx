@@ -184,7 +184,7 @@ const ServicePage = ({
               </p>
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+            <div className={`grid grid-cols-1 sm:grid-cols-2 ${service.pricing.length === 4 ? 'lg:grid-cols-4' : 'md:grid-cols-3'} gap-6 max-w-5xl mx-auto`}>
               {service.pricing.map((price, index) => (
                 <motion.div
                   key={index}
@@ -192,26 +192,30 @@ const ServicePage = ({
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className={`rounded-3xl p-8 text-center ${
+                  className={`rounded-3xl p-6 text-center ${
                     index === 1
-                      ? 'bg-dark-900 text-white shadow-2xl scale-105'
+                      ? 'bg-dark-900 text-white shadow-2xl sm:scale-105'
                       : 'bg-sand-100'
                   }`}
                 >
-                  <h3 className={`text-lg font-semibold mb-2 ${
+                  <h3 className={`text-base font-semibold mb-2 ${
                     index === 1 ? 'text-white' : 'text-dark-900'
                   }`}>
                     {price.category}
                   </h3>
-                  <p className={`text-sm mb-6 ${
+                  <p className={`text-xs mb-4 ${
                     index === 1 ? 'text-white/60' : 'text-dark-500'
                   }`}>
                     {price.examples}
                   </p>
-                  <div className={`text-4xl font-bold mb-2 ${
+                  <div className={`text-3xl font-bold mb-2 ${
                     index === 1 ? 'text-white' : 'text-dark-900'
                   }`}>
-                    CHF {price.price}.-
+                    {price.priceMax ? (
+                      <>{price.price}-{price.priceMax}.-</>
+                    ) : (
+                      <>CHF {price.price}.-</>
+                    )}
                   </div>
                   {price.duration && (
                     <p className={`text-sm ${
@@ -223,6 +227,11 @@ const ServicePage = ({
                 </motion.div>
               ))}
             </div>
+            {service.priceNote && (
+              <p className="text-center text-dark-400 text-sm mt-6 italic">
+                {service.priceNote}
+              </p>
+            )}
           </div>
         </section>
       )}

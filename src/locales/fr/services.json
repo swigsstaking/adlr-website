@@ -2,7 +2,7 @@
   "hero": {
     "label": "Nos prestations",
     "title": "Services de Detailing",
-    "description": "Des packs adaptés à tous les besoins, du nettoyage simple à la protection haut de gamme."
+    "description": "Des prestations adaptées à tous les besoins, du nettoyage simple à la protection haut de gamme."
   },
   "categories": {
     "all": "Tous",
@@ -14,91 +14,78 @@
     "popular": "Populaire",
     "duration": "Durée",
     "reserve": "Réserver",
-    "priceSedan": "Berline / SUV",
-    "priceLarge": "Grand",
+    "priceCoupe": "Coupé / GT / Supercar",
+    "priceBerline": "Berline / petit SUV",
+    "priceMonospace": "Monospace / SUV",
     "onQuote": "Sur devis",
+    "fromPrice": "à partir de",
+    "priceNote": "*le prix dépend de l'état de la carrosserie et du résultat attendu",
     "items": {
-      "eclatInitial": {
-        "name": "Éclat Initial",
-        "description": "Nettoyage complet pour redonner de l'éclat à votre véhicule",
+      "lavageSimple": {
+        "name": "Lavage Simple",
+        "description": "Nettoyage complet intérieur et extérieur de votre véhicule",
         "features": [
-          "Lavage extérieur haute pression",
-          "Nettoyage des jantes et pneus",
-          "Shampooing carrosserie",
-          "Séchage et lustrage rapide",
+          "Lavage de la carrosserie",
+          "Lavage de la partie visible des jantes",
+          "Séchage de la carrosserie à la main",
+          "Dépoussiérage du tableau de bord et console",
+          "Aspiration de l'habitacle",
           "Nettoyage des vitres",
-          "Aspiration intérieur complet",
-          "Nettoyage des plastiques intérieurs"
+          "Finition satinée des pneus"
         ]
       },
-      "prestige": {
-        "name": "Prestige",
-        "description": "Notre pack le plus demandé pour un résultat impeccable",
+      "lavageProfondeur": {
+        "name": "Lavage en Profondeur",
+        "description": "Nettoyage approfondi avec protection express incluse",
         "features": [
-          "Tout le pack Éclat Initial",
-          "Décontamination à la clay bar",
-          "Nettoyage des joints et interstices",
-          "Shampooing sièges et moquettes",
-          "Traitement cuir (si applicable)",
-          "Nettoyage compartiment moteur",
-          "Cire de protection 3 mois",
-          "Parfum intérieur premium"
-        ]
-      },
-      "excellence": {
-        "name": "Excellence",
-        "description": "Le summum du detailing pour les perfectionnistes",
-        "features": [
-          "Tout le pack Prestige",
-          "Polish léger 1 passe",
-          "Traitement anti-pluie vitres",
-          "Rénovation plastiques extérieurs",
-          "Traitement anti-UV plastiques",
-          "Protection céramique express (6 mois)",
-          "Certification détaillée"
+          "Prélavage au canon à mousse",
+          "Lavage manuel méthode des 2 seaux",
+          "Séchage manuel",
+          "Lavage approfondi des jantes et flanc des pneus",
+          "Nettoyage et séchage des passages de portes",
+          "Aspiration poussée de l'habitacle",
+          "Dépoussiérage complet de l'habitacle",
+          "Nettoyage des vitres",
+          "Cire de protection expresse (durée 2 semaines)",
+          "Finition satinée des pneus"
         ]
       },
       "polishCorrectif": {
         "name": "Polish Correctif",
         "description": "Correction des défauts de peinture pour une brillance parfaite",
         "features": [
-          "Analyse de l'état de la peinture",
-          "Décontamination complète",
-          "Polish correctif 2-3 passes",
-          "Élimination micro-rayures",
-          "Suppression des swirls",
-          "Correction hologrammes",
-          "Finition haute brillance",
-          "Protection cire 3 mois incluse"
+          "Analyse peinture à la lampe LED/halogène",
+          "Nettoyage en profondeur du véhicule",
+          "Décontamination chimique",
+          "Décontamination mécanique barre d'argile",
+          "Polish multi-passes 1-3 selon les défauts",
+          "Contrôle final sous différents éclairages"
         ]
       },
       "ceramiquePro": {
-        "name": "Céramique Pro",
+        "name": "Protection Céramique",
         "description": "Protection céramique professionnelle longue durée",
         "features": [
-          "Préparation complète (pack Excellence)",
-          "Polish correctif si nécessaire",
+          "Polish correctif obligatoire inclus",
           "Dégraissage IPA",
           "Application céramique 9H",
-          "Protection 3-5 ans",
+          "Protection longue durée",
           "Effet hydrophobe extrême",
           "Résistance UV et chimique",
           "Certificat d'authenticité",
-          "Kit entretien offert"
+          "Conseils d'entretien"
         ]
       },
-      "ppfPremium": {
-        "name": "PPF Premium",
-        "description": "Film de protection carrosserie invisible",
+      "cire": {
+        "name": "Cire Premium",
+        "description": "Protection et brillance avec cire carnauba premium",
         "features": [
-          "Consultation personnalisée",
-          "Film PPF haute qualité",
-          "Protection pare-chocs avant",
-          "Protection capot",
-          "Protection ailes avant",
-          "Protection rétroviseurs",
-          "Garantie 10 ans",
-          "Auto-cicatrisant"
+          "Cire carnauba haute teneur",
+          "Application manuelle experte",
+          "Brillance chaude et profonde",
+          "Effet perlant modéré",
+          "Durée 2-6 mois",
+          "Compatible tous shampoings"
         ]
       }
     }
@@ -107,14 +94,14 @@
     "title": "Services à la Carte",
     "description": "Personnalisez votre prestation avec nos options supplémentaires",
     "items": {
+      "ceramiqueVitres": "Traitement céramique des vitres",
+      "ceramiqueJantesVisibles": "Céramique jantes (face visible)",
+      "ceramiqueJantesComplete": "Céramique jantes + étriers (intégralité)",
       "renovationPhares": "Rénovation phares",
       "nettoyageMoteur": "Nettoyage moteur",
-      "antiPluie": "Traitement anti-pluie",
-      "desinfectionOzone": "Désinfection ozone",
-      "nettoyageToit": "Nettoyage toit ouvrant",
       "traitementCuir": "Traitement cuir complet",
-      "renovationPlastiques": "Rénovation plastiques",
-      "polishJantes": "Polish jantes"
+      "shampoingSieges": "Shampoing des sièges en tissus",
+      "renovationPlastiques": "Rénovation plastiques"
     }
   },
   "cta": {
@@ -135,106 +122,133 @@
       "configureService": "Configurer mon service",
       "contactUs": "Nous contacter",
       "otherServices": "Nos autres services",
-      "allServices": "Tous les services"
+      "allServices": "Tous les services",
+      "priceNote": "*le prix dépend de l'état de la carrosserie et du résultat attendu"
     },
     "vehicleCategories": {
-      "compact": "Citadine / Compacte",
+      "compact": "Citadine / Compact",
       "compactExamples": "Polo, Golf, A3, Classe A...",
-      "sedan": "Berline / SUV",
-      "sedanExamples": "3 Series, C-Class, Q5, GLC...",
-      "large": "Grand SUV / Van",
-      "largeExamples": "X5, GLE, Q7, Range Rover..."
+      "coupe": "Coupé / GT / Supercar",
+      "coupeExamples": "911, M4, AMG GT, Ferrari...",
+      "berline": "Berline / petit SUV",
+      "berlineExamples": "Série 3, Classe C, Q5, GLC...",
+      "monospace": "Monospace / SUV",
+      "monospaceExamples": "X5, GLE, Q7, Range Rover..."
     },
     "lavage": {
-      "title": "Lavage Premium",
-      "subtitle": "Un nettoyage minutieux intérieur et extérieur, des produits haut de gamme sélectionnés par nos experts, et une attention particulière aux moindres détails.",
+      "title": "Service de Lavage",
+      "subtitle": "Découvrez notre service de lavage automobile : un nettoyage minutieux, des produits hauts de gamme, et une attention aux moindres détails.",
       "category": "Nettoyage",
       "descriptionTitle": "L'art du lavage automobile",
-      "description": "Chez ADLR Cosmetic Auto, nous considérons le lavage comme la première étape essentielle de tout entretien automobile de qualité. Notre méthode des deux seaux, combinée à des produits pH neutres haut de gamme, garantit un nettoyage en profondeur sans jamais risquer d'endommager votre peinture.\n\nChaque véhicule reçoit une attention particulière, de la préparation initiale avec un pré-lavage à la mousse active, jusqu'au séchage minutieux avec des microfibres premium. Nous nettoyons chaque recoin, chaque interstice, pour un résultat impeccable.\n\nNotre équipe prend soin de votre véhicule comme si c'était le nôtre, avec passion et expertise.",
-      "features": [
-        { "title": "Pré-lavage mousse active", "description": "Décolle les saletés sans contact" },
-        { "title": "Méthode deux seaux", "description": "Évite les micro-rayures" },
-        { "title": "Shampooing pH neutre", "description": "Respecte les traitements existants" },
-        { "title": "Nettoyage jantes & pneus", "description": "Produits dédiés non acides" },
-        { "title": "Séchage microfibre", "description": "Microfibres premium 400 GSM" },
-        { "title": "Nettoyage vitres", "description": "Intérieur et extérieur sans traces" },
-        { "title": "Aspiration complète", "description": "Sièges, moquettes, coffre" },
-        { "title": "Nettoyage plastiques", "description": "Tableau de bord, contre-portes" },
-        { "title": "Parfum intérieur", "description": "Fragrance premium au choix" }
-      ],
-      "pricing": [
-        { "price": "80", "duration": "1h30-2h" },
-        { "price": "100", "duration": "2h-2h30" },
-        { "price": "120", "duration": "2h30-3h" }
+      "description": "Chez ADLR Cosmetic Auto, nous considérons le lavage comme la première étape essentielle de tout entretien automobile de qualité. Notre méthode des deux seaux, combinée à des produits hauts de gamme, garantit un nettoyage en profondeur sans jamais risquer d'endommager votre peinture.\n\nChaque véhicule reçoit une attention particulière, de la préparation initiale avec un pré-lavage à la mousse active, jusqu'au séchage minutieux avec des microfibres premium. Nous nettoyons chaque recoin, chaque interstice, pour un résultat impeccable.\n\nNotre équipe prend soin de votre véhicule comme si c'était le nôtre, avec passion et expertise.",
+      "subServices": [
+        {
+          "name": "Lavage Simple",
+          "features": [
+            { "title": "Lavage de la carrosserie", "description": "Nettoyage complet de la carrosserie" },
+            { "title": "Lavage des jantes", "description": "Partie visible des jantes" },
+            { "title": "Séchage à la main", "description": "Séchage minutieux de la carrosserie" },
+            { "title": "Dépoussiérage habitacle", "description": "Tableau de bord, garnitures de portes et console centrale" },
+            { "title": "Aspiration", "description": "Aspiration de l'habitacle" },
+            { "title": "Nettoyage des vitres", "description": "Vitres intérieures et extérieures" },
+            { "title": "Finition pneus", "description": "Finition satinée des pneus" }
+          ],
+          "pricing": [
+            { "price": "150", "duration": "1h30" },
+            { "price": "160", "duration": "1h45" },
+            { "price": "180", "duration": "2h" },
+            { "price": "190", "duration": "2h15" }
+          ]
+        },
+        {
+          "name": "Lavage en Profondeur",
+          "features": [
+            { "title": "Prélavage au canon à mousse", "description": "Mousse active pour décoller les saletés" },
+            { "title": "Lavage manuel méthode des 2 seaux", "description": "Méthode professionnelle anti-rayures" },
+            { "title": "Séchage manuel", "description": "Séchage minutieux à la microfibre" },
+            { "title": "Lavage approfondi des jantes", "description": "Jantes et flanc des pneus" },
+            { "title": "Passages de portes", "description": "Nettoyage et séchage des passages de portes" },
+            { "title": "Aspiration poussée", "description": "Aspiration approfondie de l'habitacle" },
+            { "title": "Dépoussiérage complet", "description": "Tableau de bord, garnitures de portes et console centrale" },
+            { "title": "Nettoyage des vitres", "description": "Vitres intérieures et extérieures" },
+            { "title": "Cire de protection expresse", "description": "Protection express durée 2 semaines" },
+            { "title": "Finition pneus", "description": "Finition satinée des pneus" }
+          ],
+          "pricing": [
+            { "price": "300", "duration": "3h" },
+            { "price": "325", "duration": "3h15" },
+            { "price": "350", "duration": "3h30" },
+            { "price": "375", "duration": "3h45" }
+          ]
+        }
       ]
     },
     "polish": {
       "title": "Polish Correctif",
-      "subtitle": "Offrez à votre voiture un éclat incomparable. Nous utilisons des techniques professionnelles pour éliminer micro-rayures, swirls et hologrammes.",
+      "subtitle": "Offrez à votre voiture un éclat incomparable avec notre service de polish. Nous utilisons des techniques expertes pour redonner à votre véhicule sa brillance d'origine.",
       "category": "Correction",
       "descriptionTitle": "La correction de peinture professionnelle",
-      "description": "Le polish correctif est l'art de redonner à votre peinture son éclat d'origine en éliminant les défauts de surface. Micro-rayures, swirls (tourbillons), hologrammes et autres marques disgracieuses disparaissent sous nos machines professionnelles.\n\nNotre processus commence par une analyse approfondie de l'état de votre peinture à l'aide de lampes spéciales. Nous déterminons ensuite le niveau de correction nécessaire et sélectionnons les pads et compounds adaptés.\n\nChaque passage de polisseuse est effectué avec précision, section par section, pour un résultat homogène et durable. Le polish correctif révèle toute la profondeur et la brillance de votre peinture.",
+      "description": "Le polish correctif est l'art de redonner à votre peinture son éclat d'origine en éliminant les défauts, les micro-rayures, les tourbillons, les hologrammes et autres marques disgracieuses.\n\nNotre processus commence par une analyse approfondie de l'état de votre peinture à l'aide de lampes spéciales. Nous déterminons ensuite avec vous le niveau de correction nécessaire en fonction de vos attentes.\n\nChaque passage de polisseuse est effectué avec précision, section par section, pour un résultat homogène et durable. Le polish révèle toute la profondeur et la brillance de votre peinture.",
       "features": [
         { "title": "Analyse peinture", "description": "Évaluation à la lampe LED/halogène" },
-        { "title": "Décontamination", "description": "Clay bar et dégraissage complet" },
-        { "title": "Polish multi-passes", "description": "2 à 3 passes selon les défauts" },
-        { "title": "Élimination swirls", "description": "Suppression des tourbillons" },
-        { "title": "Correction hologrammes", "description": "Finition parfaite" },
-        { "title": "Polisseuse orbitale", "description": "Machines professionnelles Rupes" },
-        { "title": "Compounds premium", "description": "Menzerna, Sonax, Koch Chemie" },
-        { "title": "Contrôle final", "description": "Vérification sous différents éclairages" },
-        { "title": "Protection incluse", "description": "Cire de finition 3 mois" }
+        { "title": "Nettoyage en profondeur", "description": "Nettoyage complet du véhicule" },
+        { "title": "Décontamination chimique", "description": "Traitement chimique de la surface" },
+        { "title": "Décontamination mécanique", "description": "Barre d'argile pour surface lisse" },
+        { "title": "Polish multi-passes", "description": "1 à 3 passes selon les défauts et le résultat souhaité" },
+        { "title": "Contrôle final", "description": "Vérification sous différents éclairages" }
       ],
       "pricing": [
-        { "price": "350", "duration": "1 jour" },
-        { "price": "450", "duration": "1-1.5 jours" },
-        { "price": "550", "duration": "1.5-2 jours" }
-      ]
+        { "price": "1000", "priceMax": "1800", "duration": "1 à 2 jours" },
+        { "price": "1200", "priceMax": "2000", "duration": "1 à 2 jours" },
+        { "price": "1400", "priceMax": "2200", "duration": "2 à 3 jours" },
+        { "price": "1600", "priceMax": "2400", "duration": "2 à 3 jours" }
+      ],
+      "priceNote": "*le prix dépend de l'état de la carrosserie et du résultat attendu"
     },
     "ceramique": {
       "title": "Protection Céramique",
-      "subtitle": "Protégez votre investissement avec notre traitement céramique professionnel. Une barrière invisible haute performance contre les UV et la pollution.",
+      "subtitle": "Protégez et sublimez votre véhicule avec notre service de pose de protection céramique. Une barrière invisible haute performance.",
       "category": "Protection",
       "descriptionTitle": "La protection ultime pour votre carrosserie",
-      "description": "Le traitement céramique représente le summum de la protection automobile. Cette technologie avancée crée une liaison chimique permanente avec votre peinture, formant une couche protectrice d'une dureté de 9H sur l'échelle de Mohs.\n\nNotre céramique professionnelle offre une protection exceptionnelle contre les UV, la pollution, les fientes d'oiseaux, la résine d'arbre et les contaminants chimiques. L'effet hydrophobe extrême fait perler l'eau et facilite considérablement l'entretien quotidien.\n\nAvant l'application, nous préparons minutieusement votre véhicule avec un polish correctif si nécessaire, garantissant un résultat impeccable sous la couche céramique.",
+      "description": "Le traitement céramique représente le summum de la protection automobile. Cette technologie avancée crée une liaison chimique permanente avec votre peinture, formant une couche protectrice d'une dureté de 9H sur l'échelle de Mohs.\n\nNotre céramique professionnelle offre une protection exceptionnelle contre les UV, la pollution, les fientes d'oiseaux, la résine d'arbre et les contaminants chimiques. L'effet hydrophobe extrême fait perler l'eau et facilite considérablement l'entretien quotidien.\n\nAvant l'application, nous préparons minutieusement votre véhicule, il est obligatoire d'effectuer un polish avant la pose de céramique, les micro-rayures et défauts non corrigés avant se retrouvent emprisonnés dans la céramique.",
       "features": [
         { "title": "Préparation complète", "description": "Lavage, décontamination, polish" },
         { "title": "Céramique 9H", "description": "Dureté maximale professionnelle" },
-        { "title": "Protection 3-5 ans", "description": "Durabilité garantie" },
+        { "title": "Protection longue durée", "description": "Durabilité garantie" },
         { "title": "Effet hydrophobe", "description": "L'eau perle instantanément" },
         { "title": "Anti-UV", "description": "Protection contre la décoloration" },
         { "title": "Résistance chimique", "description": "Contre pollution et contaminants" },
         { "title": "Brillance intense", "description": "Effet miroir profond" },
         { "title": "Certificat", "description": "Certificat d'authenticité fourni" },
-        { "title": "Kit entretien", "description": "Produits d'entretien offerts" }
+        { "title": "Conseils d'entretien", "description": "Conseils d'entretien personnalisés" }
       ],
       "pricing": [
-        { "price": "800", "duration": "2-3 jours" },
-        { "price": "1000", "duration": "2-3 jours" },
-        { "price": "1300", "duration": "3-4 jours" }
-      ]
+        { "price": "2000", "priceMax": "2800", "duration": "2 à 3 jours" },
+        { "price": "2200", "priceMax": "3000", "duration": "2 à 3 jours" },
+        { "price": "2400", "priceMax": "3200", "duration": "3 à 4 jours" },
+        { "price": "2600", "priceMax": "3400", "duration": "3 à 4 jours" }
+      ],
+      "priceNote": "*le prix dépend de l'état de la carrosserie et du résultat attendu"
     },
     "cire": {
       "title": "Cire Premium",
-      "subtitle": "Sublimez votre véhicule avec notre application de cire premium. Un résultat brillant pour révéler toute la profondeur de votre peinture.",
+      "subtitle": "La cire offre une protection temporaire, améliore la brillance et facilite l'entretien du véhicule.",
       "category": "Protection",
       "descriptionTitle": "L'élégance de la cire naturelle",
-      "description": "La cire carnauba reste le choix privilégié des puristes pour sublimer leur véhicule. Issue du palmier brésilien, cette cire naturelle offre une brillance chaude et profonde que les protections synthétiques ne peuvent égaler.\n\nNotre cire premium contient un taux élevé de carnauba pure, appliquée à la main par nos experts. Le résultat est une brillance incomparable qui met en valeur chaque courbe de votre carrosserie.\n\nBien que sa durabilité soit plus courte qu'une céramique (2-3 mois), la cire offre un rendu visuel unique et un rituel d'entretien apprécié des amateurs de belles automobiles.",
+      "description": "La cire est une solution de protection appréciée pour améliorer l'aspect visuel de la carrosserie. Elle apporte une brillance profonde et uniforme, tout en formant une couche protectrice contre les agressions extérieures courantes.\n\nAppliquée avec soin, la cire permet de mettre en valeur les lignes du véhicule et de faciliter son entretien au quotidien.\n\nSa durabilité est limitée dans le temps, généralement de quelques mois, mais elle offre un rendu esthétique soigné et une protection adaptée à un entretien régulier du véhicule.",
       "features": [
-        { "title": "Lavage préalable", "description": "Préparation complète du véhicule" },
-        { "title": "Décontamination", "description": "Clay bar pour surface lisse" },
         { "title": "Cire carnauba", "description": "Haute teneur en cire pure" },
         { "title": "Application manuelle", "description": "Pose à la main experte" },
         { "title": "Brillance chaude", "description": "Reflets profonds et naturels" },
-        { "title": "Protection UV", "description": "Protection naturelle" },
         { "title": "Hydrophobie", "description": "Effet perlant modéré" },
-        { "title": "Durée 2-3 mois", "description": "Réapplication recommandée" },
+        { "title": "Durée 2-6 mois", "description": "Réapplication recommandée" },
         { "title": "Entretien facile", "description": "Compatible tous shampoings" }
       ],
       "pricing": [
-        { "price": "150", "duration": "3-4h" },
-        { "price": "200", "duration": "4-5h" },
-        { "price": "250", "duration": "5-6h" }
+        { "price": "175", "duration": "2h" },
+        { "price": "200", "duration": "2h" },
+        { "price": "225", "duration": "2h" },
+        { "price": "250", "duration": "2h30" }
       ]
     },
     "backToServices": "Retour aux services",
