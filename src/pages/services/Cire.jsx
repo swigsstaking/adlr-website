@@ -59,7 +59,7 @@ const CireService = () => {
     ],
   }
 
-  return <ServicePage service={service} seoPage="services" />
+  return <ServicePage service={service} seoPage="services/cire" />
 }
 
 export default CireService

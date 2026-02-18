@@ -56,8 +56,6 @@ const Layout = () => {
       ]
     },
     { name: t('nav.configurator'), path: localePath('/configurateur') },
-    { name: t('nav.shop'), path: localePath('/boutique') },
-    { name: t('nav.tutorials'), path: localePath('/tutoriels') },
     { name: t('nav.contact'), path: localePath('/contact') },
   ]
 
@@ -154,42 +152,14 @@ const Layout = () => {
                 )
               ))}
 
-              {/* Language Switcher & Cart & User Icons */}
+              {/* Language Switcher */}
               <div className="flex items-center gap-2 ml-4 pl-4 border-l border-sand-200">
                 <LanguageSwitcher />
-                <Link
-                  to={localePath('/panier')}
-                  className="relative p-2 rounded-lg text-dark-600 hover:text-dark-900 hover:bg-sand-100 transition-colors"
-                >
-                  <ShoppingCart className="w-5 h-5" />
-                  {cartCount > 0 && (
-                    <span className="absolute -top-1 -right-1 w-5 h-5 bg-dark-900 text-white text-xs rounded-full flex items-center justify-center">
-                      {cartCount > 9 ? '9+' : cartCount}
-                    </span>
-                  )}
-                </Link>
-                <Link
-                  to={isAuthenticated ? localePath('/compte') : localePath('/connexion')}
-                  className="p-2 rounded-lg text-dark-600 hover:text-dark-900 hover:bg-sand-100 transition-colors"
-                >
-                  <User className="w-5 h-5" />
-                </Link>
               </div>
             </nav>
 
-            {/* Mobile Cart & User + Menu Button */}
+            {/* Mobile Menu Button */}
             <div className="lg:hidden flex items-center gap-2">
-              <Link
-                to={localePath('/panier')}
-                className="relative p-2 rounded-lg text-dark-900 hover:bg-sand-200 transition-colors"
-              >
-                <ShoppingCart className="w-5 h-5" />
-                {cartCount > 0 && (
-                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-dark-900 text-white text-xs rounded-full flex items-center justify-center">
-                    {cartCount > 9 ? '9+' : cartCount}
-                  </span>
-                )}
-              </Link>
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 className="p-2 rounded-lg text-dark-900 hover:bg-sand-200 transition-colors"
@@ -337,8 +307,6 @@ const Layout = () => {
               <h4 className="text-dark-900 font-semibold mb-6">{t('footer.usefulLinks')}</h4>
               <ul className="space-y-3">
                 <li><Link to={localePath('/configurateur')} className="text-dark-500 hover:text-dark-900 transition-colors text-sm">{t('nav.configurator')}</Link></li>
-                <li><Link to={localePath('/boutique')} className="text-dark-500 hover:text-dark-900 transition-colors text-sm">{t('nav.shop')}</Link></li>
-                <li><Link to={localePath('/tutoriels')} className="text-dark-500 hover:text-dark-900 transition-colors text-sm">{t('nav.tutorials')}</Link></li>
                 <li><Link to={localePath('/contact')} className="text-dark-500 hover:text-dark-900 transition-colors text-sm">{t('nav.contact')}</Link></li>
               </ul>
             </div>

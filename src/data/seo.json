@@ -5,83 +5,273 @@
     "defaultLanguage": "fr",
     "supportedLanguages": ["fr", "en"],
     "logo": "/logo.png",
-    "favicon": "/favicon.svg"
+    "favicon": "/favicon.svg",
+    "ogImage": "https://swigs.online/uploads/adlr/1769941982998-455340523.webp"
   },
   "pages": {
     "home": {
       "fr": {
-        "title": "ADLR Cosmetic Auto | Detailing Automobile Premium en Suisse",
-        "description": "Expert en detailing automobile : nettoyage professionnel, polish, traitement céramique et protection de carrosserie. Redonnez l'éclat à votre véhicule.",
-        "keywords": "detailing automobile, nettoyage voiture, polish, céramique, protection carrosserie, Suisse",
-        "ogTitle": "ADLR Cosmetic Auto - L'Art du Detailing Automobile",
-        "ogDescription": "Transformez votre véhicule avec nos services de detailing premium. Expertise, passion et résultats exceptionnels."
+        "title": "ADLR Cosmetic Auto | Detailing Automobile Premium Suisse Romande",
+        "description": "Spécialiste du detailing automobile en Suisse romande. Lavage professionnel, polish correctif sans remplisseur, traitement céramique 9H et cire carnauba premium.",
+        "keywords": "detailing automobile suisse, detailing voiture suisse romande, nettoyage auto professionnel, polish correctif, traitement céramique 9H, cire carnauba, protection peinture voiture, ADLR Cosmetic Auto",
+        "ogTitle": "ADLR Cosmetic Auto | Detailing Automobile Premium",
+        "ogDescription": "Spécialiste du detailing automobile en Suisse romande. Lavage, polish, céramique et cire premium pour sublimer votre véhicule."
       },
       "en": {
-        "title": "ADLR Cosmetic Auto | Premium Car Detailing in Switzerland",
-        "description": "Expert in automotive detailing: professional cleaning, polish, ceramic coating and bodywork protection. Restore the shine to your vehicle.",
-        "keywords": "car detailing, car cleaning, polish, ceramic, bodywork protection, Switzerland",
-        "ogTitle": "ADLR Cosmetic Auto - The Art of Car Detailing",
-        "ogDescription": "Transform your vehicle with our premium detailing services. Expertise, passion and exceptional results."
+        "title": "ADLR Cosmetic Auto | Premium Car Detailing Switzerland",
+        "description": "Professional car detailing in Switzerland. Expert wash, corrective polish (no fillers), 9H ceramic coating and premium carnauba wax for your vehicle.",
+        "keywords": "car detailing switzerland, professional car wash, corrective polish, 9H ceramic coating, carnauba wax, paint protection, auto detailing, ADLR Cosmetic Auto",
+        "ogTitle": "ADLR Cosmetic Auto | Premium Car Detailing",
+        "ogDescription": "Professional car detailing specialist in Switzerland. Wash, polish, ceramic coating and premium wax to transform your vehicle."
       }
     },
     "services": {
       "fr": {
-        "title": "Nos Services de Detailing | ADLR Cosmetic Auto",
-        "description": "Découvrez nos packs detailing : nettoyage intérieur/extérieur, polish correctif, traitement céramique, protection PPF. Services adaptés à tous les véhicules.",
-        "keywords": "services detailing, pack nettoyage, polish correctif, céramique, PPF, protection peinture"
+        "title": "Services Detailing Auto | Lavage, Polish, Céramique, Cire | ADLR",
+        "description": "Tous nos services de detailing automobile : lavage professionnel, polish correctif, traitement céramique longue durée et cire carnauba. Devis gratuit.",
+        "keywords": "services detailing automobile, lavage professionnel voiture, polish correctif peinture, traitement céramique auto, cire carnauba voiture, tarifs detailing suisse, devis detailing gratuit",
+        "ogTitle": "Nos Services de Detailing Automobile | ADLR Cosmetic Auto",
+        "ogDescription": "Découvrez nos prestations de detailing : lavage, polish, céramique et cire. Services adaptés à tous types de véhicules."
       },
       "en": {
-        "title": "Our Detailing Services | ADLR Cosmetic Auto",
-        "description": "Discover our detailing packages: interior/exterior cleaning, corrective polish, ceramic coating, PPF protection. Services tailored to all vehicles.",
-        "keywords": "detailing services, cleaning package, corrective polish, ceramic, PPF, paint protection"
+        "title": "Car Detailing Services | Wash, Polish, Ceramic, Wax | ADLR",
+        "description": "All our car detailing services: professional wash, corrective polish, long-lasting ceramic coating and carnauba wax. Free quote available.",
+        "keywords": "car detailing services, professional car wash, corrective polish, ceramic coating, carnauba wax, detailing prices switzerland, free detailing quote",
+        "ogTitle": "Our Car Detailing Services | ADLR Cosmetic Auto",
+        "ogDescription": "Discover our detailing services: wash, polish, ceramic and wax. Services tailored to all vehicle types."
+      }
+    },
+    "services/lavage": {
+      "fr": {
+        "title": "Lavage Auto Professionnel | Nettoyage Intérieur & Extérieur | ADLR",
+        "description": "Service de lavage automobile professionnel : méthode deux seaux, mousse active, séchage microfibre. Lavage simple dès CHF 150.- et lavage en profondeur dès CHF 300.-",
+        "keywords": "lavage auto professionnel, lavage voiture suisse, nettoyage intérieur voiture, nettoyage extérieur auto, méthode deux seaux, lavage main voiture, lavage profondeur, prix lavage auto suisse",
+        "ogTitle": "Lavage Automobile Professionnel | ADLR Cosmetic Auto",
+        "ogDescription": "Service de lavage professionnel avec méthode deux seaux et produits haut de gamme. Lavage simple ou en profondeur."
+      },
+      "en": {
+        "title": "Professional Car Wash | Interior & Exterior Cleaning | ADLR",
+        "description": "Professional car wash service: two-bucket method, foam cannon pre-wash, microfiber drying. Simple wash from CHF 150.- and deep wash from CHF 300.-",
+        "keywords": "professional car wash switzerland, car wash service, interior car cleaning, exterior car wash, two bucket method, hand car wash, deep car cleaning, car wash prices switzerland",
+        "ogTitle": "Professional Car Wash Service | ADLR Cosmetic Auto",
+        "ogDescription": "Professional car wash with two-bucket method and premium products. Simple or deep wash available."
+      }
+    },
+    "services/polish": {
+      "fr": {
+        "title": "Polish Correctif Auto | Correction Peinture Sans Remplisseur | ADLR",
+        "description": "Polish correctif professionnel sans remplisseur : élimination micro-rayures, swirls et hologrammes. Résultat durable dès CHF 1000.- Analyse LED/halogène incluse.",
+        "keywords": "polish correctif voiture, correction peinture auto, élimination micro-rayures, suppression swirls, polish sans remplisseur, polissage professionnel, correction hologrammes, polish auto suisse",
+        "ogTitle": "Polish Correctif Professionnel | ADLR Cosmetic Auto",
+        "ogDescription": "Correction de peinture professionnelle sans remplisseur. Élimination des micro-rayures, swirls et hologrammes pour un éclat durable."
+      },
+      "en": {
+        "title": "Corrective Polish | Paint Correction No Fillers | ADLR",
+        "description": "Professional corrective polish with no fillers: micro-scratch, swirl and hologram removal. Lasting results from CHF 1000.- LED/halogen analysis included.",
+        "keywords": "corrective polish car, paint correction, micro scratch removal, swirl removal, no filler polish, professional polishing, hologram correction, car polish switzerland",
+        "ogTitle": "Professional Corrective Polish | ADLR Cosmetic Auto",
+        "ogDescription": "Professional paint correction with no fillers. Elimination of micro-scratches, swirls and holograms for lasting shine."
+      }
+    },
+    "services/ceramique": {
+      "fr": {
+        "title": "Traitement Céramique 9H | Protection Carrosserie Longue Durée | ADLR",
+        "description": "Protection céramique professionnelle 9H pour votre véhicule. Effet hydrophobe extrême, résistance UV et chimique. Polish correctif inclus. Dès CHF 2000.-",
+        "keywords": "traitement céramique voiture, protection céramique 9H, coating céramique auto, protection peinture longue durée, effet hydrophobe voiture, céramique auto suisse, protection UV carrosserie",
+        "ogTitle": "Traitement Céramique 9H | ADLR Cosmetic Auto",
+        "ogDescription": "Protection céramique professionnelle 9H avec effet hydrophobe extrême. Polish correctif inclus pour un résultat parfait."
+      },
+      "en": {
+        "title": "9H Ceramic Coating | Long-Lasting Paint Protection | ADLR",
+        "description": "Professional 9H ceramic coating for your vehicle. Extreme hydrophobic effect, UV and chemical resistance. Corrective polish included. From CHF 2000.-",
+        "keywords": "ceramic coating car, 9H ceramic protection, car ceramic coating, long lasting paint protection, hydrophobic car coating, ceramic coating switzerland, UV paint protection",
+        "ogTitle": "9H Ceramic Coating | ADLR Cosmetic Auto",
+        "ogDescription": "Professional 9H ceramic coating with extreme hydrophobic effect. Corrective polish included for a perfect result."
+      }
+    },
+    "services/cire": {
+      "fr": {
+        "title": "Cire Carnauba Premium | Protection & Brillance Naturelle | ADLR",
+        "description": "Application de cire carnauba premium à la main. Brillance chaude et profonde, effet hydrophobe et protection 2 à 6 mois. Dès CHF 175.- Compatible pH neutre.",
+        "keywords": "cire carnauba voiture, cire auto premium, protection cire voiture, brillance naturelle auto, cire carnauba suisse, application cire main, protection peinture cire, cire premium auto",
+        "ogTitle": "Cire Carnauba Premium | ADLR Cosmetic Auto",
+        "ogDescription": "Application experte de cire carnauba premium. Brillance naturelle et protection de 2 à 6 mois pour votre véhicule."
+      },
+      "en": {
+        "title": "Premium Carnauba Wax | Natural Shine & Protection | ADLR",
+        "description": "Premium carnauba wax hand application. Warm deep shine, hydrophobic effect and 2 to 6 months protection. From CHF 175.- pH neutral compatible.",
+        "keywords": "carnauba wax car, premium car wax, wax protection car, natural car shine, carnauba wax switzerland, hand wax application, paint protection wax, premium auto wax",
+        "ogTitle": "Premium Carnauba Wax | ADLR Cosmetic Auto",
+        "ogDescription": "Expert hand application of premium carnauba wax. Natural shine and 2 to 6 months protection for your vehicle."
       }
     },
     "configurator": {
       "fr": {
-        "title": "Configurateur de Service | ADLR Cosmetic Auto",
-        "description": "Composez votre prestation de detailing sur mesure. Sélectionnez les services dont votre véhicule a besoin et obtenez un devis instantané.",
-        "keywords": "devis detailing, configurateur service, prestation sur mesure, prix detailing"
+        "title": "Configurateur Detailing | Devis Instantané en Ligne | ADLR",
+        "description": "Composez votre prestation de detailing sur mesure. Sélectionnez votre véhicule, choisissez vos services et obtenez un devis instantané en ligne.",
+        "keywords": "devis detailing en ligne, configurateur detailing, prix detailing voiture, prestation sur mesure auto, calculateur prix detailing, devis lavage auto",
+        "ogTitle": "Configurateur de Service Detailing | ADLR Cosmetic Auto",
+        "ogDescription": "Créez votre prestation de detailing sur mesure et obtenez un devis instantané. Simple, rapide et transparent."
       },
       "en": {
-        "title": "Service Configurator | ADLR Cosmetic Auto",
-        "description": "Create your custom detailing service. Select the services your vehicle needs and get an instant quote.",
-        "keywords": "detailing quote, service configurator, custom service, detailing prices"
+        "title": "Detailing Configurator | Instant Online Quote | ADLR",
+        "description": "Create your custom detailing service. Select your vehicle, choose services and get an instant online quote.",
+        "keywords": "online detailing quote, detailing configurator, car detailing prices, custom car service, detailing price calculator, car wash quote",
+        "ogTitle": "Detailing Service Configurator | ADLR Cosmetic Auto",
+        "ogDescription": "Create your custom detailing service and get an instant quote. Simple, fast and transparent."
       }
     },
     "shop": {
       "fr": {
         "title": "Boutique Produits Detailing | ADLR Cosmetic Auto",
-        "description": "Achetez les meilleurs produits de detailing : shampoings, cires, céramiques, accessoires. Produits professionnels sélectionnés par nos experts.",
-        "keywords": "produits detailing, shampoing voiture, cire, céramique, accessoires auto"
+        "description": "Produits de detailing professionnels : shampoings pH neutre, cires, céramiques et accessoires. Sélectionnés par nos experts.",
+        "keywords": "produits detailing, shampoing pH neutre voiture, cire carnauba, céramique auto, accessoires detailing",
+        "robots": "noindex,follow"
       },
       "en": {
         "title": "Detailing Products Shop | ADLR Cosmetic Auto",
-        "description": "Buy the best detailing products: shampoos, waxes, ceramics, accessories. Professional products selected by our experts.",
-        "keywords": "detailing products, car shampoo, wax, ceramic, car accessories"
+        "description": "Professional detailing products: pH neutral shampoos, waxes, ceramics and accessories. Selected by our experts.",
+        "keywords": "detailing products, pH neutral car shampoo, carnauba wax, car ceramic, detailing accessories",
+        "robots": "noindex,follow"
       }
     },
     "tutorials": {
       "fr": {
         "title": "Tutoriels Detailing | ADLR Cosmetic Auto",
-        "description": "Apprenez les techniques professionnelles de detailing : méthode des deux seaux, polish, application céramique. Guides complets avec produits recommandés.",
-        "keywords": "tutoriel detailing, méthode deux seaux, comment polish, guide céramique"
+        "description": "Guides et tutoriels detailing : méthode deux seaux, polish, application céramique. Conseils professionnels.",
+        "keywords": "tutoriel detailing, guide lavage voiture, méthode deux seaux, comment polish auto",
+        "robots": "noindex,follow"
       },
       "en": {
         "title": "Detailing Tutorials | ADLR Cosmetic Auto",
-        "description": "Learn professional detailing techniques: two-bucket method, polish, ceramic application. Complete guides with recommended products.",
-        "keywords": "detailing tutorial, two bucket method, how to polish, ceramic guide"
+        "description": "Detailing guides and tutorials: two-bucket method, polish, ceramic application. Professional tips.",
+        "keywords": "detailing tutorial, car wash guide, two bucket method, how to polish car",
+        "robots": "noindex,follow"
       }
     },
     "contact": {
       "fr": {
-        "title": "Contact | ADLR Cosmetic Auto",
-        "description": "Contactez ADLR Cosmetic Auto pour un devis gratuit. Réponse rapide, conseils personnalisés pour votre véhicule.",
-        "keywords": "contact detailing, devis gratuit, rendez-vous detailing"
+        "title": "Contact & Devis Gratuit | ADLR Cosmetic Auto Suisse",
+        "description": "Contactez ADLR Cosmetic Auto pour un devis gratuit. Réponse rapide par téléphone, email ou WhatsApp. Conseils personnalisés pour votre véhicule.",
+        "keywords": "contact detailing suisse, devis gratuit detailing, rendez-vous detailing auto, ADLR contact, detailing suisse romande contact",
+        "ogTitle": "Contactez-nous | ADLR Cosmetic Auto",
+        "ogDescription": "Demandez un devis gratuit ou prenez rendez-vous. Notre équipe répond rapidement à toutes vos questions."
       },
       "en": {
-        "title": "Contact | ADLR Cosmetic Auto",
-        "description": "Contact ADLR Cosmetic Auto for a free quote. Quick response, personalized advice for your vehicle.",
-        "keywords": "contact detailing, free quote, detailing appointment"
+        "title": "Contact & Free Quote | ADLR Cosmetic Auto Switzerland",
+        "description": "Contact ADLR Cosmetic Auto for a free quote. Quick response by phone, email or WhatsApp. Personalized advice for your vehicle.",
+        "keywords": "contact detailing switzerland, free detailing quote, detailing appointment, ADLR contact, swiss detailing contact",
+        "ogTitle": "Contact Us | ADLR Cosmetic Auto",
+        "ogDescription": "Request a free quote or book an appointment. Our team responds quickly to all your questions."
+      }
+    }
+  },
+  "structuredData": {
+    "localBusiness": {
+      "@context": "https://schema.org",
+      "@type": "AutoRepair",
+      "name": "ADLR Cosmetic Auto",
+      "description": "Spécialiste du detailing automobile en Suisse romande. Lavage professionnel, polish correctif, traitement céramique et cire premium.",
+      "url": "https://adlrcosmeticauto.ch",
+      "logo": "https://adlrcosmeticauto.ch/logo.png",
+      "image": "https://swigs.online/uploads/adlr/1769941982998-455340523.webp",
+      "telephone": "+41 79 904 89 22",
+      "email": "adlrcosmetic@gmail.com",
+      "priceRange": "CHF 150 - CHF 3400",
+      "currenciesAccepted": "CHF",
+      "paymentAccepted": "Cash, Credit Card, Twint",
+      "areaServed": {
+        "@type": "GeoCircle",
+        "geoMidpoint": {
+          "@type": "GeoCoordinates",
+          "latitude": 46.2333,
+          "longitude": 7.3667
+        },
+        "geoRadius": "50000"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 46.2333,
+        "longitude": 7.3667
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          "opens": "08:00",
+          "closes": "18:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": "Saturday",
+          "opens": "09:00",
+          "closes": "16:00"
+        }
+      ],
+      "sameAs": [
+        "https://www.instagram.com/adlr_cosmetic_auto/"
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Services Detailing",
+        "itemListElement": [
+          {
+            "@type": "OfferCatalog",
+            "name": "Lavage Professionnel",
+            "itemListElement": [
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Lavage Simple",
+                  "description": "Nettoyage complet intérieur et extérieur de votre véhicule"
+                },
+                "priceCurrency": "CHF",
+                "price": "150"
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Lavage en Profondeur",
+                  "description": "Nettoyage profond avec protection express incluse"
+                },
+                "priceCurrency": "CHF",
+                "price": "300"
+              }
+            ]
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Polish Correctif",
+              "description": "Correction de peinture professionnelle sans remplisseur"
+            },
+            "priceCurrency": "CHF",
+            "price": "1000"
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Traitement Céramique 9H",
+              "description": "Protection céramique professionnelle longue durée"
+            },
+            "priceCurrency": "CHF",
+            "price": "2000"
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Cire Carnauba Premium",
+              "description": "Protection et brillance naturelle à la cire carnauba"
+            },
+            "priceCurrency": "CHF",
+            "price": "175"
+          }
+        ]
       }
     }
   }

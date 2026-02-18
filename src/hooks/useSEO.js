@@ -4,7 +4,7 @@ import seoData from '../data/seo.json';
 
 /**
  * Hook pour récupérer les données SEO d'une page avec support multilingue
- * @param {string} page - Nom de la page (home, services, configurator, shop, tutorials, contact)
+ * @param {string} page - Nom de la page (home, services, services/lavage, services/polish, etc.)
  * @returns {object} Données SEO de la page
  */
 export const useSEO = (page = 'home') => {
@@ -18,7 +18,7 @@ export const useSEO = (page = 'home') => {
     // Get language-specific SEO or fallback to default language
     const pageSEO = pageData[currentLang] || pageData[global.defaultLanguage] || pageData;
 
-    // Build path based on language
+    // Build path based on page key
     const langPrefix = `/${currentLang}`;
     const pagePath = page === 'home' ? '' : `/${page}`;
     const fullPath = `${langPrefix}${pagePath}`;
@@ -32,7 +32,7 @@ export const useSEO = (page = 'home') => {
       // Open Graph
       ogTitle: pageSEO.ogTitle || pageSEO.title,
       ogDescription: pageSEO.ogDescription || pageSEO.description,
-      ogImage: pageSEO.ogImage || global.logo,
+      ogImage: pageSEO.ogImage || global.ogImage || global.logo,
       ogUrl: `${global.siteUrl}${fullPath}`,
 
       // Twitter Card

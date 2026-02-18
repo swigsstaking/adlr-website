@@ -65,7 +65,7 @@ const PolishService = () => {
     ],
   }
 
-  return <ServicePage service={service} seoPage="services" />
+  return <ServicePage service={service} seoPage="services/polish" />
 }
 
 export default PolishService

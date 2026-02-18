@@ -42,7 +42,7 @@ const LavageService = () => {
 
   return (
     <>
-      <SEOHead page="services" />
+      <SEOHead page="services/lavage" />
 
       {/* Hero Section */}
       <section ref={heroRef} className="relative h-[70vh] min-h-[500px] overflow-hidden">

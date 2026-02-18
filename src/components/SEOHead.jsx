@@ -1,8 +1,9 @@
 import { Helmet } from 'react-helmet-async';
 import { useSEO } from '../hooks/useSEO';
+import seoData from '../data/seo.json';
 
 /**
- * Composant pour gérer les meta tags SEO avec support multilingue
+ * Composant pour gérer les meta tags SEO avec support multilingue et données structurées
  * @param {string} page - Nom de la page
  */
 const SEOHead = ({ page = 'home' }) => {
@@ -13,6 +14,36 @@ const SEOHead = ({ page = 'home' }) => {
     lang,
     url: `${seo.siteUrl}/${lang}${seo.currentPath}`
   }));
+
+  // Structured data (JSON-LD)
+  const localBusiness = seoData.structuredData?.localBusiness;
+
+  // Build breadcrumb structured data
+  const breadcrumbItems = [
+    { name: 'Accueil', url: `${seo.siteUrl}/${seo.language}` }
+  ];
+
+  if (page !== 'home') {
+    const parts = page.split('/');
+    let currentPath = `${seo.siteUrl}/${seo.language}`;
+
+    parts.forEach((part) => {
+      currentPath += `/${part}`;
+      const name = part.charAt(0).toUpperCase() + part.slice(1);
+      breadcrumbItems.push({ name, url: currentPath });
+    });
+  }
+
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    'itemListElement': breadcrumbItems.map((item, index) => ({
+      '@type': 'ListItem',
+      'position': index + 1,
+      'name': item.name,
+      'item': item.url
+    }))
+  };
 
   return (
     <Helmet>
@@ -59,6 +90,20 @@ const SEOHead = ({ page = 'home' }) => {
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
       <meta name="theme-color" content="#000000" />
+
+      {/* Structured Data - LocalBusiness (only on home page) */}
+      {page === 'home' && localBusiness && (
+        <script type="application/ld+json">
+          {JSON.stringify(localBusiness)}
+        </script>
+      )}
+
+      {/* Structured Data - BreadcrumbList */}
+      {page !== 'home' && (
+        <script type="application/ld+json">
+          {JSON.stringify(breadcrumbSchema)}
+        </script>
+      )}
     </Helmet>
   );
 };

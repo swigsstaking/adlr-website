@@ -65,7 +65,7 @@ const CeramiqueService = () => {
     ],
   }
 
-  return <ServicePage service={service} seoPage="services" />
+  return <ServicePage service={service} seoPage="services/ceramique" />
 }
 
 export default CeramiqueService

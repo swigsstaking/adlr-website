@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+
+Disallow: /*/boutique
+Disallow: /*/boutique/
+Disallow: /*/tutoriels
+Disallow: /*/tutoriels/
+Disallow: /*/panier
+Disallow: /*/checkout
+Disallow: /*/connexion
+Disallow: /*/inscription
+Disallow: /*/compte
+Disallow: /*/success
+
+Sitemap: https://adlrcosmeticauto.ch/sitemap.xml
