@@ -163,6 +163,7 @@ const Layout = () => {
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 className="p-2 rounded-lg text-dark-900 hover:bg-sand-200 transition-colors"
+                aria-label={isMenuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
               >
                 {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
               </button>
@@ -347,13 +348,13 @@ const Layout = () => {
           {/* Bottom Bar */}
           <div className="border-t border-sand-400 mt-12 pt-8">
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-              <p className="text-dark-400 text-sm">
+              <p className="text-dark-500 text-sm">
                 &copy; {new Date().getFullYear()} {siteInfo?.name || 'ADLR Cosmetic Auto'}. {t('footer.copyright')}
               </p>
               <div className="flex items-center gap-6">
                 <LanguageSwitcherFooter />
                 <span className="text-dark-300 hidden md:inline">|</span>
-                <p className="text-dark-400 text-sm">
+                <p className="text-dark-500 text-sm">
                   {t('footer.createdBy')}{' '}
                   <a
                     href="https://swigs.ch/"
