@@ -306,7 +306,6 @@ const Layout = () => {
               <p className="text-dark-900 font-semibold mb-6">{t('footer.usefulLinks')}</p>
               <ul className="space-y-3">
                 <li><Link to={localePath('/configurateur')} className="text-dark-500 hover:text-dark-900 transition-colors text-sm">{t('nav.configurator')}</Link></li>
-                <li><Link to={localePath('/contact')} className="text-dark-500 hover:text-dark-900 transition-colors text-sm">{t('nav.contact')}</Link></li>
               </ul>
             </div>
 
@@ -314,15 +313,12 @@ const Layout = () => {
             <div>
               <p className="text-dark-900 font-semibold mb-6">{t('footer.contactTitle')}</p>
               <ul className="space-y-4">
-                {siteInfo?.contact?.address && (
-                  <li className="flex items-start text-sm">
-                    <MapPin className="w-4 h-4 text-dark-900 mr-3 mt-0.5 flex-shrink-0" />
-                    <span className="text-dark-500">
-                      {siteInfo.contact.address}
-                      {siteInfo.contact.postalCode && <><br />{siteInfo.contact.postalCode} {siteInfo.contact.city}</>}
-                    </span>
-                  </li>
-                )}
+                <li>
+                  <Link to={localePath('/contact')} className="flex items-center text-sm text-dark-500 hover:text-dark-900 transition-colors">
+                    <Mail className="w-4 h-4 text-dark-900 mr-3 flex-shrink-0" />
+                    {t('nav.contact')}
+                  </Link>
+                </li>
                 {siteInfo?.contact?.phone && (
                   <li>
                     <a href={`tel:${siteInfo.contact.phone.replace(/\s/g, '')}`} className="flex items-center text-sm text-dark-500 hover:text-dark-900 transition-colors">
@@ -337,6 +333,15 @@ const Layout = () => {
                       <Mail className="w-4 h-4 text-dark-900 mr-3 flex-shrink-0" />
                       {siteInfo.contact.email}
                     </a>
+                  </li>
+                )}
+                {siteInfo?.contact?.address && (
+                  <li className="flex items-start text-sm">
+                    <MapPin className="w-4 h-4 text-dark-900 mr-3 mt-0.5 flex-shrink-0" />
+                    <span className="text-dark-500">
+                      {siteInfo.contact.address}
+                      {siteInfo.contact.postalCode && <><br />{siteInfo.contact.postalCode} {siteInfo.contact.city}</>}
+                    </span>
                   </li>
                 )}
               </ul>

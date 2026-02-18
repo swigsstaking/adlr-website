@@ -123,8 +123,8 @@ const Success = () => {
             <div className="mt-10 pt-8 border-t border-sand-200 text-center">
               <p className="text-dark-500 text-sm">
                 {t('success.support')}{' '}
-                <a href="mailto:contact@adlrcosmeticauto.ch" className="text-dark-900 font-medium hover:underline">
-                  contact@adlrcosmeticauto.ch
+                <a href="mailto:info@adlrcosmeticauto.ch" className="text-dark-900 font-medium hover:underline">
+                  info@adlrcosmeticauto.ch
                 </a>
               </p>
             </div>

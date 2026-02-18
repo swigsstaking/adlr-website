@@ -23,8 +23,8 @@ export const useSiteInfo = () => {
           name: 'ADLR Cosmetic Auto',
           description: 'Spécialiste du detailing automobile en Suisse. Nettoyage, polish, céramique et protection de votre véhicule.',
           contact: {
-            phone: '+41 XX XXX XX XX',
-            email: 'contact@adlrcosmeticauto.ch',
+            phone: '+41 79 949 06 30',
+            email: 'info@adlrcosmeticauto.ch',
             address: 'Suisse',
           },
           social: {
