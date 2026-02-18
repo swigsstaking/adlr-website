@@ -68,7 +68,7 @@ const ServicePage = ({
               <span className="inline-block text-white/60 text-sm uppercase tracking-widest mb-4">
                 {service.category || 'Service'}
               </span>
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-black text-white mb-6">
+              <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-display font-black text-white mb-6">
                 {service.title}
                 <span className="text-sand-300">.</span>
               </h1>
@@ -90,7 +90,7 @@ const ServicePage = ({
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <h2 className="text-4xl md:text-5xl font-display font-black text-dark-900 mb-8">
+              <h2 className="text-2xl sm:text-3xl md:text-5xl font-display font-black text-dark-900 mb-8">
                 {service.descriptionTitle || 'Notre expertise'}
               </h2>
               <div className="prose prose-lg text-dark-600">

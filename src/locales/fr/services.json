@@ -188,7 +188,7 @@
       "subtitle": "Offrez à votre voiture un éclat incomparable avec notre service de polish. Nous utilisons des techniques expertes pour redonner à votre véhicule sa brillance d'origine.",
       "category": "Correction",
       "descriptionTitle": "La correction de peinture professionnelle",
-      "description": "Le polish correctif est l'art de redonner à votre peinture son éclat d'origine en éliminant les défauts, les micro-rayures, les tourbillons, les hologrammes et autres marques disgracieuses.\n\nNotre processus commence par une analyse approfondie de l'état de votre peinture à l'aide de lampes spéciales. Nous déterminons ensuite avec vous le niveau de correction nécessaire en fonction de vos attentes.\n\nChaque passage de polisseuse est effectué avec précision, section par section, pour un résultat homogène et durable. Le polish révèle toute la profondeur et la brillance de votre peinture.",
+      "description": "Le polish correctif est l'art de redonner à votre peinture son éclat d'origine en éliminant les défauts, les micro-rayures, les tourbillons, les hologrammes et autres marques disgracieuses.\n\nNotre processus commence par une analyse approfondie de l'état de votre peinture à l'aide de lampes spéciales. Nous déterminons ensuite avec vous le niveau de correction nécessaire en fonction de vos attentes.\n\nChaque passage de polisseuse est effectué avec précision, section par section, pour un résultat homogène et durable (sans remplisseur). Le polish révèle toute la profondeur et la brillance de votre peinture.",
       "features": [
         { "title": "Analyse peinture", "description": "Évaluation à la lampe LED/halogène" },
         { "title": "Nettoyage en profondeur", "description": "Nettoyage complet du véhicule" },
@@ -235,14 +235,14 @@
       "subtitle": "La cire offre une protection temporaire, améliore la brillance et facilite l'entretien du véhicule.",
       "category": "Protection",
       "descriptionTitle": "L'élégance de la cire naturelle",
-      "description": "La cire est une solution de protection appréciée pour améliorer l'aspect visuel de la carrosserie. Elle apporte une brillance profonde et uniforme, tout en formant une couche protectrice contre les agressions extérieures courantes.\n\nAppliquée avec soin, la cire permet de mettre en valeur les lignes du véhicule et de faciliter son entretien au quotidien.\n\nSa durabilité est limitée dans le temps, généralement de quelques mois, mais elle offre un rendu esthétique soigné et une protection adaptée à un entretien régulier du véhicule.",
+      "description": "La cire est une solution de protection appréciée pour améliorer l'aspect visuel de la carrosserie. Elle apporte une brillance profonde et uniforme, tout en formant une couche protectrice contre les agressions extérieures courantes.\n\nAppliquée avec soin, la cire permet de mettre en valeur les lignes du véhicule et de faciliter son entretien au quotidien.\n\nSa durabilité est limitée dans le temps, généralement de quelques mois, mais elle offre un rendu esthétique soigné et une protection adaptée à un entretien régulier du véhicule.\n\nPour augmenter la durabilité de notre cire, veuillez utiliser nos shampoings à PH Neutre, disponible chez ADLR Cosmetic.",
       "features": [
         { "title": "Cire carnauba", "description": "Haute teneur en cire pure" },
         { "title": "Application manuelle", "description": "Pose à la main experte" },
         { "title": "Brillance chaude", "description": "Reflets profonds et naturels" },
         { "title": "Hydrophobie", "description": "Effet perlant modéré" },
         { "title": "Durée 2-6 mois", "description": "Réapplication recommandée" },
-        { "title": "Entretien facile", "description": "Compatible tous shampoings" }
+        { "title": "Entretien facile", "description": "Lavage plus facile" }
       ],
       "pricing": [
         { "price": "175", "duration": "2h" },

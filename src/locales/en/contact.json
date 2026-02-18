@@ -45,7 +45,7 @@
     "error": "An error occurred. Please try again or contact us by phone."
   },
   "map": {
-    "title": "Google Maps",
-    "subtitle": "(To be configured with exact address)"
+    "title": "Currently relocating",
+    "subtitle": "Our new address will be communicated soon"
   }
 }

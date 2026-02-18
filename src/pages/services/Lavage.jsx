@@ -72,7 +72,7 @@ const LavageService = () => {
               <span className="inline-block text-white/60 text-sm uppercase tracking-widest mb-4">
                 {serviceData.category}
               </span>
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-black text-white mb-6">
+              <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-display font-black text-white mb-6">
                 {serviceData.title}
                 <span className="text-sand-300">.</span>
               </h1>

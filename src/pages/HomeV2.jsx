@@ -27,9 +27,9 @@ const HomeV2 = () => {
   const textOpacity = useTransform(heroProgress, [0, 0.5], [1, 0])
 
   const stats = [
-    { value: '500+', label: t('stats.vehicles') },
+    { value: '100+', label: t('stats.vehicles') },
     { value: '98%', label: t('stats.satisfaction') },
-    { value: '5+', label: t('stats.experience') }
+    { value: '2', label: t('stats.experience') }
   ]
 
   const testimonials = t('testimonials.items', { returnObjects: true })
