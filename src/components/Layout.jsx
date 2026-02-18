@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation, useParams, Outlet } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, Phone, Mail, MapPin, Instagram, Facebook, ChevronDown } from 'lucide-react'
+import { Menu, X, Phone, Mail, MapPin, Instagram, ChevronDown } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import Logo from './Logo'
 import Favicon from './Favicon'
@@ -275,16 +275,6 @@ const Layout = () => {
                     className="w-10 h-10 rounded-full bg-dark-900 flex items-center justify-center text-white hover:bg-dark-700 transition-all"
                   >
                     <Instagram className="w-5 h-5" />
-                  </a>
-                )}
-                {siteInfo?.social?.facebook && (
-                  <a
-                    href={siteInfo.social.facebook}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-10 h-10 rounded-full bg-dark-900 flex items-center justify-center text-white hover:bg-dark-700 transition-all"
-                  >
-                    <Facebook className="w-5 h-5" />
                   </a>
                 )}
               </div>
