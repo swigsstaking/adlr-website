@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation, useParams, Outlet } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, Phone, Mail, MapPin, Instagram, ChevronDown } from 'lucide-react'
+import { Menu, X, Phone, Mail, MapPin, Instagram, ChevronDown, User } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import Logo from './Logo'
 import Favicon from './Favicon'
@@ -229,7 +229,7 @@ const Layout = () => {
                   )
                 ))}
 
-                {/* Account link */}
+                {/* Account link - Masqué v1 prod
                 <div className="border-t border-sand-200 mt-4 pt-4">
                   <Link
                     to={isAuthenticated ? localePath('/compte') : localePath('/connexion')}
@@ -239,6 +239,7 @@ const Layout = () => {
                     {isAuthenticated ? t('nav.myAccount') : t('nav.login')}
                   </Link>
                 </div>
+                */}
 
                 {/* Language Switcher Mobile */}
                 <div className="border-t border-sand-200 mt-4 pt-4 px-4">
