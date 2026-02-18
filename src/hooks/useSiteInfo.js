@@ -28,12 +28,15 @@ export const useSiteInfo = () => {
         const data = await response.json();
 
         if (data.success && data.data) {
-          // Merge API data with defaults so contact info always shows
+          // Merge API data with defaults, ignoring empty strings
+          const strip = (obj) =>
+            Object.fromEntries(Object.entries(obj).filter(([, v]) => v !== ''));
+          const api = data.data;
           setSiteInfo({
             ...DEFAULTS,
-            ...data.data,
-            contact: { ...DEFAULTS.contact, ...data.data.contact },
-            social: { ...DEFAULTS.social, ...data.data.social },
+            ...api,
+            contact: { ...DEFAULTS.contact, ...(api.contact ? strip(api.contact) : {}) },
+            social: { ...DEFAULTS.social, ...(api.social ? strip(api.social) : {}) },
           });
         }
       } catch (error) {
