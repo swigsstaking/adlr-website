@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation, useParams, Outlet } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, Phone, Mail, MapPin, Instagram, Facebook, ChevronDown, ShoppingCart, User } from 'lucide-react'
+import { Menu, X, Phone, Mail, MapPin, Instagram, Facebook, ChevronDown } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import Logo from './Logo'
 import Favicon from './Favicon'
 import { LanguageSwitcher, LanguageSwitcherFooter } from './LanguageSwitcher'
 import { useSiteInfo } from '../hooks/useSiteInfo'
 import { useAuth } from '../context/AuthContext'
-import { useCart } from '../context/CartContext'
+// import { useCart } from '../context/CartContext' // Masqué v1 prod
 
 const Layout = () => {
   const { lang } = useParams()
@@ -19,8 +19,6 @@ const Layout = () => {
   const location = useLocation()
   const { siteInfo } = useSiteInfo()
   const { isAuthenticated } = useAuth()
-  const { getCartCount } = useCart()
-  const cartCount = getCartCount()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -294,7 +292,7 @@ const Layout = () => {
 
             {/* Services */}
             <div>
-              <h4 className="text-dark-900 font-semibold mb-6">{t('footer.servicesTitle')}</h4>
+              <p className="text-dark-900 font-semibold mb-6">{t('footer.servicesTitle')}</p>
               <ul className="space-y-3">
                 <li><Link to={localePath('/services/lavage')} className="text-dark-500 hover:text-dark-900 transition-colors text-sm">{t('serviceNames.lavage')}</Link></li>
                 <li><Link to={localePath('/services/polish')} className="text-dark-500 hover:text-dark-900 transition-colors text-sm">{t('serviceNames.polish')}</Link></li>
@@ -305,7 +303,7 @@ const Layout = () => {
 
             {/* Liens Utiles */}
             <div>
-              <h4 className="text-dark-900 font-semibold mb-6">{t('footer.usefulLinks')}</h4>
+              <p className="text-dark-900 font-semibold mb-6">{t('footer.usefulLinks')}</p>
               <ul className="space-y-3">
                 <li><Link to={localePath('/configurateur')} className="text-dark-500 hover:text-dark-900 transition-colors text-sm">{t('nav.configurator')}</Link></li>
                 <li><Link to={localePath('/contact')} className="text-dark-500 hover:text-dark-900 transition-colors text-sm">{t('nav.contact')}</Link></li>
@@ -314,7 +312,7 @@ const Layout = () => {
 
             {/* Contact */}
             <div>
-              <h4 className="text-dark-900 font-semibold mb-6">{t('footer.contactTitle')}</h4>
+              <p className="text-dark-900 font-semibold mb-6">{t('footer.contactTitle')}</p>
               <ul className="space-y-4">
                 {siteInfo?.contact?.address && (
                   <li className="flex items-start text-sm">
