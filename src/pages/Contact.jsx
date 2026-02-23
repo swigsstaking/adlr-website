@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Send, Phone, Mail, MapPin, Clock, CheckCircle, AlertCircle } from 'lucide-react'
@@ -7,6 +7,7 @@ import SEOHead from '../components/SEOHead'
 import { useSiteInfo } from '../hooks/useSiteInfo'
 
 const API_URL = import.meta.env.VITE_API_URL || '/api'
+const SITE_SLUG = import.meta.env.VITE_SITE_SLUG || 'adlr'
 
 const Contact = () => {
   const { lang } = useParams()
@@ -21,6 +22,23 @@ const Contact = () => {
   })
   const [status, setStatus] = useState({ type: '', message: '' })
   const [sending, setSending] = useState(false)
+  const [siteId, setSiteId] = useState(null)
+
+  // Récupérer l'ID MongoDB du site
+  useEffect(() => {
+    const fetchSiteId = async () => {
+      try {
+        const res = await fetch(`${API_URL}/public/sites/${SITE_SLUG}`)
+        const data = await res.json()
+        if (data.success && data.data?._id) {
+          setSiteId(data.data._id)
+        }
+      } catch (err) {
+        console.error('Erreur récupération siteId:', err)
+      }
+    }
+    fetchSiteId()
+  }, [])
 
   const subjects = [
     { key: 'quote', label: t('subjects.quote') },
@@ -35,14 +53,24 @@ const Contact = () => {
     setSending(true)
     setStatus({ type: '', message: '' })
 
+    if (!siteId) {
+      setStatus({ type: 'error', message: t('messages.error') })
+      setSending(false)
+      return
+    }
+
     try {
-      const response = await fetch(`${API_URL}/public/contact`, {
+      const response = await fetch(`${API_URL}/contact/submit`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          ...formData,
-          site: 'adlr',
-          language: lang
+          siteId,
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          message: formData.subject
+            ? `Sujet: ${formData.subject}\n\n${formData.message}`
+            : formData.message,
         })
       })
 
