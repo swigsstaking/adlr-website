@@ -1,9 +1,12 @@
-import { useState, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Check, ChevronRight, ChevronLeft, Car, CarFront, Truck, Zap, Send, Lightbulb, Wrench, Droplets, Wind, Armchair, PaintBucket, CircleDot, ShoppingCart } from 'lucide-react'
+import { Check, ChevronRight, ChevronLeft, Car, CarFront, Truck, Zap, Send, Lightbulb, Wrench, Droplets, Wind, Armchair, PaintBucket, CircleDot, ShoppingCart, CheckCircle, X, AlertCircle } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import SEOHead from '../components/SEOHead'
+
+const API_URL = import.meta.env.VITE_API_URL || '/api'
+const SITE_SLUG = import.meta.env.VITE_SITE_SLUG || 'adlr'
 
 /**
  * ConfiguratorV2 - Design repensé avec approche visuelle
@@ -21,6 +24,26 @@ const ConfiguratorV2 = () => {
     options: [],
     contact: { name: '', email: '', phone: '', message: '' }
   })
+  const [siteId, setSiteId] = useState(null)
+  const [sending, setSending] = useState(false)
+  const [showModal, setShowModal] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState(null) // 'success' | 'error'
+
+  // Récupérer l'ID MongoDB du site
+  useEffect(() => {
+    const fetchSiteId = async () => {
+      try {
+        const res = await fetch(`${API_URL}/public/sites/${SITE_SLUG}`)
+        const data = await res.json()
+        if (data.success && data.data?._id) {
+          setSiteId(data.data._id)
+        }
+      } catch (err) {
+        console.error('Erreur récupération siteId:', err)
+      }
+    }
+    fetchSiteId()
+  }, [])
 
   const vehicleTypes = [
     { id: 'compact', Icon: Car, image: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=400&auto=format&fit=crop' },
@@ -115,9 +138,64 @@ const ConfiguratorV2 = () => {
     }
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    alert(t('alerts.success'))
+  const buildMessage = () => {
+    const vehicle = vehicleTypes.find(v => v.id === config.vehicleType)
+    const pack = basePacks.find(p => p.id === config.basePack)
+    const packName = pack ? t(`packs.${pack.id}.name`) : ''
+    const vehicleName = vehicle ? t(`vehicles.${vehicle.id}.name`) : ''
+    const duration = getSelectedDuration()
+    const selectedOpts = config.options.map(optId => {
+      const opt = additionalOptions.find(o => o.id === optId)
+      return `${t(`options.${optId}`)} (+CHF ${opt?.price})`
+    })
+
+    let msg = `--- ${t('summary.title')} ---\n`
+    msg += `${t('summary.vehicle')}: ${vehicleName}\n`
+    msg += `${t('summary.pack')}: ${packName}\n`
+    msg += `${t('summary.duration')}: ${duration}\n`
+    if (selectedOpts.length > 0) {
+      msg += `${t('summary.options')}: ${selectedOpts.join(', ')}\n`
+    }
+    msg += `${t('summary.total')}: CHF ${getPrice()}.-\n`
+    if (config.contact.message) {
+      msg += `\n${config.contact.message}`
+    }
+    return msg
+  }
+
+  const handleSubmit = async (e) => {
+    if (e) e.preventDefault()
+    if (!siteId || !canProceed() || sending) return
+
+    setSending(true)
+    setSubmitStatus(null)
+
+    try {
+      const response = await fetch(`${API_URL}/contact/submit`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          siteId,
+          name: config.contact.name,
+          email: config.contact.email,
+          phone: config.contact.phone,
+          message: buildMessage(),
+        })
+      })
+
+      const data = await response.json()
+
+      if (data.success) {
+        setSubmitStatus('success')
+      } else {
+        setSubmitStatus('error')
+      }
+    } catch {
+      setSubmitStatus('error')
+    } finally {
+      setSending(false)
+      setShowModal(true)
+    }
   }
 
   const selectedVehicle = vehicleTypes.find(v => v.id === config.vehicleType)
@@ -475,15 +553,18 @@ const ConfiguratorV2 = () => {
                 ) : (
                   <button
                     onClick={handleSubmit}
-                    disabled={!canProceed()}
+                    disabled={!canProceed() || sending}
                     className={`flex items-center px-6 py-3 rounded-xl font-semibold transition-all ${
-                      canProceed()
+                      canProceed() && !sending
                         ? 'bg-dark-900 hover:bg-dark-800 text-white'
                         : 'bg-sand-200 text-dark-400 cursor-not-allowed'
                     }`}
                   >
-                    {t('buttons.send')}
-                    <Send className="w-5 h-5 ml-1" />
+                    {sending ? (
+                      <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+                    ) : (
+                      <>{t('buttons.send')}<Send className="w-5 h-5 ml-1" /></>
+                    )}
                   </button>
                 )}
               </div>
@@ -588,15 +669,18 @@ const ConfiguratorV2 = () => {
                   ) : (
                     <button
                       onClick={handleSubmit}
-                      disabled={!canProceed()}
+                      disabled={!canProceed() || sending}
                       className={`flex-1 flex items-center justify-center px-4 py-4 rounded-xl font-semibold transition-all ${
-                        canProceed()
+                        canProceed() && !sending
                           ? 'bg-white text-dark-900 hover:bg-sand-100'
                           : 'bg-white/20 text-white/40 cursor-not-allowed'
                       }`}
                     >
-                      <Send className="w-5 h-5 mr-2" />
-                      {t('buttons.sendRequest')}
+                      {sending ? (
+                        <div className="w-5 h-5 border-2 border-dark-300 border-t-dark-900 rounded-full animate-spin" />
+                      ) : (
+                        <><Send className="w-5 h-5 mr-2" />{t('buttons.sendRequest')}</>
+                      )}
                     </button>
                   )}
                 </div>
@@ -605,6 +689,68 @@ const ConfiguratorV2 = () => {
           </div>
         </div>
       </div>
+
+      {/* Confirmation Modal */}
+      <AnimatePresence>
+        {showModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 p-4"
+            onClick={() => setShowModal(false)}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 text-center"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {submitStatus === 'success' ? (
+                <>
+                  <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <CheckCircle className="w-8 h-8 text-green-600" />
+                  </div>
+                  <h3 className="text-2xl font-display font-bold text-dark-900 mb-3">
+                    {t('modal.successTitle')}
+                  </h3>
+                  <p className="text-dark-500 mb-2">
+                    {t('modal.successMessage')}
+                  </p>
+                  <p className="text-dark-900 font-semibold text-lg mb-6">
+                    CHF {getPrice()}.-
+                  </p>
+                  <Link
+                    to={`/${lang}`}
+                    className="inline-flex items-center px-6 py-3 bg-dark-900 text-white font-semibold rounded-full hover:bg-dark-800 transition-all"
+                  >
+                    {t('modal.backHome')}
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <AlertCircle className="w-8 h-8 text-red-600" />
+                  </div>
+                  <h3 className="text-2xl font-display font-bold text-dark-900 mb-3">
+                    {t('modal.errorTitle')}
+                  </h3>
+                  <p className="text-dark-500 mb-6">
+                    {t('modal.errorMessage')}
+                  </p>
+                  <button
+                    onClick={() => setShowModal(false)}
+                    className="inline-flex items-center px-6 py-3 bg-dark-900 text-white font-semibold rounded-full hover:bg-dark-800 transition-all"
+                  >
+                    {t('modal.retry')}
+                  </button>
+                </>
+              )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   )
 }

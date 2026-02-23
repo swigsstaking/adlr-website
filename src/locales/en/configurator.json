@@ -106,5 +106,13 @@
   },
   "alerts": {
     "success": "Request sent! We will contact you shortly."
+  },
+  "modal": {
+    "successTitle": "Request sent!",
+    "successMessage": "We have received your quote request and will get back to you as soon as possible.",
+    "backHome": "Back to home",
+    "errorTitle": "An error occurred",
+    "errorMessage": "Your request could not be sent. Please try again or contact us by phone.",
+    "retry": "Try again"
   }
 }

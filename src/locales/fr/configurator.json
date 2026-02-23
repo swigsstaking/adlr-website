@@ -112,5 +112,13 @@
   },
   "alerts": {
     "success": "Demande envoyée ! Nous vous recontacterons rapidement."
+  },
+  "modal": {
+    "successTitle": "Demande envoyée !",
+    "successMessage": "Nous avons bien reçu votre demande de devis et reviendrons vers vous dans les plus brefs délais.",
+    "backHome": "Retour à l'accueil",
+    "errorTitle": "Une erreur est survenue",
+    "errorMessage": "Votre demande n'a pas pu être envoyée. Veuillez réessayer ou nous contacter par téléphone.",
+    "retry": "Réessayer"
   }
 }
