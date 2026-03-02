@@ -535,6 +535,7 @@ const ConfiguratorV2 = () => {
 
                 <div className="text-center">
                   <p className="text-2xl font-bold text-dark-900">CHF {getPrice()}.-</p>
+                  <p className="text-dark-500 text-[10px] italic leading-tight">*Prix indicatif sous réserve<br/>de l'état initial du véhicule</p>
                 </div>
 
                 {step < 4 ? (
@@ -632,6 +633,7 @@ const ConfiguratorV2 = () => {
 
               {/* Total & CTA */}
               <div className="pt-6 border-t border-white/20 mt-6">
+                <p className="text-white/40 text-xs italic mb-3">*Prix indicatif sous réserve de l'état initial du véhicule</p>
                 <div className="flex items-end justify-between mb-6">
                   <span className="text-white/60">{t('summary.total')}</span>
                   <div className="text-right">
